@@ -2,6 +2,7 @@ package images;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -11,8 +12,7 @@ import java.util.Objects;
 public class ImageModel implements ImageModelInterface {
 
   private int[][][] rgb_buffer;
-  private int width;
-  private int height;
+  private int[][][] rgb_buffer_processed;
   private ArrayList<ImageObserver> imageObservers;
 
   /**
@@ -22,9 +22,8 @@ public class ImageModel implements ImageModelInterface {
 
   public ImageModel() {
     this.rgb_buffer = null;
-    this.width = 0;
-    this.height = 0;
-    imageObservers = new ArrayList<ImageObserver>();
+    this.rgb_buffer_processed = null;
+    imageObservers = new ArrayList<>();
   }
 
   /**
@@ -33,82 +32,110 @@ public class ImageModel implements ImageModelInterface {
    */
 
   public ImageModel(ImageModel imgModel) {
-    this.rgb_buffer = imgModel.rgb_buffer;
+    if (!Objects.isNull(imgModel.rgb_buffer)) {
+      this.rgb_buffer = new int[imgModel.rgb_buffer.length][imgModel.rgb_buffer[0].length][imgModel.rgb_buffer[0][0].length];
+      for (int x = 0; x < imgModel.rgb_buffer.length; x++) {
+        for (int y = 0; y < imgModel.rgb_buffer[0].length; y++) {
+          for (int z = 0; z < imgModel.rgb_buffer[0][0].length; z++) {
+            this.rgb_buffer[x][y][z] = imgModel.rgb_buffer[x][y][z];
+          }
+        }
+      }
+    } else {
+      this.rgb_buffer = null;
+    }
+    if (!Objects.isNull(imgModel.rgb_buffer_processed)) {
+      this.rgb_buffer_processed = new int[imgModel.rgb_buffer_processed.length][imgModel.rgb_buffer_processed[0].length][imgModel.rgb_buffer_processed[0][0].length];
+      for (int x = 0; x < imgModel.rgb_buffer_processed.length; x++) {
+        for (int y = 0; y < imgModel.rgb_buffer_processed[0].length; y++) {
+          for (int z = 0; z < imgModel.rgb_buffer_processed[0][0].length; z++) {
+            this.rgb_buffer_processed[x][y][z] = imgModel.rgb_buffer_processed[x][y][z];
+          }
+        }
+      }
+    } else {
+      this.rgb_buffer_processed = null;
+    }
+
+    this.imageObservers = new ArrayList<>();
+    for (int i = 0; i < imgModel.imageObservers.size(); i++) {
+      this.imageObservers.add(imgModel.imageObservers.get(i));
+    }
   }
 
   @Override
   public String toString() {
-    // Fix - rgb buffer printing
-    return String.format("Height - %d\nWidth - %d\nBuffered Image Pixels - %s\nObservers - %s",
-        this.height, this.width, this.rgb_buffer.toString(), this.imageObservers.toString());
-
-  }
-
-  @Override
-  public int[][][] getPixels() {
-    ImageModel img = new ImageModel(this);
-    return img.rgb_buffer;
-  }
-
-  @Override
-  public void setPixels(int[][][] rgbBuffer) {
-    this.rgb_buffer = rgbBuffer;
+    if (Objects.isNull(this.rgb_buffer)) {
+      return String.format("No image is loaded.");
+    } else {
+    }
+    return String.format("Image Height - %d and Width - %d", this.rgb_buffer.length,
+        this.rgb_buffer[0].length);
   }
 
   @Override
   public ImageModelInterface loadImage(String filepath) throws IOException {
     Objects.requireNonNull(filepath, "Filepath cannot be null");
 
-    ImageProcessingInterface imgProcessing = new ImageProcessing();
-
-    this.rgb_buffer = imgProcessing.readImage(filepath);
-    this.height = imgProcessing.getHeight(filepath);
-    this.width = imgProcessing.getWidth(filepath);
+    this.rgb_buffer = ImageUtilities.readImage(filepath);
 
     return new ImageModel(this);
   }
 
   @Override
   public ImageModelInterface saveImage(String filepath) throws IOException {
-    Objects.requireNonNull(filepath, "Filepath cannot be null");
-
-    ImageProcessingInterface imgProcessing = new ImageProcessing();
-
-    imgProcessing.writeImage(this.rgb_buffer, this.width, this.height, filepath);
-
+    Objects.requireNonNull(filepath, "Filepath cannot be null.");
+    ImageModel imgModel = new ImageModel(this);
+    ImageUtilities.writeImage(imgModel.rgb_buffer_processed,
+        imgModel.rgb_buffer_processed[0].length, imgModel.rgb_buffer_processed.length, filepath);
     return new ImageModel(this);
   }
 
   @Override
   public ImageModelInterface colorTransformation(float[][] colorTransformedMatrix) {
     Objects.requireNonNull(colorTransformedMatrix, "Color Transformed matrix cannot not be null");
-
+    ImageModel imgModel = new ImageModel(this);
     ColorTransformationInterface colorTransformation = new ColorTransformation();
 
-    this.rgb_buffer = colorTransformation.doColorTransformation(this.height, this.width,
-        this.rgb_buffer, colorTransformedMatrix);
+    this.rgb_buffer_processed = colorTransformation.doColorTransformation(imgModel.rgb_buffer,
+        colorTransformedMatrix);
     return new ImageModel(this);
   }
 
   @Override
-  public void registerImageObserver(ImageObserver imageObserver) {
-    imageObservers.add(imageObserver);
+  public ImageModelInterface filter(float[][] kernel) {
+    Objects.requireNonNull(kernel, "Kernel value cannot not be null.");
+    ImageModel imgModel = new ImageModel(this);
+    FilterInterface filter = new Filter();
+
+    this.rgb_buffer_processed = filter.doFilter(imgModel.rgb_buffer, kernel);
+    return new ImageModel(this);
+  }
+  
+  @Override
+  public ImageModelInterface reduceColorDensity(int noOfColorsToReduceTo) {
+    ImageModel imgModel = new ImageModel(this);
+    ReducingColorDensityInterface colorDensity = new ReducingColorDensity();
+
+    this.rgb_buffer_processed = colorDensity.doReduceColorDensity(imgModel.rgb_buffer, noOfColorsToReduceTo);
+    return new ImageModel(this);
   }
 
   @Override
-  public void removeImageObserver(ImageObserver imageObserver) {
-    int i = imageObservers.indexOf(imageObserver);
-    if (i >= 0) {
-      imageObservers.remove(i);
-    }
+  public void registerImageObserver(ImageObserver imageObserver)
+      throws UnsupportedOperationException {
+    throw new UnsupportedOperationException("This feature is not available");
   }
 
   @Override
-  public void notifyImageObservers() {
-    for (int i = 0; i < imageObservers.size(); i++) {
-      ImageObserver observer = (ImageObserver) imageObservers.get(i);
-      observer.updateImage();
-    }
+  public void removeImageObserver(ImageObserver imageObserver)
+      throws UnsupportedOperationException {
+    throw new UnsupportedOperationException("This feature is not available");
+  }
+
+  @Override
+  public void notifyImageObservers() throws UnsupportedOperationException {
+    throw new UnsupportedOperationException("This feature is not available");
   }
 
 }

@@ -14,19 +14,6 @@ import java.io.IOException;
  * 
  */
 public interface ImageModelInterface {
-  /**
-   * This method get the pixels.
-   * 
-   * @return a 2D array of RGB colors
-   */
-  public int[][][] getPixels();
-
-  /**
-   * This method set the pixels.
-   * 
-   * @param rgbBuffer It is a 2D array of RGB colors
-   */
-  public void setPixels(int[][][] rgbBuffer);
 
   /**
    * This method loads the image from the given file path.
@@ -50,10 +37,14 @@ public interface ImageModelInterface {
    * This method applies color transformation on the image.
    * 
    * @param colorTransformedMatrix It is the matrix form of the Linear color
-   *                                transformations
+   *                               transformations
    * @return an ImageModel object
    */
   public ImageModelInterface colorTransformation(float[][] colorTransformedMatrix);
+
+  public ImageModelInterface filter(float[][] kernel);
+
+  public ImageModelInterface reduceColorDensity(int noOfColorsToReduceTo);
 
   /**
    * This method allows objects to register as observer for state changes.
