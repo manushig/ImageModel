@@ -1,13 +1,20 @@
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.junit.Test;
 
-import images.ColorTransformation;
-import images.ColorTransformationInterface;
-import images.Filter;
-import images.FilterInterface;
-import images.ReducingColorDensity;
-import images.ReducingColorDensityInterface;
+import images.imagemodel.Clamping;
+import images.imagemodel.ColorTransformation;
+import images.imagemodel.ColorTransformationInterface;
+import images.imagemodel.Filter;
+import images.imagemodel.FilterInterface;
+import images.imagemodel.ImageModel;
+import images.imagemodel.ImageModelInterface;
+import images.imagemodel.ImageUtilities;
+import images.imagemodel.ReducingColorDensity;
+import images.imagemodel.ReducingColorDensityInterface;
 
 /**
  * A JUnit test class for manipulating 2 D RGB array image data.
@@ -27,7 +34,10 @@ public class ImageModelTest {
         { { 43, 43, 43 }, { 54, 54, 54 }, { 56, 56, 56 }, { 76, 76, 76 } },
         { { 65, 65, 65 }, { 43, 43, 43 }, { 123, 123, 123 }, { 32, 32, 32 } } };
 
-    int[][][] expectedOutput = { { {} } };
+    int[][][] expectedOutput = { { { 27, 27, 27 }, { 31, 31, 31 }, { 20, 20, 20 }, { 5, 5, 5 } },
+        { { 124, 124, 124 }, { 179, 179, 179 }, { 205, 205, 205 }, { 136, 136, 136 } },
+        { { 238, 238, 238 }, { 341, 341, 341 }, { 319, 319, 319 }, { 117, 117, 117 } },
+        { { 237, 237, 237 }, { 433, 433, 433 }, { 337, 337, 337 }, { 65, 65, 65 } } };
 
     FilterInterface filter = new Filter();
     int[][][] actualOutput = filter.doFilter(rgbBuffer, kernel);
@@ -88,8 +98,9 @@ public class ImageModelTest {
         { { 43, 43, 43 }, { 54, 54, 54 }, { 56, 56, 56 }, { 76, 76, 76 } },
         { { 65, 65, 65 }, { 43, 43, 43 }, { 123, 123, 123 }, { 32, 32, 32 } } };
 
-    int[][][] expectedOutput = { { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
-        { { 0, 0, 0 }, { 9, 9, 9 }, { 22, 22, 22 }, { 4, 4, 4 } },
+    int[][][] expectedOutput = {
+        { { -14, -14, -14 }, { -16, -16, -16 }, { -19, -19, -19 }, { -17, -17, -17 } },
+        { { -2, -2, -2 }, { 9, 9, 9 }, { 22, 22, 22 }, { 4, 4, 4 } },
         { { 62, 62, 62 }, { 127, 127, 127 }, { 126, 126, 126 }, { 116, 116, 116 } },
         { { 75, 75, 75 }, { 112, 112, 112 }, { 172, 172, 172 }, { 82, 82, 82 } } };
 
@@ -149,9 +160,9 @@ public class ImageModelTest {
         { { 237, 237, 237 }, { 255, 255, 255 }, { 255, 255, 255 }, { 65, 65, 65 } } };
 
     int[][][] expectedOutput = { { { 36, 36, 36 }, { 42, 42, 42 }, { 27, 27, 27 }, { 7, 7, 7 } },
-        { { 168, 168, 168 }, { 242, 242, 242 }, { 255, 255, 255 }, { 184, 184, 184 } },
-        { { 255, 255, 255 }, { 255, 255, 255 }, { 255, 255, 255 }, { 158, 158, 158 } },
-        { { 255, 255, 255 }, { 255, 255, 255 }, { 255, 255, 255 }, { 88, 88, 88 } } };
+        { { 168, 168, 168 }, { 242, 242, 242 }, { 277, 277, 277 }, { 184, 184, 184 } },
+        { { 322, 322, 322 }, { 345, 345, 345 }, { 345, 345, 345 }, { 158, 158, 158 } },
+        { { 320, 320, 320 }, { 345, 345, 345 }, { 345, 345, 345 }, { 88, 88, 88 } } };
 
     ColorTransformationInterface colorTransformation = new ColorTransformation();
     int[][][] actualOutput = colorTransformation.doColorTransformation(rgbBuffer,
@@ -197,18 +208,20 @@ public class ImageModelTest {
   }
 
   @Test
-  public void testReduceColorDensity() {
+  public void testReduceColorDensityTo8Colors() {
 
-    int[][][] rgbBuffer = {
-        { { 128, 128, 128 }, { 128, 128, 128 }, { 128, 128, 128 }, { 128, 128, 128 } },
-        { { 128, 128, 128 }, { 128, 128, 128 }, { 128, 128, 128 }, { 128, 128, 128 } },
-        { { 128, 128, 128 }, { 128, 128, 128 }, { 128, 128, 128 }, { 128, 128, 128 } },
-        { { 128, 128, 128 }, { 128, 128, 128 }, { 128, 128, 128 }, { 128, 128, 128 } } };
+    int[][][] rgbBuffer = { { { 27, 27, 27 }, { 31, 31, 31 }, { 20, 20, 20 }, { 5, 5, 5 } },
+        { { 124, 124, 124 }, { 179, 179, 179 }, { 205, 205, 205 }, { 136, 136, 136 } },
+        { { 238, 238, 238 }, { 255, 255, 255 }, { 255, 255, 255 }, { 117, 117, 117 } },
+        { { 237, 237, 237 }, { 255, 255, 255 }, { 255, 255, 255 }, { 65, 65, 65 } } };
 
-    int[][][] expectedOutput = { { {} } };
+    int[][][] expectedOutput = { { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+        { { 0, 0, 0 }, { 255, 255, 255 }, { 0, 0, 0 }, { 255, 255, 255 } },
+        { { 255, 255, 255 }, { 255, 255, 255 }, { 255, 255, 255 }, { 0, 0, 0 } },
+        { { 255, 255, 255 }, { 255, 255, 255 }, { 255, 255, 255 }, { 0, 0, 0 } } };
 
     ReducingColorDensityInterface reduceColorDensity = new ReducingColorDensity();
-    int[][][] actualOutput = reduceColorDensity.doReduceColorDensity(rgbBuffer, 2);
+    int[][][] actualOutput = reduceColorDensity.doReduceColorDensity(rgbBuffer, 2, true);
     for (int i = 0; i < actualOutput.length; i++) {
       for (int j = 0; j < actualOutput[0].length; j++) {
         for (int k = 0; k < rgbBuffer[0][0].length; k++) {
@@ -216,5 +229,81 @@ public class ImageModelTest {
         }
       }
     }
+  }
+
+  @Test
+  public void testReduceColorDensityTo512Colors() {
+
+    int[][][] rgbBuffer = {
+        { { 128, 128, 128 }, { 128, 128, 128 }, { 128, 128, 128 }, { 128, 128, 128 } },
+        { { 128, 128, 128 }, { 128, 128, 128 }, { 128, 128, 128 }, { 128, 128, 128 } },
+        { { 128, 128, 128 }, { 128, 128, 128 }, { 128, 128, 128 }, { 128, 128, 128 } },
+        { { 128, 128, 128 }, { 128, 128, 128 }, { 128, 128, 128 }, { 128, 128, 128 } } };
+
+    int[][][] expectedOutput = {
+        { { 109, 109, 109 }, { 109, 109, 109 }, { 109, 109, 109 }, { 109, 109, 109 } },
+        { { 109, 109, 109 }, { 146, 146, 146 }, { 146, 146, 146 }, { 146, 146, 146 } },
+        { { 109, 109, 109 }, { 146, 146, 146 }, { 109, 109, 109 }, { 109, 109, 109 } },
+        { { 109, 109, 109 }, { 109, 109, 109 }, { 146, 146, 146 }, { 109, 109, 109 } } };
+
+    ReducingColorDensityInterface reduceColorDensity = new ReducingColorDensity();
+    int[][][] actualOutput = reduceColorDensity.doReduceColorDensity(rgbBuffer, 8, true);
+    for (int i = 0; i < actualOutput.length; i++) {
+      for (int j = 0; j < actualOutput[0].length; j++) {
+        for (int k = 0; k < rgbBuffer[0][0].length; k++) {
+          assertEquals(expectedOutput[i][j][k], actualOutput[i][j][k]);
+        }
+      }
+    }
+  }
+
+  @Test
+  public void testReduceColorDensityTo512ColorsWithoutEssence() {
+
+    int[][][] rgbBuffer = {
+        { { 128, 128, 128 }, { 255, 255, 255 }, { 128, 128, 128 }, { 128, 128, 128 } },
+        { { 128, 128, 128 }, { 128, 128, 128 }, { 0, 0, 0 }, { 128, 128, 128 } },
+        { { 128, 128, 128 }, { 255, 255, 255 }, { 128, 128, 128 }, { 128, 128, 128 } },
+        { { 128, 128, 128 }, { 0, 0, 0 }, { 128, 128, 128 }, { 128, 128, 128 } } };
+
+    int[][][] expectedOutput = {
+        { { 109, 109, 109 }, { 255, 255, 255 }, { 109, 109, 109 }, { 109, 109, 109 } },
+        { { 109, 109, 109 }, { 109, 109, 109 }, { 0, 0, 0 }, { 109, 109, 109 } },
+        { { 109, 109, 109 }, { 255, 255, 255 }, { 109, 109, 109 }, { 109, 109, 109 } },
+        { { 109, 109, 109 }, { 0, 0, 0 }, { 109, 109, 109 }, { 109, 109, 109 } } };
+
+    ReducingColorDensityInterface reduceColorDensity = new ReducingColorDensity();
+    int[][][] actualOutput = reduceColorDensity.doReduceColorDensity(rgbBuffer, 8, false);
+    for (int i = 0; i < actualOutput.length; i++) {
+      for (int j = 0; j < actualOutput[0].length; j++) {
+        for (int k = 0; k < rgbBuffer[0][0].length; k++) {
+          assertEquals(expectedOutput[i][j][k], actualOutput[i][j][k]);
+        }
+      }
+    }
+  }
+
+  @Test
+  public void testClamping() {
+    assertEquals(0, Clamping.doClamping(0));
+    assertEquals(255, Clamping.doClamping(255));
+    assertEquals(0, Clamping.doClamping(-10));
+    assertEquals(255, Clamping.doClamping(280));
+    assertEquals(10, Clamping.doClamping(10));
+    assertEquals(254, Clamping.doClamping(254));
+  }
+
+  @Test
+  public void testImageModel() throws IOException {
+    ImageModelInterface imgModel = new ImageModel();
+
+    assertEquals("No image is loaded.", imgModel.toString());
+
+    String directory = new File(".").getCanonicalPath();
+    String input_file_path = String.format(directory + "\\res\\Images\\Image1\\Original.png");
+
+    imgModel.loadImage(input_file_path);
+
+    assertEquals("Image Height - 373 and Width - 640", imgModel.toString());
   }
 }

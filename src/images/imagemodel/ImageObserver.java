@@ -1,4 +1,4 @@
-package images;
+package images.imagemodel;
 
 /**
  * ImageObserver, is an interface that is refer by Subject for updating state.

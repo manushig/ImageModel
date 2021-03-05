@@ -1,4 +1,4 @@
-package images;
+package images.imagemodel;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -100,7 +100,7 @@ public class ImageUtilities {
         output.setRGB(j, i, color);
       }
     }
-    String extension = filename.substring(filename.lastIndexOf(".") + 1);
+    String extension = filename.substring(filename.indexOf(".") + 1);
     ImageIO.write(output, extension, new FileOutputStream(filename));
   }
 }

@@ -1,7 +1,12 @@
-package images;
+package images.imagemodel;
 
 import java.util.Objects;
 
+/**
+ * Filter, implements an interface FilterInterface that defines methods to do
+ * filter manipulation on the image.
+ *
+ */
 public class Filter implements FilterInterface {
 
   @Override
@@ -39,7 +44,7 @@ public class Filter implements FilterInterface {
             }
           }
 
-          filtered_rgb_buffer[x][y][z] = Clamping.doClamping(Math.round(sum_channel));
+          filtered_rgb_buffer[x][y][z] = Math.round(sum_channel);
         }
       }
     }

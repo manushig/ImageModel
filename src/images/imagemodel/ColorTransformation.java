@@ -1,4 +1,4 @@
-package images;
+package images.imagemodel;
 
 import java.util.Objects;
 
@@ -8,7 +8,6 @@ import java.util.Objects;
  *
  */
 public class ColorTransformation implements ColorTransformationInterface {
-
   @Override
   public int[][][] doColorTransformation(int[][][] rgbBuffer, float[][] colorTransformedMatrix) {
 
@@ -16,24 +15,26 @@ public class ColorTransformation implements ColorTransformationInterface {
     Objects.requireNonNull(colorTransformedMatrix,
         "Color transformed matrix value cannot be null.");
 
-    int[][][] colorTransformed_rgb_buffer = new int[rgbBuffer.length][rgbBuffer[0].length][rgbBuffer[0][0].length];
+    int[][][] rgbBuffer_copy = ArrayCopyUtility.copyArray(rgbBuffer);
 
-    int height = rgbBuffer.length;
-    int width = rgbBuffer[0].length;
+    int[][][] colorTransformed_rgb_buffer = new int[rgbBuffer_copy.length][rgbBuffer_copy[0].length][rgbBuffer_copy[0][0].length];
+
+    int height = rgbBuffer_copy.length;
+    int width = rgbBuffer_copy[0].length;
 
     for (int x = 0; x < height; x++) {
       for (int y = 0; y < width; y++) {
 
-        int old_red = rgbBuffer[x][y][0];
-        int old_green = rgbBuffer[x][y][1];
-        int old_blue = rgbBuffer[x][y][2];
+        int old_red = rgbBuffer_copy[x][y][0];
+        int old_green = rgbBuffer_copy[x][y][1];
+        int old_blue = rgbBuffer_copy[x][y][2];
 
         int[] color_transformed_array = colorTransformed(old_red, old_green, old_blue,
             colorTransformedMatrix);
 
-        colorTransformed_rgb_buffer[x][y][0] = Clamping.doClamping(color_transformed_array[0]);
-        colorTransformed_rgb_buffer[x][y][1] = Clamping.doClamping(color_transformed_array[1]);
-        colorTransformed_rgb_buffer[x][y][2] = Clamping.doClamping(color_transformed_array[2]);
+        colorTransformed_rgb_buffer[x][y][0] = color_transformed_array[0];
+        colorTransformed_rgb_buffer[x][y][1] = color_transformed_array[1];
+        colorTransformed_rgb_buffer[x][y][2] = color_transformed_array[2];
       }
     }
 

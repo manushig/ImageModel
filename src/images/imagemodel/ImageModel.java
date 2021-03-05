@@ -1,8 +1,7 @@
-package images;
+package images.imagemodel;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -68,16 +67,21 @@ public class ImageModel implements ImageModelInterface {
     if (Objects.isNull(this.rgb_buffer)) {
       return String.format("No image is loaded.");
     } else {
+
+      return String.format("Image Height - %d and Width - %d", this.rgb_buffer.length,
+          this.rgb_buffer[0].length);
     }
-    return String.format("Image Height - %d and Width - %d", this.rgb_buffer.length,
-        this.rgb_buffer[0].length);
   }
 
   @Override
   public ImageModelInterface loadImage(String filepath) throws IOException {
     Objects.requireNonNull(filepath, "Filepath cannot be null");
 
-    this.rgb_buffer = ImageUtilities.readImage(filepath);
+    int[][][] rgb_buffer = ImageUtilities.readImage(filepath);
+
+    Objects.requireNonNull(rgb_buffer, "2 D RGB array value cannot be null.");
+
+    this.rgb_buffer = rgb_buffer;
 
     return new ImageModel(this);
   }
@@ -85,39 +89,76 @@ public class ImageModel implements ImageModelInterface {
   @Override
   public ImageModelInterface saveImage(String filepath) throws IOException {
     Objects.requireNonNull(filepath, "Filepath cannot be null.");
+
     ImageModel imgModel = new ImageModel(this);
+
     ImageUtilities.writeImage(imgModel.rgb_buffer_processed,
         imgModel.rgb_buffer_processed[0].length, imgModel.rgb_buffer_processed.length, filepath);
+
     return new ImageModel(this);
   }
 
   @Override
   public ImageModelInterface colorTransformation(float[][] colorTransformedMatrix) {
     Objects.requireNonNull(colorTransformedMatrix, "Color Transformed matrix cannot not be null");
+
     ImageModel imgModel = new ImageModel(this);
+
     ColorTransformationInterface colorTransformation = new ColorTransformation();
 
-    this.rgb_buffer_processed = colorTransformation.doColorTransformation(imgModel.rgb_buffer,
+    int[][][] rgb_buffer_processed = colorTransformation.doColorTransformation(imgModel.rgb_buffer,
         colorTransformedMatrix);
+
+    Objects.requireNonNull(rgb_buffer_processed, "2 D RGB array value cannot be null.");
+
+    int[][][] rgb_buffer_processed_clamped = Clamping.doClamping(rgb_buffer_processed);
+
+    Objects.requireNonNull(rgb_buffer_processed_clamped, "2 D RGB array value cannot be null.");
+
+    this.rgb_buffer_processed = rgb_buffer_processed_clamped;
+
     return new ImageModel(this);
   }
 
   @Override
   public ImageModelInterface filter(float[][] kernel) {
     Objects.requireNonNull(kernel, "Kernel value cannot not be null.");
+
     ImageModel imgModel = new ImageModel(this);
+
     FilterInterface filter = new Filter();
 
-    this.rgb_buffer_processed = filter.doFilter(imgModel.rgb_buffer, kernel);
+    int[][][] rgb_buffer_processed = filter.doFilter(imgModel.rgb_buffer, kernel);
+
+    Objects.requireNonNull(rgb_buffer_processed, "2 D RGB array value cannot be null.");
+
+    int[][][] rgb_buffer_processed_clamped = Clamping.doClamping(rgb_buffer_processed);
+
+    Objects.requireNonNull(rgb_buffer_processed_clamped, "2 D RGB array value cannot be null.");
+
+    this.rgb_buffer_processed = rgb_buffer_processed_clamped;
+
     return new ImageModel(this);
   }
-  
+
   @Override
-  public ImageModelInterface reduceColorDensity(int noOfColorsToReduceTo) {
+  public ImageModelInterface reduceColorDensity(int noOfColorsToReduceTo,
+      Boolean isDitheringRequired) {
     ImageModel imgModel = new ImageModel(this);
+
     ReducingColorDensityInterface colorDensity = new ReducingColorDensity();
 
-    this.rgb_buffer_processed = colorDensity.doReduceColorDensity(imgModel.rgb_buffer, noOfColorsToReduceTo);
+    int[][][] rgb_buffer_processed = colorDensity.doReduceColorDensity(imgModel.rgb_buffer,
+        noOfColorsToReduceTo, isDitheringRequired);
+
+    Objects.requireNonNull(rgb_buffer_processed, "2 D RGB array value cannot be null.");
+    
+    int[][][] rgb_buffer_processed_clamped = Clamping.doClamping(rgb_buffer_processed);
+
+    Objects.requireNonNull(rgb_buffer_processed_clamped, "2 D RGB array value cannot be null.");
+
+    this.rgb_buffer_processed = rgb_buffer_processed_clamped;
+
     return new ImageModel(this);
   }
 
