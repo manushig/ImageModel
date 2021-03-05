@@ -213,34 +213,79 @@ This class implements the Gear Visitor interface. It handles the attack and defe
 
 ### - Version 1.0:
 ##### IImageController Interface class:
-Provides interface functionality for the user/driver to perform functions like add an character, add an gear to the character, and also I was thinking will do predictWin and rematch win in the driver class rather than inside any concrete class
+Provides interface functionality for the user/driver to perform functions save, read, blur, sharp, grey scale, sepia tone, reduce color dennsity 8 colors and reduce color density 16 colors on the image.
    
-##### Role Player Builder class:
-   Intuition for this class was to create different characters and each character internally added with gears, similar to medivalBuilder where we create levels (in here its characters), so each levels will have its own monsters and treasures (in here it will be gears). I thought I can use builder pattern to create a character and update the items its using
+##### ImageController class:
+Intuition for this class was to provide a handler between Image Model and Driver to perform functions save, read, blur, sharp, grey scale, sepia tone, reduce color dennsity 8 colors and reduce color density 16 colors on the image.
    
-##### ICharacter Interface:
-   Provides the feature sets which defines a characters
+##### IImageModel Interface:
+Provides the feature to initialize, get and set RGB buffer, register, remove and notify the observers
    
-##### Character class:
-   Concrete class which implements the ICharacter, which holds all information about the character, the number of gears it holds, attack strength and defense strength
+##### ImageModel class:
+Concrete class which implements the IImageModel, which provides the feature to initialize, get and set RGB buffer, register, remove and notify the observers. It maintains the list of image observers, rgb buffer, height and weight of the image.
 
-##### IGear Interface
-   Provides definition for an gear or item.
+##### ImageProcessing Interface
+Provides the functionality to read and save the image.
    
-##### Abstract Gear class:
-   It provides implementation of how the geat should behave and how to give the character class about the gear attack and defense strength when queried.
-   
-   There are other supporting classes which helps to define the gear information and also strength information like Strength class, Gear Description class
-   
-   HeadGear, HandGear, JewlleryGear, FootwearGear, extends the Abstract Gear class, and implements its won specific compareTo functions when queried.
+##### ImageProcessingImp class:
+Concrete class which implements the ImageProcessing, it provides the functionality to read and save the image using image Utilities.
+
+##### ColorTransformation Interface
+Provides the functionalty to do color transformation of type Sepia Tone and Gray scale on the image.
+
+##### AbstractColorTransformation class:
+Abstract class which implements the ColorTransformation, which provides the feature to do color transformation of type Sepia Tone and Gray scale on the image. It maintains rgb buffer, height and weight of the image.
+
+Concrete classes like SepiaTone and GrayScale extend AbstractColorTransformation, and provide the implemention of color transformated logic.
+
+##### ColorTransformationVisitor interface:
+It declares the visit operations for all the types of classes of type ColorTransformation which can be visited.
+
+##### ColorTransformationHandler class
+This class implements the ColorTransformationVisitor interface.
+
+##### Filter Interface
+Provides the functionalty to do filter of type Blur and sharpness on the image.
+
+##### AbstractFilter class:
+Abstract class which implements the Filter, which provides the feature to do filter of type Blur and sharpness on the image. It maintains rgb buffer, height and weight of the image and filter matrix.
+
+Concrete classes like Blur and Sharp extend AbstractFilter, and provide the implemention of filter logic.
+
+##### FilterVisitor interface:
+It declares the visit operations for all the types of classes of type Filter which can be visited.
+
+##### FilterHandler class
+This class implements the FilterVisitor interface.
+
+##### ColorDensity Interface
+Provides the functionalty to do reduce color density of type 8 colors and 16 colors on the image.
+
+##### AbstractColorDensity class:
+Abstract class which implements the ColorDensity, which provides the feature to do reduce color density of type 8 colors and 16 colors on the image. It maintains rgb buffer, height and weight of the image and dither matrix.
+
+Concrete classes like Color8 and Color16 extend AbstractColorDensity, and provide the implemention of reduce color density logic.
+
+##### ColorDensityVisitor interface:
+It declares the visit operations for all the types of classes of type ColorDensity which can be visited.
+
+##### ColorDensityHandler class
+This class implements the ColorDensityVisitor interface.
+
+##### Clamping class:
+This provides the functionality to clamp the channel values.
+
+##### ColorTransformationVisitor interface:
+It declares the visit operations for all the types of classes of type IGear which can be visited (# of gears allowed for a particular type, to get strength of particular type attack or defense, to get the count of particular gear type)
    
 # ASSUMPTIONS
  
 1) This will support only RGB representation of images
   
 # Limitations
- None
+- None
  
 # Citations
 - https://pixabay.com/photos/road-forest-fall-autumn-season-1072823/
 - https://pixabay.com/photos/bird-fluttering-berries-wings-tit-1045954/
+
