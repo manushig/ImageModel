@@ -159,57 +159,38 @@ File saved at C:\Manushi\ProjectsWorkSpace\ImageModel\res\Images\Image2\ReduceCD
 ## Design/Model Changes
 
 ### - Version 2.0
-##### ICharacter interface:
-It provides the methods like adding gears to the character, getting details about the character, predictwinner of the match and also the getHitPoints of the character; in which driver is interested to create/test the game.
+##### ImageModelInterface interface:
+It provides the methods that can load and save images and manipulates images to produce some interesting effects.
 
-##### Character class:
-This is the concrete implementation of the ICharacter interface, which provides the implementation of all the required methods (getting details about the character, predictwinner of the match and also the getHitPoints of the character;) This class also maintain the list of gears the character is wearing and also the list of gears the characters discarded.
+##### ImageModel class:
+This is the concrete implementation of the ImageModelInterface interface, which provides the implementation of all the required methods (load and save image, do color transformations, filter and reduce color density) This class also maintain the list of image observers, rgb buffer data and rgb buffer processed data.
 
-##### IStrength interface which implementd the <Comparable> Interface
-This is the interface for the strength of an character or gear
-This interface provides methods for the visitor class to get into appropriate gear or character's strength type and get the value of the strength they are having
+##### FilterInterface interface:
+It provides the methods to do filter manipulation like blur and sharpness on the image.
 
-##### Intuition:
-This I had to add because to get the value of the strength each gear or character is having, and I thought visitor pattern is best way to implement the double dispatch.
+##### Filter class:
+This is the concrete implementation of the FilterInterface interface, which provides the implementation of all the required methods.
 
-##### AbstractStrength class:
-This is the concrete implementation of the IStrength which provides the implementation of the accept methods and facilitates the visitor.
+##### ColorTransformationInterface interface:
+It provides the methods to do color transformation manipulation like grey scale and sepia tone on the image.
 
-##### Intuition:
-Attack and Defense classes which extends the AbstractStrength provides different implementation for compareTo() and accept() which will used for getting the strength value back to the character/gear class.
+##### ColorTransformation class:
+This is the concrete implementation of the ColorTransformationInterface interface, which provides the implementation of all the required methods.
 
-##### IGear interface, implements <Comparable>
-This interface provides definitions for a Gear, 
+##### ReducingColorDensityInterface interface:
+It provides the methods to reduce color density of the image.To transform the colors in an image, it reduce the number of colors in the image.
+ 
+##### ReducingColorDensity class:
+This is the concrete implementation of the ReducingColorDensityInterface interface, which provides the implementation of all the required methods.
 
-##### Abstract Gear class:
-This provides the common and most of the implementation for the gear, it maintains the gear description, strength of the gear which is common to all of the gears.
+##### ArrayCopyUtility class:
+It provides the method to create a clone 3D Array.
 
-##### IGear concrete classes:
-HandGear, HeadGear, Footwear, Jewelry classes which extends AbstractGear class, provides the implementation of compareTo, and accept classes which are needed while adding a gear to the character, also to get the current count of particular type of gear.
+##### Clamping class:
+It provides the methods to "clamp" each value in each channel to avoid overflow and underflow while saving, and to display such images properly.
 
-##### GearVistor interface:
-It declares the visit operations for all the types of classes of type IGear which can be visited (# of gears allowed for a particular type, to get strength of particular type attack or defense, to get the count of particular gear type)
-
-##### CharacterWearingHandler class
-This class implements the Gear Visitor interface. It handles the description representation of different types of gears character is wearing by traversing through all gear types using the visit()
-
-##### CountGearHandler interface
-This class implements the Gear Visitor interface. It handles the count of gear a character is wearing using the visit()
-
-##### GearAllowedHandler interface
-This class implements the Gear Visitor interface. It handles whether a gear can be added to the list before comparing with the existing list of gears by using the visit methods()
-
-##### GearStrengthHandler interface
-This class implements the Gear Visitor interface. It handles the calculation of the gear strength considering wear out percentage in the given round using visit()
-
-##### StrengthVisitor interface:
-It declares the visit operations for all the types of classes of type IStrength which can be visited.
-
-##### StrengthHandler class
-This class implements the Gear Visitor interface. It handles the attack and defense values of character or gear.
-
-##### There are other supporting class which defines the description of a gear GearDescription
-
+##### IImageController Interface class: 
+It is an interface that is refer by Subject for updating state.
 
 ### - Version 1.0:
 ##### IImageController Interface class:
@@ -277,7 +258,10 @@ This provides the functionality to clamp the channel values.
 
 ##### ColorTransformationVisitor interface:
 It declares the visit operations for all the types of classes of type IGear which can be visited (# of gears allowed for a particular type, to get strength of particular type attack or defense, to get the count of particular gear type)
-   
+
+##### IImageController Interface class: 
+It is an interface that is refer by Subject for updating state.
+
 # ASSUMPTIONS
  
 1) This will support only RGB representation of images
