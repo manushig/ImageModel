@@ -124,35 +124,37 @@ File saved at C:\Manushi\ProjectsWorkSpace\ImageModel\res\Images\Image2\ReduceCD
 ********************Done********************
 ```
 ## These are the ouputs for different requirements:
- 
+- Original Image
+  
+  ![](./Images/Image2/Original.png)
+
 - Filtering Images - Blur
   
-  ![](./Images/Image1/Blur1.png)
-  
+  ![](./Images/Image2/Blur1.png)
   
 - Filtering Images - Sharpness
   
-  ![](./Images/Image1/Sharp1.png)
+  ![](./Images/Image2/Sharp1.png)
  
 - Color transformations - Grey Scale
   
-  ![](./Images/Image1/GrayScale1.png)
+  ![](./Images/Image2/GrayScale1.png)
 
 - Color transformations - Sepia Tone
   
-  ![](./Images/Image1/SepiaTone1.png)
+  ![](./Images/Image2/SepiaTone1.png)
 
 - Reducing color density - 8 values per channel
   
-  ![](./Images/Image1/ReduceCD512WithoutEssence.png)
+  ![](./Images/Image2/ReduceCD512WithoutEssence.png)
 
 - Reducing color density - 8 values per channel with essence
   
-  ![](./Images/Image1/ReduceCD512Colors.png)
+  ![](./Images/Image2/ReduceCD512Colors.png)
 
 - Reducing color density of grey scale image - 8 total colors with essence
 
-  ![](./Images/Image1/ReduceCD8GrayColors.png)
+  ![](./Images/Image2/ReduceCD8GrayColors.png)
 
 ## Design/Model Changes
 
