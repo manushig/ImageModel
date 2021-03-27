@@ -20,7 +20,7 @@ public class Clamping {
    * @return It returns the clamped value of a channel
    */
 
-  public static int doClamping(int channel) {
+  protected static int doClamping(int channel) {
 
     return clampingHelper(channel);
   }
@@ -32,9 +32,10 @@ public class Clamping {
    * @param rgbBuffer It is a 2D array of RGB colors
    * @return An array having clamped RGB color values
    */
-  public static int[][][] doClamping(int[][][] rgbBuffer) {
+  protected static int[][][] doClamping(int[][][] rgbBuffer) {
     Objects.requireNonNull(rgbBuffer, "2 D RGB array value cannot be null.");
-    int[][][] clamped_array = new int[rgbBuffer.length][rgbBuffer[0].length][rgbBuffer[0][0].length];
+    int[][][] clamped_array = 
+        new int[rgbBuffer.length][rgbBuffer[0].length][rgbBuffer[0][0].length];
 
     for (int x = 0; x < rgbBuffer.length; x++) {
       for (int y = 0; y < rgbBuffer[0].length; y++) {

@@ -15,9 +15,10 @@ public class ColorTransformation implements ColorTransformationInterface {
     Objects.requireNonNull(colorTransformedMatrix,
         "Color transformed matrix value cannot be null.");
 
-    int[][][] rgbBuffer_copy = ArrayCopyUtility.copyArray(rgbBuffer);
+    int[][][] rgbBuffer_copy = ImageOperationsUtility.copyArray(rgbBuffer);
 
-    int[][][] colorTransformed_rgb_buffer = new int[rgbBuffer_copy.length][rgbBuffer_copy[0].length][rgbBuffer_copy[0][0].length];
+    int[][][] colorTransformed_rgb_buffer = new int[rgbBuffer_copy.length]
+        [rgbBuffer_copy[0].length][rgbBuffer_copy[0][0].length];
 
     int height = rgbBuffer_copy.length;
     int width = rgbBuffer_copy[0].length;

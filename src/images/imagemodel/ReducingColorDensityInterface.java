@@ -12,11 +12,11 @@ public interface ReducingColorDensityInterface {
   /**
    * This method applies Floyd-Steinberg algorithm to dither an image.
    * 
-   * @param rgbBuffer              It is a 2D array of RGB colors
-   * @param maxNoOfColorsInChannel It is the number of colors to be reduced to an
-   *                               ImageModel object
-   * @param ditheringRequired      It is a check whether dithering to be performed
-   *                               or not.
+   * @param rgbBuffer            It is a 2D array of RGB colors
+   * @param noOfColorsToReduceTo It is the number of colors to be reduced to an
+   *                             ImageModel object
+   * @param isDitheringRequired  It is a check whether dithering to be performed
+   *                             or not.
    * @return processed 2D array of RGB colors
    */
   public int[][][] doReduceColorDensity(int[][][] rgbBuffer, int noOfColorsToReduceTo,

@@ -1,0 +1,6 @@
+load 3.png
+pixelate 100
+save 3_pixelate.jpg
+load 3.png
+pattern
+savePattern 3-pattern.txt

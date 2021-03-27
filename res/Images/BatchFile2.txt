@@ -1,0 +1,6 @@
+load Flower.png
+pixelate 100
+save Flower-pixelate-100.png
+load Flower.png
+pattern
+savePattern Flower-pattern.txt

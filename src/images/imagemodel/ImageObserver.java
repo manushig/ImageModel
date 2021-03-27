@@ -6,7 +6,7 @@ package images.imagemodel;
  */
 public interface ImageObserver {
   /**
-   * This method id used to update the state.
+   * This method is used to update the state.
    */
   public void updateImage();
 }

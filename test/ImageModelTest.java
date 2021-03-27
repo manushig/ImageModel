@@ -3,18 +3,22 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.Test;
-
-import images.imagemodel.Clamping;
 import images.imagemodel.ColorTransformation;
 import images.imagemodel.ColorTransformationInterface;
 import images.imagemodel.Filter;
 import images.imagemodel.FilterInterface;
+import images.imagemodel.Image;
+import images.imagemodel.ImageInterface;
 import images.imagemodel.ImageModel;
 import images.imagemodel.ImageModelInterface;
-import images.imagemodel.ImageUtilities;
+import images.imagemodel.Pattern;
+import images.imagemodel.PatternInterface;
+import images.imagemodel.Pixelate;
+import images.imagemodel.PixelateInterface;
 import images.imagemodel.ReducingColorDensity;
 import images.imagemodel.ReducingColorDensityInterface;
+import org.junit.Test;
+
 
 /**
  * A JUnit test class for manipulating 2 D RGB array image data.
@@ -284,26 +288,61 @@ public class ImageModelTest {
   }
 
   @Test
-  public void testClamping() {
-    assertEquals(0, Clamping.doClamping(0));
-    assertEquals(255, Clamping.doClamping(255));
-    assertEquals(0, Clamping.doClamping(-10));
-    assertEquals(255, Clamping.doClamping(280));
-    assertEquals(10, Clamping.doClamping(10));
-    assertEquals(254, Clamping.doClamping(254));
+  public void testImageModel() throws IOException {
+    ImageInterface image = new Image();
+
+    assertEquals("No image is loaded.", image.toString());
+
+    String directory = new File(".").getCanonicalPath();
+    String input_file_path = String.format(directory + "\\res\\ImageResources\\IndiaFlag.png");
+
+    image.loadImage(input_file_path);
+
+    assertEquals("Image Height - 426 and Width - 640", image.toString());
   }
 
   @Test
-  public void testImageModel() throws IOException {
-    ImageModelInterface imgModel = new ImageModel();
+  public void testPixelate() throws IOException {
 
-    assertEquals("No image is loaded.", imgModel.toString());
+    int[][][] rgbBuffer = { { { 27, 27, 27 }, { 31, 31, 31 }, { 20, 20, 20 }, { 5, 5, 5 } },
+        { { 124, 124, 124 }, { 179, 179, 179 }, { 205, 205, 205 }, { 136, 136, 136 } },
+        { { 238, 238, 238 }, { 255, 255, 255 }, { 255, 255, 255 }, { 117, 117, 117 } },
+        { { 237, 237, 237 }, { 255, 255, 255 }, { 255, 255, 255 }, { 65, 65, 65 } } };
 
-    String directory = new File(".").getCanonicalPath();
-    String input_file_path = String.format(directory + "\\res\\Images\\Image1\\Original.png");
+    int[][][] expectedOutput = {
+        { { 179, 179, 179 }, { 179, 179, 179 }, { 136, 136, 136 }, { 136, 136, 136 } },
+        { { 179, 179, 179 }, { 179, 179, 179 }, { 136, 136, 136 }, { 136, 136, 136 } },
+        { { 255, 255, 255 }, { 255, 255, 255 }, { 65, 65, 65 }, { 65, 65, 65 } },
+        { { 255, 255, 255 }, { 255, 255, 255 }, { 65, 65, 65 }, { 65, 65, 65 } } };
 
-    imgModel.loadImage(input_file_path);
+    PixelateInterface pixelate = new Pixelate();
 
-    assertEquals("Image Height - 373 and Width - 640", imgModel.toString());
+    int[][][] actualOutput = pixelate.doPixelate(rgbBuffer, 2);
+
+    for (int i = 0; i < actualOutput.length; i++) {
+      for (int j = 0; j < actualOutput[0].length; j++) {
+        for (int k = 0; k < rgbBuffer[0][0].length; k++) {
+          assertEquals(expectedOutput[i][j][k], actualOutput[i][j][k]);
+        }
+      }
+    }
   }
+
+  @Test
+  public void testPattern() throws IOException {
+
+    int[][][] rgbBuffer = { { { 43, 43, 43 }, { 6, 6, 6 }, { 43, 43, 43 }, { 5, 5, 5 } },
+        { { 8, 8, 8 }, { 7, 7, 7 }, { 9, 9, 9 }, { 0, 0, 0 } },
+        { { 43, 43, 43 }, { 54, 54, 54 }, { 43, 43, 43 }, { 76, 76, 76 } },
+        { { 65, 65, 65 }, { 43, 43, 43 }, { 123, 123, 123 }, { 32, 32, 32 } } };
+    String expectedOutput = "2 x 2\n" + "\n" + "tt\n" + "tt\n" + "\n" + "LEGEND\n" + "t DMC-934\n";
+
+    PatternInterface pattern = new Pattern();
+
+    String actualOutput = pattern.doPattern(rgbBuffer, 2);
+
+    assertEquals(expectedOutput, actualOutput);
+
+  }
+
 }

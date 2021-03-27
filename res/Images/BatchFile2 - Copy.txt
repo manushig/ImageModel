@@ -1,0 +1,24 @@
+load Brird.jpg
+blur
+save Bird-blur.jpg
+load Bird.jpg
+sharpen
+save Bird-sharpen.jpg
+load Bird.jpg
+grayscale
+save Bird-grayscale.jpg
+load Bird.jpg
+sepia
+save Bird-sepia.jpg
+load Bird.jpg
+dither 8
+save Bird-dither.jpg
+load Bird.jpg
+mosaic 1000
+save Bird-mosaic-1000.jpg
+load Bird.jpg
+pixelate 50
+save Bird-pixelate-50.jpg
+load Bird.jpg
+pattern
+savePattern Bird-pattern.txt

@@ -264,12 +264,14 @@ It is an interface that is refer by Subject for updating state.
 
 # ASSUMPTIONS
  
-1) This will support only RGB representation of images
+1) This will support only RGB representation of images.
+2) Two images path should be given while executing the jar
+3) This folder structure should be there from where jar is executing /Images/Image1 and /Images/Image2
   
 # Limitations
 - None
  
 # Citations
-- https://pixabay.com/photos/road-forest-fall-autumn-season-1072823/
+- https://pixy.org/1322230/
 - https://pixabay.com/photos/bird-fluttering-berries-wings-tit-1045954/
 
