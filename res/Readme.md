@@ -1,16 +1,20 @@
-# Image Model
+# Image Model & Cross-Stitch Controller
 
 ## Overview
-Requirement is to build a model that can be used to manipulate images to produce some interesting effects.
+Requirement is to build a model that can be used to manipulate images to produce some interesting effects and to extend the image model by adding to two algorithms for breaking down an image into "chunks", and then use one of these to develop a controller for creating cross-stitch patterns.
 - Loading and Saving Images:Standard representation is used where an image can be thought of as simply as a 3D array of integers with rows = height, columns = width and depth = 3. With 8-bit channels, each value is between 0 and 255.
 - Filtering Images: A basic operation in many image processing algorithms is filtering. A filter has a "kernel", which is a 2D array of numbers, having odd dimensions (3x3, 5x5, etc.). Given a pixel in the image and a channel, the result of the filter can be computed for that pixel and channel.
 - Color transformations: Filtering modifies the value of a pixel depending on the values of its neighbors. Filtering is applied separately to each channel. In contrast, a color transformation modifies the color of a pixel based on its own color. Consider a pixel with color LaTeX: (r,g,b)( r , g , b ). A color transformation results in the new color of this pixel to be LaTeX: (r',g',b')( r ′ , g ′ , b ′ ) such that each of them are dependent only on the values LaTeX: (r,g,b)( r , g , b ).
 - Reducing color density: One of the ways to transform the colors in an image is to reduce the number of colors in the image.The technique for preserving the essence of the image breaks down an image that has many colors into an image that is made of dots from just a few colors is known as dithering. A popular technique to dither an image is the Floyd-Steinberg algorithm 
+- Image Chunking: A image can be "broken down" into mosaic shapes, by choosing a set of points in the image (called seeds). Another way is chunking the image into regular squares across the rows and columns.This chunking method produces what many think of as an equivalent to pixelating the image.
+- Pattern Generation: It generates the chunked image to makes it possible to convert an image that has many pixels into one that has fewer pixels without actually changing the number of colors that the image uses. It generates the cross-stitch pattern from an image.
 ## List of features.
 - Loading and Saving Images
 - Filtering Images - Different filters like image blur and image sharpening could be applied.
 - Color transformations- Different color transformations like grey scale and sepia tone could be applied.
 - Reducing color density - Another way to transform the colors in an image is to reduce the number of colors in the image.
+- Chunking Images - Different chunking algorithms can be applied like Mosaic and Pixelate.
+- Pattern Generation - Cross-stitch pattern could be generated from an image.
 
 ## How To Run. 
 
@@ -18,145 +22,185 @@ Image Model package will have the below mentioned folder structure:
 
 ![](./Screenshots/Code_Structure.JPG)
 
-- jar file is saved in the \res folder
+![](./Screenshots/Code_Structure_2.JPG)
 
-- Open the \res folder in command shell
+- jar file "CrossStitchController.jar" is saved in the \res\ImageResources folder
 
-- run the command as below, program does need two arguments from the user. Argument 1 is first image path and argument 2 is second image path
+- Open the \res\ImageResources folder in command shell
+
+- run the command as below, program does need one argument from the user. That is the file name of batch file which should be in same directory as jar
  
 ```sh
-> java -jar .\ImageModel.jar .\Images\Image1\Original.png .\Images\Image2\Original.png
+> java - jar .\CrossStitchController.jar .\BatchFile1.txt
+> java - jar .\CrossStitchController.jar .\BatchFile2.txt
 ```
- 
+
  ![](./Screenshots/Command_To_Run_Jar.JPG)
                               
-
+ ![](./Screenshots/Command_To_Run_Jar_2.JPG)
+ 
  ## How to Use the Program.
      
-There is no interaction with the user, so user just have to run the jar file as mentioned above with two arguments(image path)
+There is no interaction with the user, so user just have to run the jar file as mentioned above with one argument(batch file name)
     
 ## Description of Example Runs
 
 Results of running the ImageModel.jar file
 
 ```sh  
-PS C:\Manushi\ProjectsWorkSpace\ImageModel\res> java -jar .\ImageModel.jar .\Images\Image1\Original.png .\Images\Image2\Original.png
-******************Starting Processing for first image******************
+PS C:\Manushi\ProjectsWorkSpace\ImageModel\res\Image Resources> java -jar .\CrossStitchController.jar .\BatchFile1.txt
+Started
 
-First image Loaded
+load command is executed.
+blur command is executed.
+save command is executed.
+load command is executed.
+sharpen command is executed.
+save command is executed.
+load command is executed.
+grayscale command is executed.
+save command is executed.
+load command is executed.
+sepia command is executed.
+save command is executed.
+load command is executed.
+dither command is executed.
+save command is executed.
+load command is executed.
+mosaic command is executed.
+save command is executed.
+load command is executed.
+pixelate command is executed.
+save command is executed.
+load command is executed.
+pattern command is executed.
+savePattern command is executed.
 
-Applied Color Transformation - Gray Scale on the original image
+Done
 
-File saved at C:\Manushi\ProjectsWorkSpace\ImageModel\res\Images\Image1\GrayScale1.png
+PS C:\Manushi\ProjectsWorkSpace\ImageModel\res\Image Resources> java -jar .\CrossStitchController.jar .\BatchFile2.txt
+Started
 
-Applied Color Transformation - Sepia Tone on the original image
+load command is executed.
+blur command is executed.
+save command is executed.
+load command is executed.
+sharpen command is executed.
+save command is executed.
+load command is executed.
+grayscale command is executed.
+save command is executed.
+load command is executed.
+sepia command is executed.
+save command is executed.
+load command is executed.
+dither command is executed.
+save command is executed.
+load command is executed.
+mosaic command is executed.
+save command is executed.
+load command is executed.
+pixelate command is executed.
+save command is executed.
+load command is executed.
+pattern command is executed.
+savePattern command is executed.
 
-File saved at C:\Manushi\ProjectsWorkSpace\ImageModel\res\Images\Image1\SepiaTone1.png
-
-Applied Filter - Blur on the original image
-
-File saved at C:\Manushi\ProjectsWorkSpace\ImageModel\res\Images\Image1\Blur1.png
-
-Applied Filter - Blur on the blured image
-
-File saved at C:\Manushi\ProjectsWorkSpace\ImageModel\res\Images\Image1\Blur2.png
-
-Applied Filter - Sharpness on the original image
-
-File saved at C:\Manushi\ProjectsWorkSpace\ImageModel\res\Images\Image1\Sharp1.png
-
-Applied Filter - Sharpness on the sharped image
-
-File saved at C:\Manushi\ProjectsWorkSpace\ImageModel\res\Images\Image1\Sharp2.png
-
-Reduced Color Density to 512(8X8X8) colors with essence on the original image
-
-File saved at C:\Manushi\ProjectsWorkSpace\ImageModel\res\Images\Image1\ReduceCD512Colors.png
-
-Reduced Color Density to 512(8X8X8) colors without essence on the original image
-
-File saved at C:\Manushi\ProjectsWorkSpace\ImageModel\res\Images\Image1\ReduceCD512WithoutEssence.png
-
-Reduced Color Density to 8(2X2X2) colors with essence on the gray scale image
-
-File saved at C:\Manushi\ProjectsWorkSpace\ImageModel\res\Images\Image1\ReduceCD8GrayColors.png
-
-******************Starting Processing for second image******************
-
-Second image Loaded
-
-Applied Color Transformation - Gray Scale on the original image
-
-File saved at C:\Manushi\ProjectsWorkSpace\ImageModel\res\Images\Image2\GrayScale1.png
-
-Applied Color Transformation - Sepia Tone on the original image
-
-File saved at C:\Manushi\ProjectsWorkSpace\ImageModel\res\Images\Image2\SepiaTone1.png
-
-Applied Filter - Blur on the original image
-
-File saved at C:\Manushi\ProjectsWorkSpace\ImageModel\res\Images\Image2\Blur1.png
-
-Applied Filter - Blur on the blured image
-
-File saved at C:\Manushi\ProjectsWorkSpace\ImageModel\res\Images\Image2\Blur2.png
-
-Applied Filter - Sharpness on the original image
-
-File saved at C:\Manushi\ProjectsWorkSpace\ImageModel\res\Images\Image2\Sharp1.png
-
-Applied Filter - Sharpness on the sharped image
-
-File saved at C:\Manushi\ProjectsWorkSpace\ImageModel\res\Images\Image2\Sharp2.png
-
-Reduced Color Density to 512(8X8X8) colors on the original image
-
-File saved at C:\Manushi\ProjectsWorkSpace\ImageModel\res\Images\Image2\ReduceCD512Colors.png
-
-Reduced Color Density to 512(8X8X8) colors without essence on the original image
-
-File saved at C:\Manushi\ProjectsWorkSpace\ImageModel\res\Images\Image2\ReduceCD512WithoutEssence.png
-
-Reduced Color Density to 8(2X2X2) colors on the gray scale image
-
-File saved at C:\Manushi\ProjectsWorkSpace\ImageModel\res\Images\Image2\ReduceCD8GrayColors.png
-
-********************Done********************
+Done
 ```
 ## These are the ouputs for different requirements:
 - Original Image
-  
-  ![](./Images/Image2/Original.png)
+
+ ![](./ImageResources/IndiaFlag.png)
 
 - Filtering Images - Blur
   
-  ![](./Images/Image2/Blur1.png)
+ ![](./ImageResources/IndiaFlag-blur.png)
   
 - Filtering Images - Sharpness
   
-  ![](./Images/Image2/Sharp1.png)
+  ![](./ImageResources/IndiaFlag-sharpen.png)
  
 - Color transformations - Grey Scale
   
-  ![](./Images/Image2/GrayScale1.png)
+  ![](./ImageResources/IndiaFlag-grayscale.png)
 
 - Color transformations - Sepia Tone
   
-  ![](./Images/Image2/SepiaTone1.png)
+  ![](./ImageResources/IndiaFlag-sepia.png)
 
-- Reducing color density - 8 values per channel
+- Dither - 8 values per channel
   
-  ![](./Images/Image2/ReduceCD512WithoutEssence.png)
+  ![](./ImageResources/IndiaFlag-dither.png)
 
-- Reducing color density - 8 values per channel with essence
+- Mosaic - 1650 seeds
   
-  ![](./Images/Image2/ReduceCD512Colors.png)
+  ![](./ImageResources/IndiaFlag-mosaic-1650.png)
 
-- Reducing color density of grey scale image - 8 total colors with essence
+- Pixelate 100 squares across
 
-  ![](./Images/Image2/ReduceCD8GrayColors.png)
+  ![](./ImageResources/IndiaFlag-pixelate-100.png)
+
+- Cross-Stitch Pattern - This pattern can be seen by opening the file at /ImageResources/IndiaFlag-pattern.txt. This file should be open in UTF-16 BE format.
 
 ## Design/Model Changes
+### - Version 3.0
+##### ImageModelInterface interface:
+It provides the methods that can load and save images and manipulates images to produce some interesting effects.New methods like pixelate, mosaic, pattern and save pattern have been added. 
+
+##### ImageModel class:
+This is the concrete implementation of the ImageModelInterface interface, which provides the implementation of all the required methods (load and save image, do grayscale and sepia, do blue and sharpen, dither, pixelate, mosaic, pattern and savePattern) This class also maintain image object.
+
+##### ImageInterface interface:
+It provides the methods that can load and save images and manipulates images to produce some interesting effects.
+
+##### Image class:
+This is the concrete implementation of the ImageModelInterface interface, which provides the implementation of all the required methods (load and save image, do color transformations, filter and reduce color density,  pixelate, mosaic, pattern and save pattern) This class also maintain the list of image observers, rgb buffer and pattern data.
+
+##### Clamping class:
+Access modifier has been changed to protected.
+
+##### ArrayCopyUtility class:
+This class has been removed.
+
+##### DmcFloss class:
+This class represents the DMC floss to RGB conversion values representation.
+
+##### ImageOperationsUtility class:
+ This class has methods which helps to do various operations on the Image.
+ 
+##### Legend class:
+This class represents the Legend values representation which are required at the time of generating the cross-stitch pattern from the image.
+
+##### MosaicInterface interface:
+It provides the methods to generate mosaic effect on the image.
+
+##### Mosaic class:
+This is the concrete implementation of the MosaicInterface interface, which provides the implementation of all the required methods.
+
+##### PixelateInterface interface:
+It provides the methods to generate pixelate effect on the image.
+
+##### Pixelate class:
+This is the concrete implementation of the PixelateInterface interface, which provides the implementation of all the required methods.
+
+##### PatternInterface interface:
+It provides the methods  to generate cross-stitch pattern from the image.
+
+##### Pattern class:
+This is the concrete implementation of the PatternInterface interface, which provides the implementation of all the required methods.
+
+##### ImageCommand interface:
+It provides the methods to execute commands on the image.
+
+##### Blur, Dither, GrayScale, LoadImage, Mosaic, Pattern, Pixelate, SaveImage, SavePattern, Sepia and Sharpen classes:
+This is the concrete implementation of the ImageCommand interface, which provides the implementation of all the required methods.
+
+##### ImageControllerInterface interface:
+This interface takes user inputs, tells model which image manipulations to do on the image.
+
+##### ImageController class:
+This is the concrete implementation of the ImageControllerInterface interface, which provides the implementation of all the required methods.
 
 ### - Version 2.0
 ##### ImageModelInterface interface:
@@ -264,14 +308,18 @@ It is an interface that is refer by Subject for updating state.
 
 # ASSUMPTIONS
  
-1) This will support only RGB representation of images.
-2) Two images path should be given while executing the jar
-3) This folder structure should be there from where jar is executing /Images/Image1 and /Images/Image2
+1) DMCFloss.txt, batch files(BatchFile1.txt and BatchFile2.txt) and the images (IndiaFlag.png and USFlag.png) should be in same directory as jar file.
+2) For pattern generation, it will pixelate images to 100 squares across the width of the image and then generate the pattern.
+3) Generated pattern file(IndiaFlag-pattern.txt and USFlag-pattern.txt) should be open in UTF-16 BE encoding format.
+4) All output files will be generated in same directory as jar file
+5) No of squares across the width of the image should be less than the image width and height.
+6) All the DMC codes are prefixed by "DMC-", and sorted in lexicographical order.
   
 # Limitations
 - None
  
 # Citations
-- https://pixy.org/1322230/
-- https://pixabay.com/photos/bird-fluttering-berries-wings-tit-1045954/
+- https://pixabay.com/vectors/flag-india-tricolor-country-nation-159416/
+- https://commons.wikimedia.org/wiki/File:Possible_52-star_U.S._flag.svg
+- http://my.crazyartzone.com/dmc.asp
 
