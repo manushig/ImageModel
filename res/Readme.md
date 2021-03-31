@@ -145,6 +145,9 @@ Done
 
 ## Design/Model Changes
 ### - Version 3.0
+##### Model Changes
+ImageInterface interface and Image class are added to handle 3D image array. There are changes in ImageModelInterface and ImageModel to give unified the existing interface for controller to use. New methods have been added for the new functionality. 
+
 ##### ImageModelInterface interface:
 It provides the methods that can load and save images and manipulates images to produce some interesting effects.New methods like pixelate, mosaic, pattern and save pattern have been added. 
 
@@ -319,6 +322,8 @@ It is an interface that is refer by Subject for updating state.
 - None
  
 # Citations
-- https://pixabay.com/vectors/flag-india-tricolor-country-nation-159416/
-- https://commons.wikimedia.org/wiki/File:Possible_52-star_U.S._flag.svg
+- IndiaFlag.png - https://pixabay.com/vectors/flag-india-tricolor-country-nation-159416/
+- USFlag.png - https://commons.wikimedia.org/wiki/File:Possible_52-star_U.S._flag.svg
+- Bike.png - https://commons.wikimedia.org/wiki/File:KTM_DUKE_200.jpg
+- Flower.png - It is the personal image.
 - http://my.crazyartzone.com/dmc.asp

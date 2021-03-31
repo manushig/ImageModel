@@ -20,5 +20,8 @@ load IndiaFlag.png
 pixelate 100
 save IndiaFlag-pixelate-100.png
 load IndiaFlag.png
+pixelate 50
+save IndiaFlag-pixelate-50.png
+load IndiaFlag.png
 pattern
 savePattern IndiaFlag-pattern.txt

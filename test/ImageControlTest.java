@@ -9,6 +9,8 @@ import images.imagemodel.ImageModelInterface;
 import org.junit.Before;
 import org.junit.Test;
 
+
+
 /**
  * A JUnit test class for manipulating 2 D RGB array image data.
  */
@@ -199,36 +201,31 @@ public class ImageControlTest {
     assertEquals("Filename: Test.txt and UniqueCode: 12355", log.toString());
     assertEquals("savePattern command is executed.\n", out.toString());
   }
-
-  @Test
+  
+  @Test(expected = IllegalArgumentException.class)
   public void TestInvalidCommand() throws IOException {
     ImageModelInterface mockmodel = new MockImageModel(log, 12355);
 
-    String command = "test Test.png\nload Bike.png";
+    String command = "saveImage Test.png";
 
     Readable reader = new BufferedReader(new StringReader(command));
 
     ImageControllerInterface control = new ImageController(reader, out);
 
     control.start(mockmodel);
-
-    String s = out.toString();
-
-    assertEquals(true, true);
-
   }
-
+  
   @Test(expected = NullPointerException.class)
   public void TestNullIn() throws IOException {
     ImageModelInterface mockmodel = new MockImageModel(log, 12355);
 
     Readable reader = null;
-
+    
     ImageControllerInterface control = new ImageController(reader, out);
 
     control.start(mockmodel);
   }
-
+  
   @Test(expected = NullPointerException.class)
   public void TestNullOut() throws IOException {
 
@@ -238,7 +235,7 @@ public class ImageControlTest {
 
     ImageControllerInterface control = new ImageController(reader, null);
   }
-
+  
   @Test(expected = NullPointerException.class)
   public void TestNullModel() throws IOException {
     ImageModelInterface mockmodel = null;

@@ -30,7 +30,7 @@ public class Legend implements Comparable<Legend> {
    * 
    * @return the DMC code value.
    */
-  public String getDmcCode() {
+  protected String getDmcCode() {
     return this.dmcCode;
   }
 
@@ -39,7 +39,7 @@ public class Legend implements Comparable<Legend> {
    * 
    * @return the symbol.
    */
-  public char getSymbol() {
+  protected char getSymbol() {
     return this.symbol;
   }
 
@@ -48,7 +48,7 @@ public class Legend implements Comparable<Legend> {
    * 
    * @return the DMC id value.
    */
-  public Integer getDmcId() {
+  protected Integer getDmcId() {
     return new Integer(this.dmcId);
   }
 

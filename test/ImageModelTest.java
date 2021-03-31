@@ -9,8 +9,6 @@ import images.imagemodel.Filter;
 import images.imagemodel.FilterInterface;
 import images.imagemodel.Image;
 import images.imagemodel.ImageInterface;
-import images.imagemodel.ImageModel;
-import images.imagemodel.ImageModelInterface;
 import images.imagemodel.Pattern;
 import images.imagemodel.PatternInterface;
 import images.imagemodel.Pixelate;

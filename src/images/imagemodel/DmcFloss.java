@@ -38,7 +38,7 @@ public class DmcFloss {
    * 
    * @return the identifier value.
    */
-  public int getId() {
+  protected int getId() {
     return this.id;
   }
 
@@ -47,7 +47,7 @@ public class DmcFloss {
    * 
    * @return the DMC code value
    */
-  public String getDmcCode() {
+  protected String getDmcCode() {
     return this.dmcCode;
   }
 
@@ -56,7 +56,7 @@ public class DmcFloss {
    * 
    * @return the red value
    */
-  public int getRedValue() {
+  protected int getRedValue() {
     return this.redValue;
   }
 
@@ -65,7 +65,7 @@ public class DmcFloss {
    * 
    * @return the green value
    */
-  public int getGreenValue() {
+  protected int getGreenValue() {
     return this.greenValue;
   }
 
@@ -74,7 +74,7 @@ public class DmcFloss {
    * 
    * @return the blue value
    */
-  public int getBlueValue() {
+  protected int getBlueValue() {
     return this.blueValue;
   }
 
@@ -83,7 +83,7 @@ public class DmcFloss {
    * 
    * @return the unique unicode value
    */
-  public char getSymbol() {
+  protected char getSymbol() {
     return this.symbol;
   }
 
