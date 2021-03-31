@@ -110,7 +110,6 @@ Done
 ```
 ## These are the ouputs for different requirements:
 - Original Image
-<<<<<<< HEAD
 
  ![](./ImageResources/IndiaFlag.png)
 
@@ -149,43 +148,6 @@ Done
 ##### Model Changes
 ImageInterface interface and Image class are added to handle 3D image array. There are changes in ImageModelInterface and ImageModel to give unified the existing interface for controller to use. New methods have been added for the new functionality. 
 
-=======
-
- ![](./ImageResources/IndiaFlag.png)
-
-- Filtering Images - Blur
-  
- ![](./ImageResources/IndiaFlag-blur.png)
-  
-- Filtering Images - Sharpness
-  
-  ![](./ImageResources/IndiaFlag-sharpen.png)
- 
-- Color transformations - Grey Scale
-  
-  ![](./ImageResources/IndiaFlag-grayscale.png)
-
-- Color transformations - Sepia Tone
-  
-  ![](./ImageResources/IndiaFlag-sepia.png)
-
-- Dither - 8 values per channel
-  
-  ![](./ImageResources/IndiaFlag-dither.png)
-
-- Mosaic - 1650 seeds
-  
-  ![](./ImageResources/IndiaFlag-mosaic-1650.png)
-
-- Pixelate 100 squares across
-
-  ![](./ImageResources/IndiaFlag-pixelate-100.png)
-
-- Cross-Stitch Pattern - This pattern can be seen by opening the file at /ImageResources/IndiaFlag-pattern.txt. This file should be open in UTF-16 BE format.
-
-## Design/Model Changes
-### - Version 3.0
->>>>>>> 275a24251f3d58018cbc57824a89bb5ee0a27a56
 ##### ImageModelInterface interface:
 It provides the methods that can load and save images and manipulates images to produce some interesting effects.New methods like pixelate, mosaic, pattern and save pattern have been added. 
 
@@ -360,15 +322,8 @@ It is an interface that is refer by Subject for updating state.
 - None
  
 # Citations
-<<<<<<< HEAD
 - IndiaFlag.png - https://pixabay.com/vectors/flag-india-tricolor-country-nation-159416/
 - USFlag.png - https://commons.wikimedia.org/wiki/File:Possible_52-star_U.S._flag.svg
 - Bike.png - https://commons.wikimedia.org/wiki/File:KTM_DUKE_200.jpg
 - Flower.png - It is the personal image.
 - http://my.crazyartzone.com/dmc.asp
-=======
-- https://pixabay.com/vectors/flag-india-tricolor-country-nation-159416/
-- https://commons.wikimedia.org/wiki/File:Possible_52-star_U.S._flag.svg
-- http://my.crazyartzone.com/dmc.asp
-
->>>>>>> 275a24251f3d58018cbc57824a89bb5ee0a27a56
