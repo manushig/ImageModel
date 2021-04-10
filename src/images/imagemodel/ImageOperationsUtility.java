@@ -162,7 +162,7 @@ public class ImageOperationsUtility {
    * @return number of squares.
    */
   protected static int getNoofSquaresAcrossPattern() {
-    return 100;
+    return 50;
   }
 
   /**

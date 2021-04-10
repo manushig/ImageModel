@@ -1,6 +1,8 @@
 package images.imagemodel;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * ImageInterface, it is an interface that can be used to manipulate images to
@@ -119,4 +121,10 @@ public interface ImageInterface {
    *                     file.
    */
   public ImageInterface savePattern(String fileName) throws IOException;
+
+  public ImageInterface patternUi() throws IOException;
+  
+  public List<Legend> getPatternLegend();
+
+  public BufferedImage getImage();
 }

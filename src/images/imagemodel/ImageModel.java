@@ -2,6 +2,8 @@ package images.imagemodel;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -11,7 +13,8 @@ import java.util.Objects;
 public class ImageModel implements ImageModelInterface {
 
   private ImageInterface imageObj;
-  private ArrayList<ImageObserver> imageObservers;
+  private List<ImageObserver> imageObservers;
+  private List<PatternLegendObserver> patternLegendObservers;
 
   /**
    * Constructs a ImageModel.
@@ -20,7 +23,8 @@ public class ImageModel implements ImageModelInterface {
 
   public ImageModel() {
     this.imageObj = new Image();
-    imageObservers = new ArrayList<>();
+    imageObservers = new ArrayList<ImageObserver>();
+    patternLegendObservers = new ArrayList<PatternLegendObserver>();
   }
 
   /**
@@ -29,11 +33,22 @@ public class ImageModel implements ImageModelInterface {
    */
 
   public ImageModel(ImageModel imgModel) {
+    Objects.requireNonNull(imgModel);
+    Objects.requireNonNull(imgModel.imageObj);
+    Objects.requireNonNull(imgModel.imageObservers);
+
     this.imageObj = imgModel.imageObj;
 
-    this.imageObservers = new ArrayList<>();
+    this.imageObservers = new ArrayList<ImageObserver>();
     for (int i = 0; i < imgModel.imageObservers.size(); i++) {
+      Objects.requireNonNull(imgModel.imageObservers.get(i));
       this.imageObservers.add(imgModel.imageObservers.get(i));
+    }
+
+    this.patternLegendObservers = new ArrayList<PatternLegendObserver>();
+    for (int i = 0; i < imgModel.patternLegendObservers.size(); i++) {
+      Objects.requireNonNull(imgModel.patternLegendObservers.get(i));
+      this.patternLegendObservers.add(imgModel.patternLegendObservers.get(i));
     }
   }
 
@@ -46,6 +61,8 @@ public class ImageModel implements ImageModelInterface {
     Objects.requireNonNull(imageData);
 
     this.imageObj = imageData;
+
+    notifyImageObservers();
 
     return new ImageModel(this);
   }
@@ -75,6 +92,8 @@ public class ImageModel implements ImageModelInterface {
 
     this.imageObj = imageData;
 
+    notifyImageObservers();
+
     return new ImageModel(this);
   }
 
@@ -89,6 +108,8 @@ public class ImageModel implements ImageModelInterface {
     Objects.requireNonNull(imageData);
 
     this.imageObj = imageData;
+
+    notifyImageObservers();
 
     return new ImageModel(this);
   }
@@ -105,6 +126,8 @@ public class ImageModel implements ImageModelInterface {
 
     this.imageObj = imageData;
 
+    notifyImageObservers();
+
     return new ImageModel(this);
   }
 
@@ -120,6 +143,8 @@ public class ImageModel implements ImageModelInterface {
 
     this.imageObj = imageData;
 
+    notifyImageObservers();
+
     return new ImageModel(this);
   }
 
@@ -132,24 +157,55 @@ public class ImageModel implements ImageModelInterface {
 
     this.imageObj = imageData;
 
+    notifyImageObservers();
+
     return new ImageModel(this);
   }
 
   @Override
-  public void registerImageObserver(ImageObserver imageObserver)
-      throws UnsupportedOperationException {
-    throw new UnsupportedOperationException("This feature is not available");
+  public void registerImageObserver(ImageObserver imageObserver) {
+    Objects.requireNonNull(imageObserver);
+    imageObservers.add(imageObserver);
   }
 
   @Override
-  public void removeImageObserver(ImageObserver imageObserver)
-      throws UnsupportedOperationException {
-    throw new UnsupportedOperationException("This feature is not available");
+  public void removeImageObserver(ImageObserver imageObserver) {
+    Objects.requireNonNull(imageObserver);
+    int observerIndex = imageObservers.indexOf(imageObserver);
+    if (observerIndex >= 0) {
+      imageObservers.remove(observerIndex);
+    }
+  }
+
+  public void notifyImageObservers() {
+    Iterator<ImageObserver> iterator = imageObservers.iterator();
+    while (iterator.hasNext()) {
+      ImageObserver observer = (ImageObserver) iterator.next();
+      observer.updateImage(this.imageObj.getImage());
+    }
   }
 
   @Override
-  public void notifyImageObservers() throws UnsupportedOperationException {
-    throw new UnsupportedOperationException("This feature is not available");
+  public void registerPatternLegendObserver(PatternLegendObserver patternLegendObserver) {
+    Objects.requireNonNull(patternLegendObserver);
+    patternLegendObservers.add(patternLegendObserver);
+  }
+
+  @Override
+  public void removePatternLegendObserver(PatternLegendObserver patternLegendObserver) {
+    Objects.requireNonNull(patternLegendObserver);
+    int observerIndex = patternLegendObservers.indexOf(patternLegendObserver);
+    if (observerIndex >= 0) {
+      patternLegendObservers.remove(observerIndex);
+    }
+  }
+
+  public void notifyPatternLegendObservers() {
+    Iterator<PatternLegendObserver> iterator = patternLegendObservers.iterator();
+    while (iterator.hasNext()) {
+      PatternLegendObserver observer = (PatternLegendObserver) iterator.next();
+      observer.updatePatternLegend(this.imageObj.getPatternLegend());
+    }
   }
 
   @Override
@@ -159,6 +215,8 @@ public class ImageModel implements ImageModelInterface {
     Objects.requireNonNull(imageData);
 
     this.imageObj = imageData;
+
+    notifyImageObservers();
 
     return new ImageModel(this);
   }
@@ -170,6 +228,8 @@ public class ImageModel implements ImageModelInterface {
     Objects.requireNonNull(imageData);
 
     this.imageObj = imageData;
+
+    notifyImageObservers();
 
     return new ImageModel(this);
   }
@@ -195,6 +255,21 @@ public class ImageModel implements ImageModelInterface {
     Objects.requireNonNull(imageData);
 
     this.imageObj = imageData;
+
+    return new ImageModel(this);
+  }
+
+  @Override
+  public ImageModelInterface patternUi() throws IOException {
+    ImageInterface imageData = this.imageObj.patternUi();
+
+    Objects.requireNonNull(imageData);
+
+    this.imageObj = imageData;
+
+    notifyImageObservers();
+
+    notifyPatternLegendObservers();
 
     return new ImageModel(this);
   }

@@ -11,6 +11,9 @@ public class Legend implements Comparable<Legend> {
   private Integer dmcId;
   private String dmcCode;
   private char symbol;
+  private int redValue;
+  private int greenValue;
+  private int blueValue;
 
   /**
    * Constructs a Legend, specifying details like dmcId,dmcValueand symbol.
@@ -19,10 +22,18 @@ public class Legend implements Comparable<Legend> {
    * @param dmcValue it is the DMC code value
    * @param symbol   it is the unique unicode value
    */
-  public Legend(int dmcId, String dmcValue, char symbol) {
+  public Legend(int dmcId, String dmcCode, char symbol) {
     this.dmcId = dmcId;
-    this.dmcCode = dmcValue;
+    this.dmcCode = dmcCode;
     this.symbol = symbol;
+  }
+  
+  public Legend(int dmcId, String dmcCode, char symbol, int redValue, int greenValue,
+      int blueValue) {
+    this(dmcId, dmcCode, symbol);
+    this.redValue = redValue;
+    this.greenValue = greenValue;
+    this.blueValue = blueValue;
   }
 
   /**
@@ -30,7 +41,7 @@ public class Legend implements Comparable<Legend> {
    * 
    * @return the DMC code value.
    */
-  protected String getDmcCode() {
+  public String getDmcCode() {
     return this.dmcCode;
   }
 
@@ -39,7 +50,7 @@ public class Legend implements Comparable<Legend> {
    * 
    * @return the symbol.
    */
-  protected char getSymbol() {
+  public char getSymbol() {
     return this.symbol;
   }
 
@@ -48,7 +59,7 @@ public class Legend implements Comparable<Legend> {
    * 
    * @return the DMC id value.
    */
-  protected Integer getDmcId() {
+  public Integer getDmcId() {
     return new Integer(this.dmcId);
   }
 
@@ -80,5 +91,17 @@ public class Legend implements Comparable<Legend> {
     Legend that = (Legend) other;
     return this.getDmcId().compareTo(that.getDmcId());
 
+  }
+
+  public int getRed() {
+    return this.redValue;
+  }
+
+  public int getGreen() {
+    return this.greenValue;
+  }
+
+  public int getBlue() {
+    return this.blueValue;
   }
 }

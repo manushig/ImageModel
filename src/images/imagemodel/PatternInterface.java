@@ -1,6 +1,9 @@
 package images.imagemodel;
 
 import java.io.IOException;
+import java.util.List;
+
+import javafx.util.Pair;
 
 /**
  * PatternInterface , it is an interface that defines methods to generate
@@ -34,5 +37,7 @@ public interface PatternInterface {
    *                     conversion values.
    */
   public String doPattern(int[][][] rgbBuffer, int noOfSquaresAcross) throws IOException;
+
+  public Pair<int[][][], List<Legend>> doUIPattern(int[][][] rgbBuffer, int noOfSquaresAcross) throws IOException;
 
 }

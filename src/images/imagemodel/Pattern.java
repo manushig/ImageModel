@@ -8,6 +8,8 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.IntStream;
 
+import javafx.util.Pair;
+
 /**
  * Pattern, implements an interface PatternInterface that defines methods to
  * generate cross-stitch pattern from the image.
@@ -139,6 +141,80 @@ public class Pattern implements PatternInterface {
     double weightG = 4.0;
     double weightB = 2 + (255 - rmean) / 256;
     return Math.sqrt(weightR * r * r + weightG * g * g + weightB * b * b);
+  }
+
+  @Override
+  public Pair<int[][][], List<Legend>> doUIPattern(int[][][] rgbBuffer, int noOfSquaresAcross)
+      throws IOException {
+    Objects.requireNonNull(rgbBuffer, "2 D RGB array value cannot be null.");
+
+    int[][][] rgbBuffer_copy = ImageOperationsUtility.copyArray(rgbBuffer);
+
+    int[][][] pattern_buffer = new int[rgbBuffer_copy.length][rgbBuffer_copy[0].length][rgbBuffer_copy[0][0].length];
+
+    int[][][] legend_buffer = new int[rgbBuffer_copy.length][rgbBuffer_copy[0].length][1];
+
+    List<DmcFloss> dmcDataSet = ImageOperationsUtility.loadDmcFloss();
+
+    Objects.requireNonNull(dmcDataSet);
+
+    int height = rgbBuffer_copy.length;
+    int width = rgbBuffer_copy[0].length;
+
+    for (int x = 0; x < height; x++) {
+      for (int y = 0; y < width; y++) {
+
+        int[] color = { rgbBuffer_copy[x][y][0], rgbBuffer_copy[x][y][1], rgbBuffer_copy[x][y][2] };
+        int dmc_id = getClosetColorId(color, dmcDataSet);
+
+        pattern_buffer[x][y][0] = dmcDataSet.get(dmc_id).getRedValue();
+        pattern_buffer[x][y][1] = dmcDataSet.get(dmc_id).getGreenValue();
+        pattern_buffer[x][y][2] = dmcDataSet.get(dmc_id).getBlueValue();
+
+        legend_buffer[x][y][0] = dmc_id;
+      }
+    }
+    Set<Legend> legendSet = generateLegend(legend_buffer, noOfSquaresAcross, dmcDataSet);
+    List<Legend> legendList = new ArrayList<>(legendSet);
+
+    return new Pair<int[][][], List<Legend>>(pattern_buffer, legendList);
+  }
+
+  private Set<Legend> generateLegend(int[][][] dmcBuffer, int noOfSquaresAcross,
+      List<DmcFloss> dmcDataSet) {
+
+    List<Legend> legendSet = new ArrayList<Legend>();
+
+    int image_height = dmcBuffer.length;
+    int image_width = dmcBuffer[0].length;
+
+    int square_length = image_width / noOfSquaresAcross;
+
+    int pixelate_x = image_height / square_length;
+
+    int m = pixelate_x;
+    int n = noOfSquaresAcross;
+
+    int i = 0;
+    int j = 0;
+    for (int y = 0; y < m; y++) {
+      for (int x = 0; x < n; x++) {
+        int id = dmcBuffer[i][j][0];
+
+        legendSet.add(new Legend(id, dmcDataSet.get(id).getDmcCode(),
+            dmcDataSet.get(id).getSymbol(), dmcDataSet.get(id).getRedValue(),
+            dmcDataSet.get(id).getGreenValue(), dmcDataSet.get(id).getBlueValue()));
+        j += square_length;
+      }
+
+      j = 0;
+      i += square_length;
+
+    }
+
+    Set<Legend> legendListTree = new TreeSet<Legend>(legendSet);
+
+    return legendListTree;
   }
 
 }

@@ -155,5 +155,12 @@ public interface ImageModelInterface {
   /**
    * This method notifies observers if there is any state change.
    */
-  public void notifyImageObservers();
+  // public void notifyImageObservers();
+
+  public void registerPatternLegendObserver(PatternLegendObserver patternLegendObserver);
+
+  public void removePatternLegendObserver(PatternLegendObserver patternLegendObserver);
+
+  public ImageModelInterface patternUi() throws IOException;
+  // public void notifyPatternObservers();
 }

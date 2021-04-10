@@ -14,12 +14,14 @@ import images.imagecontrol.commands.GrayScale;
 import images.imagecontrol.commands.LoadImage;
 import images.imagecontrol.commands.Mosaic;
 import images.imagecontrol.commands.Pattern;
+import images.imagecontrol.commands.PatternUI;
 import images.imagecontrol.commands.Pixelate;
 import images.imagecontrol.commands.SaveImage;
 import images.imagecontrol.commands.SavePattern;
 import images.imagecontrol.commands.Sepia;
 import images.imagecontrol.commands.Sharpen;
 import images.imagemodel.ImageModelInterface;
+import images.imageview.ImageViewInterface;
 
 /**
  * ImageController class implements the ImageControllerInterface interface that
@@ -95,4 +97,5 @@ public class ImageController implements ImageControllerInterface {
     }
 
   }
+
 }

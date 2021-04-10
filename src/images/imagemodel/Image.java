@@ -1,7 +1,12 @@
 package images.imagemodel;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import javafx.util.Pair;
 
 /**
  * Image class implements the ImageInterface interface that can be used to
@@ -9,6 +14,7 @@ import java.util.Objects;
  */
 public class Image implements ImageInterface {
   private int[][][] rgb_buffer;
+  private List<Legend> pattern_legend_list;
   private String pattern;
 
   /**
@@ -20,6 +26,7 @@ public class Image implements ImageInterface {
   public Image() {
     this.rgb_buffer = null;
     this.pattern = null;
+    this.pattern_legend_list = new ArrayList<Legend>();
   }
 
   /**
@@ -29,8 +36,7 @@ public class Image implements ImageInterface {
 
   public Image(Image image) {
     if (!Objects.isNull(image.rgb_buffer)) {
-      this.rgb_buffer = new int[image.rgb_buffer.length]
-          [image.rgb_buffer[0].length][image.rgb_buffer[0][0].length];
+      this.rgb_buffer = new int[image.rgb_buffer.length][image.rgb_buffer[0].length][image.rgb_buffer[0][0].length];
       for (int x = 0; x < image.rgb_buffer.length; x++) {
         for (int y = 0; y < image.rgb_buffer[0].length; y++) {
           for (int z = 0; z < image.rgb_buffer[0][0].length; z++) {
@@ -41,7 +47,18 @@ public class Image implements ImageInterface {
     } else {
       this.rgb_buffer = null;
     }
-    this.pattern = image.pattern;
+
+    if (!Objects.isNull(image.pattern)) {
+      this.pattern = image.pattern;
+    } else {
+      this.pattern = null;
+    }
+
+    this.pattern_legend_list = new ArrayList<Legend>();
+    for (int i = 0; i < image.pattern_legend_list.size(); i++) {
+      Objects.requireNonNull(image.pattern_legend_list.get(i));
+      this.pattern_legend_list.add(image.pattern_legend_list.get(i));
+    }
   }
 
   @Override
@@ -218,6 +235,60 @@ public class Image implements ImageInterface {
     Objects.requireNonNull(this.pattern, "Please generate Pattern first.");
 
     ImageOperationsUtility.savePattern(this.pattern, fileName);
+
+    return new Image(this);
+  }
+
+  @Override
+  public List<Legend> getPatternLegend() {
+    return this.pattern_legend_list;
+  }
+
+  @Override
+  public BufferedImage getImage() {
+    Objects.requireNonNull(this.rgb_buffer, "Please load the image first.");
+
+    int[][][] image_buffer = ImageOperationsUtility.copyArray(this.rgb_buffer);
+
+    BufferedImage bufferedImage = ImageUtilities.getBufferedImage(image_buffer,
+        image_buffer[0].length, image_buffer.length);
+    Objects.requireNonNull(bufferedImage);
+
+    return bufferedImage;
+  }
+
+  @Override
+  public ImageInterface patternUi() throws IOException {
+    Objects.requireNonNull(this.rgb_buffer, "Please load the image first.");
+
+    int[][][] image_buffer = ImageOperationsUtility.copyArray(this.rgb_buffer);
+
+    PixelateInterface pixelate = new Pixelate();
+
+    PatternInterface pattern = new Pattern();
+
+    int noOfSquaresAcross = ImageOperationsUtility.getNoofSquaresAcrossPattern();
+
+    int[][][] rgb_buffer_processed = pixelate.doPixelate(image_buffer, noOfSquaresAcross);
+
+    Objects.requireNonNull(rgb_buffer_processed, "2 D RGB array value cannot be null.");
+
+    Pair<int[][][], List<Legend>> result = pattern.doUIPattern(rgb_buffer_processed,
+        noOfSquaresAcross);
+
+    Objects.requireNonNull(result);
+
+    rgb_buffer_processed = result.getKey();
+
+    Objects.requireNonNull(rgb_buffer_processed, "2 D RGB array value cannot be null.");
+
+    List<Legend> legendList = result.getValue();
+
+    Objects.requireNonNull(legendList, "Legend List cannot be null");
+
+    this.rgb_buffer = rgb_buffer_processed;
+
+    this.pattern_legend_list = legendList;
 
     return new Image(this);
   }

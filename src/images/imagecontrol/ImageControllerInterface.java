@@ -3,6 +3,7 @@ package images.imagecontrol;
 import java.io.IOException;
 
 import images.imagemodel.ImageModelInterface;
+import images.imageview.ImageViewInterface;
 
 /**
  * ImageControllerInterface, it is and interface that takes user inputs, tells
