@@ -83,8 +83,7 @@ public class Pattern implements PatternInterface {
 
     int[][][] rgbBuffer_copy = ImageOperationsUtility.copyArray(rgbBuffer);
 
-    int[][][] pattern_buffer = new int[rgbBuffer_copy.length]
-        [rgbBuffer_copy[0].length][rgbBuffer_copy[0][0].length];
+    int[][][] pattern_buffer = new int[rgbBuffer_copy.length][rgbBuffer_copy[0].length][rgbBuffer_copy[0][0].length];
 
     int[][][] legend_buffer = new int[rgbBuffer_copy.length][rgbBuffer_copy[0].length][1];
 
@@ -158,8 +157,7 @@ public class Pattern implements PatternInterface {
 
   @Override
   public Pair<int[][][], List<Legend>> doReplaceColorPattern(int[][][] rgbBuffer,
-      int noOfSquaresAcross, int xCordinate,
-      int yCordinate, String dmcCode,
+      int noOfSquaresAcross, int xCordinate, int yCordinate, String dmcCode,
       List<Legend> legendList) {
     Objects.requireNonNull(rgbBuffer, "2 D RGB array value cannot be null.");
     Objects.requireNonNull(dmcCode, "DMC Code value cannot be null.");
@@ -328,8 +326,8 @@ public class Pattern implements PatternInterface {
     DmcFloss colorSelectedFloss = getDmcFlossDetails(dmcCode);
 
     int red_color = colorSelectedFloss.getRedValue();
-    int blue_color = colorSelectedFloss.getGreenValue();
-    int green_color = colorSelectedFloss.getBlueValue();
+    int green_color = colorSelectedFloss.getGreenValue();
+    int blue_color = colorSelectedFloss.getBlueValue();
 
     int image_height = pattern_buffer.length;
     int image_width = pattern_buffer[0].length;
@@ -474,8 +472,7 @@ public class Pattern implements PatternInterface {
 
     int[][][] rgbBuffer_copy = ImageOperationsUtility.copyArray(rgbBuffer);
 
-    int[][][] pattern_buffer = new int[rgbBuffer_copy.length]
-        [rgbBuffer_copy[0].length][rgbBuffer_copy[0][0].length];
+    int[][][] pattern_buffer = new int[rgbBuffer_copy.length][rgbBuffer_copy[0].length][rgbBuffer_copy[0][0].length];
 
     Objects.requireNonNull(dmcDataSet);
 

@@ -84,10 +84,10 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
   private JMenuItem pixelateImageMenu;
   private JMenuItem generatePatternImageMenu;
 
-  private JFileChooser imageOpenChooser;
-  private JFileChooser imageSaveChooser;
-  private JFileChooser batchFileOpenChooser;
-  private JFileChooser patternSaveOpenChooser;
+  private JButton imageOpenChooser;
+  private JButton imageSaveChooser;
+  private JButton batchFileOpenChooser;
+  private JButton patternSaveOpenChooser;
   private BufferedImage imageToDisplay;
   private JLabel imageLabel;
 
@@ -139,11 +139,6 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
     setButtons();
     setMenu();
     setPanel();
-
-    imageOpenChooser = new JFileChooser();
-    imageSaveChooser = new JFileChooser();
-    batchFileOpenChooser = new JFileChooser();
-    patternSaveOpenChooser = new JFileChooser();
 
     imageOperationsPerformed = false;
     mouseListenerIsActive = false;
@@ -348,6 +343,10 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
     patternNewColorButton = new JButton();
     addTextButton = new JButton();
     selectNewColorPatternButton = new JButton();
+    imageOpenChooser = new JButton();
+    imageSaveChooser = new JButton();
+    batchFileOpenChooser = new JButton();
+    patternSaveOpenChooser = new JButton();
   }
 
   private void setPatternOperationsVisibility(boolean visibilityFlag) {
@@ -424,12 +423,13 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
   /**
    * Private helper method to display fileChooser and get user input.
    * 
-   * @param fileChooser It is the component of JFileChooser
+   * @param fileChooser It is the component of JButton
    * @param filter      It is the filter for file extensions.
    * @param operation   It is verify which type of Dialog box to show to the user.
    */
-  private void fileChooser(JFileChooser fileChooser, FileNameExtensionFilter filter,
+  private void fileChooser(JButton fileChooserButton, FileNameExtensionFilter filter,
       String operation) {
+    JFileChooser fileChooser = new JFileChooser();
     fileChooser.setCurrentDirectory(new java.io.File("."));
     fileChooser.setSelectedFile(new File(""));
     fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
@@ -445,6 +445,7 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
     } else {
       this.fileName = fileChooser.getSelectedFile().getAbsolutePath();
     }
+    fileChooserButton.doClick();
   }
 
   @Override
