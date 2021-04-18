@@ -20,7 +20,7 @@ public class Mosaic implements ImageCommand {
    * @throws IllegalArgumentException if noOfSeeds value is zero or less than 0
    */
   public Mosaic(int noOfSeeds) throws IllegalArgumentException {
-    if (noOfSeeds >= 0) {
+    if (noOfSeeds <= 0) {
       throw new IllegalArgumentException("Value cannot be negative or zero");
     }
     this.noOfSeeds = noOfSeeds;

@@ -21,7 +21,7 @@ public class Dither implements ImageCommand {
    */
 
   public Dither(int noOfColorsToReduceTo) throws IllegalArgumentException {
-    if (noOfColorsToReduceTo >= 0) {
+    if (noOfColorsToReduceTo <= 0) {
       throw new IllegalArgumentException("Value cannot be negative or zero");
     }
 
