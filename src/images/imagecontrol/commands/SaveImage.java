@@ -12,15 +12,19 @@ import images.imagemodel.ImageModelInterface;
  */
 public class SaveImage implements ImageCommand {
 
-  private String fileName;
+  private final String fileName;
 
   /**
    * Constructs a SaveImage, specifying file name.
    * 
    * @param fileName It is the name of the file where image needs to be saved.
+   * @throws IllegalArgumentException if filename is empty.
    */
-  public SaveImage(String fileName) {
+  public SaveImage(String fileName) throws IllegalArgumentException {
     Objects.requireNonNull(fileName);
+    if (fileName.equals("")) {
+      throw new IllegalArgumentException("Filename cannot be empty");
+    }
     this.fileName = fileName;
   }
 

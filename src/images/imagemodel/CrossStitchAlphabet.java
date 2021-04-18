@@ -6,10 +6,10 @@ package images.imagemodel;
  * 
  */
 public class CrossStitchAlphabet {
-  private int id;
-  private char alphabet;
-  private int[][] alphabetPattern;
-  private int noOfSquaresOccupiedInXAxis;
+  private final int id;
+  private final char alphabet;
+  private final int[][] alphabetPattern;
+  private final int noOfSquaresOccupiedInXAxis;
 
   /**
    * Constructs a CrossStitchAlphabet.

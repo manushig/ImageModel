@@ -6,7 +6,7 @@ import java.util.List;
  * This interface represents a set of features that the program offers. Each
  * feature is exposed as a function in this interface. This function is used
  * suitably as a callback by the view, to pass control to the controller. How
- * the view uses them as callbacks is completely up to how the view is designed
+ * the view uses them as call backs is completely up to how the view is designed
  * (e.g. it could use them as a callback for a button, or a callback for a
  * dialog box, or a set of text inputs, etc.)
  *
@@ -41,7 +41,7 @@ public interface Features {
   public void sharpen();
 
   /**
-   * Generate Grayscale effect on the image.
+   * Generate Gray scale effect on the image.
    */
   public void grayscale();
 
@@ -97,14 +97,14 @@ public interface Features {
    * 
    * @param xCordinate x-coordinate of the image clicked.
    * @param yCordinate y-coordinate of the image clicked.
-   * @param dmcCode    dmc code color to replace to
+   * @param dmcCode    DMC code color to replace to
    */
   public void patternReplaceColor(int xCordinate, int yCordinate, String dmcCode);
 
   /**
    * Remove the given color from the pattern.
    * 
-   * @param dmcCode dmc code color to remove from the pattern.
+   * @param dmcCode DMC code color to remove from the pattern.
    */
   public void patternRemoveColor(String dmcCode);
 
@@ -125,13 +125,13 @@ public interface Features {
   public void programExit();
 
   /**
-   * Take user input as cordinates on the image to be replaced and the dmc color
+   * Take user input as coordinates on the image to be replaced and the dmc color
    * code when exchange color on pattern operation selected.
    */
   public void exchangeColorPatternButtonClicked();
 
   /**
-   * Take user input as dmc color code to replace when remove color on pattern
+   * Take user input as DMC color code to replace when remove color on pattern
    * operation selected.
    */
   public void removeColorPatternButtonClicked();

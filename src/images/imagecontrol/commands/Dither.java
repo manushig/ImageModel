@@ -11,15 +11,20 @@ import images.imagemodel.ImageModelInterface;
  */
 public class Dither implements ImageCommand {
 
-  private int noOfColorsToReduceTo;
+  private final int noOfColorsToReduceTo;
 
   /**
    * Constructs a Dither, specifying number of colors to reduce to detail.
    * 
    * @param noOfColorsToReduceTo It is the number of colors to reduce to.
+   * @throws IllegalArgumentException if noOfColorsToReduceTo less than 0 or 0.
    */
 
-  public Dither(int noOfColorsToReduceTo) {
+  public Dither(int noOfColorsToReduceTo) throws IllegalArgumentException {
+    if (noOfColorsToReduceTo >= 0) {
+      throw new IllegalArgumentException("Value cannot be negative or zero");
+    }
+
     this.noOfColorsToReduceTo = noOfColorsToReduceTo;
   }
 

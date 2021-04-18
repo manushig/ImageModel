@@ -12,15 +12,18 @@ import images.imagemodel.ImageModelInterface;
  */
 public class SavePattern implements ImageCommand {
 
-  private String fileName;
+  private final String fileName;
 
   /**
    * Constructs a SavePattern, specifying file name.
    * 
    * @param fileName It is the name of the file where pattern needs to be saved.
    */
-  public SavePattern(String fileName) {
+  public SavePattern(String fileName) throws IllegalArgumentException {
     Objects.requireNonNull(fileName);
+    if (fileName.equals("")) {
+      throw new IllegalArgumentException("Filename cannot be empty");
+    }
     this.fileName = fileName;
   }
 

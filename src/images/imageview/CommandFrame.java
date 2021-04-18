@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -33,6 +35,7 @@ public class CommandFrame extends JFrame implements ActionListener {
    * @param parentFrame It is the parent ImageViewImp frame.
    */
   public CommandFrame(ImageViewInterface parentFrame) {
+    Objects.requireNonNull(parentFrame);
     this.parentFrame = parentFrame;
     this.setSize(200, 200); // Sets the x and y dimension of the frame
     this.setLocation(150, 150);
@@ -69,6 +72,7 @@ public class CommandFrame extends JFrame implements ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent event) {
+    Objects.requireNonNull(event);
     if (event.getSource() == executeButton) {
       this.dispose();
       parentFrame.setCommandText(commandTextArea.getText());

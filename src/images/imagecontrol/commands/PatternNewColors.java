@@ -14,15 +14,19 @@ import images.imagemodel.ImageModelInterface;
  */
 public class PatternNewColors implements ImageCommand {
 
-  private List<String> selectedColors;
+  private final List<String> selectedColors;
 
   /**
-   * Constructs a PatternAddText, specifying list of dmc codes.
+   * Constructs a PatternAddText, specifying list of DMC codes.
    * 
-   * @param selectedColors List of dmc codes.
+   * @param selectedColors List of DMC codes.
+   * @throws IllegalArgumentException if no colors are provided.
    */
-  public PatternNewColors(List<String> selectedColors) {
+  public PatternNewColors(List<String> selectedColors) throws IllegalArgumentException {
     Objects.requireNonNull(selectedColors);
+    if (selectedColors.size() == 0) {
+      throw new IllegalArgumentException("Atleast one color be there.");
+    }
     this.selectedColors = selectedColors;
   }
 

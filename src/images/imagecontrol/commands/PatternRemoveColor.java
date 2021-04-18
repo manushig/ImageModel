@@ -13,16 +13,20 @@ import images.imagemodel.ImageModelInterface;
  */
 public class PatternRemoveColor implements ImageCommand {
 
-  private String dmcCode;
+  private final String dmcCode;
 
   /**
-   * Constructs a PatternRemoveColor, specifying dmc code of the color to be
+   * Constructs a PatternRemoveColor, specifying DMC code of the color to be
    * removed on the pattern.
    * 
-   * @param dmcCode dmc code of the color to be replaced on the pattern.
+   * @param dmcCode DMC code of the color to be replaced on the pattern.
+   * @throws IllegalArgumentException if dmcCode value is empty.
    */
-  public PatternRemoveColor(String dmcCode) {
+  public PatternRemoveColor(String dmcCode) throws IllegalArgumentException {
     Objects.requireNonNull(dmcCode);
+    if (dmcCode.equals("")) {
+      throw new IllegalArgumentException("Value cannot be empty");
+    }
     this.dmcCode = dmcCode;
   }
 

@@ -12,16 +12,20 @@ import images.imagemodel.ImageModelInterface;
  */
 public class LoadImage implements ImageCommand {
 
-  private String fileName;
+  private final String fileName;
 
   /**
    * Constructs a LoadImage, specifying file name.
    * 
    * @param fileName It is the name of the file from which image needs to be
    *                 loaded.
+   * @throws IllegalArgumentException if filename is empty.
    */
-  public LoadImage(String fileName) {
+  public LoadImage(String fileName) throws IllegalArgumentException {
     Objects.requireNonNull(fileName);
+    if (fileName.equals("")) {
+      throw new IllegalArgumentException("Filename cannot be empty");
+    }
     this.fileName = fileName;
   }
 

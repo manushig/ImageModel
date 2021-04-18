@@ -7,12 +7,12 @@ import java.util.Objects;
  * 
  */
 public class DmcFloss implements Comparable<DmcFloss> {
-  private Integer id;
-  private String dmcCode;
-  private int redValue;
-  private int greenValue;
-  private int blueValue;
-  private char symbol;
+  private final Integer id;
+  private final String dmcCode;
+  private final int redValue;
+  private final int greenValue;
+  private final int blueValue;
+  private final char symbol;
 
   /**
    * Constructs a DMCFloss, specifying details like id,dmcValue, redValue,
@@ -92,6 +92,7 @@ public class DmcFloss implements Comparable<DmcFloss> {
 
   @Override
   public boolean equals(Object o) {
+    Objects.requireNonNull(o);
     // Fast path for pointer equality:
     if (this == o) { // backward compatibility with default equals
       return true;
@@ -116,7 +117,7 @@ public class DmcFloss implements Comparable<DmcFloss> {
 
   @Override
   public int compareTo(DmcFloss other) {
-
+    Objects.requireNonNull(other);
     DmcFloss that = (DmcFloss) other;
     return this.getId().compareTo(that.getId());
 

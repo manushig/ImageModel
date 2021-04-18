@@ -18,9 +18,9 @@ public class Legend implements Comparable<Legend> {
   /**
    * Constructs a Legend, specifying details like dmcId,dmcValue and symbol.
    * 
-   * @param dmcId    it is the identifier value
+   * @param dmcId   it is the identifier value
    * @param dmcCode it is the DMC code value
-   * @param symbol   it is the unique unicode value
+   * @param symbol  it is the unique unicode value
    */
   public Legend(int dmcId, String dmcCode, char symbol) {
     Objects.requireNonNull(dmcCode);
@@ -33,9 +33,9 @@ public class Legend implements Comparable<Legend> {
    * Constructs a Legend, specifying details like dmcId,dmcValue symbol, red
    * color, green color and blue color.
    * 
-   * @param dmcId    it is the identifier value
+   * @param dmcId   it is the identifier value
    * @param dmcCode it is the DMC code value
-   * @param symbol   it is the unique unicode value
+   * @param symbol  it is the unique unicode value
    */
   public Legend(int dmcId, String dmcCode, char symbol, int redValue, int greenValue,
       int blueValue) {
@@ -74,6 +74,7 @@ public class Legend implements Comparable<Legend> {
 
   @Override
   public boolean equals(Object o) {
+    Objects.requireNonNull(o);
     // Fast path for pointer equality:
     if (this == o) { // backward compatibility with default equals
       return true;
@@ -96,7 +97,7 @@ public class Legend implements Comparable<Legend> {
 
   @Override
   public int compareTo(Legend other) {
-
+    Objects.requireNonNull(other);
     Legend that = (Legend) other;
     return this.getDmcId().compareTo(that.getDmcId());
 

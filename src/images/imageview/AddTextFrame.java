@@ -109,6 +109,7 @@ public class AddTextFrame extends JFrame implements ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent event) {
+    Objects.requireNonNull(event);
     int number = buttonsString.length();
     if (event.getSource() == backSpace) {
       buffer = buffer.substring(0, buffer.length() - 1);

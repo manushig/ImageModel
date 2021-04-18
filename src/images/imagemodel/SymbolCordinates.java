@@ -9,9 +9,9 @@ import java.util.Objects;
  */
 public class SymbolCordinates implements Comparable<SymbolCordinates> {
 
-  private int xCordinate;
-  private int yCordinate;
-  private char symbol;
+  private final int xCordinate;
+  private final int yCordinate;
+  private final char symbol;
 
   /**
    * COnstructs a SymbolCordinates.
@@ -55,6 +55,7 @@ public class SymbolCordinates implements Comparable<SymbolCordinates> {
 
   @Override
   public boolean equals(Object o) {
+    Objects.requireNonNull(o);
     // Fast path for pointer equality:
     if (this == o) { // backward compatibility with default equals
       return true;
@@ -77,7 +78,7 @@ public class SymbolCordinates implements Comparable<SymbolCordinates> {
 
   @Override
   public int compareTo(SymbolCordinates other) {
-
+    Objects.requireNonNull(other);
     SymbolCordinates that = (SymbolCordinates) other;
     return this.getSymbol().compareTo(that.getSymbol());
 

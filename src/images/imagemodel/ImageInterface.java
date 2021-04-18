@@ -167,7 +167,7 @@ public interface ImageInterface {
    * 
    * @param xCordinate x-coordinate of the image clicked.
    * @param yCordinate y-coordinate of the image clicked.
-   * @param dmcCode    dmc code color to replace to
+   * @param dmcCode    DMC code color to replace to
    * @return an ImageInterface object
    * @throws IOException if file/directory not found
    */

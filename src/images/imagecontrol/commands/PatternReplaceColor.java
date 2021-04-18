@@ -13,9 +13,9 @@ import images.imagemodel.ImageModelInterface;
  */
 public class PatternReplaceColor implements ImageCommand {
 
-  private int xCordinate;
-  private int yCordinate;
-  private String dmcCode;
+  private final int xCordinate;
+  private final int yCordinate;
+  private final String dmcCode;
 
   /**
    * Constructs a PatternReplaceColor, specifying dmc code of the color to be
@@ -23,10 +23,15 @@ public class PatternReplaceColor implements ImageCommand {
    * 
    * @param xCordinate x-coordinate of the image clicked.
    * @param yCordinate y-coordinate of the image clicked.
-   * @param dmcCode    dmc code color to replace to
+   * @param dmcCode    DMC code color to replace to
+   * @throws IllegalArgumentException if dmcCode value is empty.
    */
-  public PatternReplaceColor(int xCordinate, int yCordinate, String dmcCode) {
+  public PatternReplaceColor(int xCordinate, int yCordinate, String dmcCode)
+      throws IllegalArgumentException {
     Objects.requireNonNull(dmcCode);
+    if (dmcCode.equals("")) {
+      throw new IllegalArgumentException("Value cannot be empty");
+    }
     this.xCordinate = xCordinate;
     this.yCordinate = yCordinate;
     this.dmcCode = dmcCode;

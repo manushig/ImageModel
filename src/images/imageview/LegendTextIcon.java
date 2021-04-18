@@ -8,9 +8,9 @@ import javax.swing.ImageIcon;
  * 
  */
 public class LegendTextIcon {
-  private String dmcFlossText;
-  private char symbol;
-  private ImageIcon dmcFlossImage;
+  private final String dmcFlossText;
+  private final char symbol;
+  private final ImageIcon dmcFlossImage;
 
   /**
    * Constructs a LegendTextIcon.

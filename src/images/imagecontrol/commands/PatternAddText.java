@@ -11,18 +11,23 @@ import images.imagemodel.ImageModelInterface;
  *
  */
 public class PatternAddText implements ImageCommand {
-  private String text;
-  private String dmcCode;
+  private final String text;
+  private final String dmcCode;
 
   /**
    * Constructs a PatternAddText, specifying text and color of the text.
    * 
    * @param text    text to be displayed on the pattern.
-   * @param dmcCode dmc Code of the color of the text.
+   * @param dmcCode DMC Code of the color of the text.
+   * @throws IllegalArgumentException if text or dmcCode value is empty.
    */
-  public PatternAddText(String text, String dmcCode) {
+  public PatternAddText(String text, String dmcCode) throws IllegalArgumentException {
     Objects.requireNonNull(text);
     Objects.requireNonNull(dmcCode);
+    if (text.equals("") || dmcCode.equals("")) {
+      throw new IllegalArgumentException("Value cannot be empty");
+    }
+
     this.text = text;
     this.dmcCode = dmcCode;
   }
