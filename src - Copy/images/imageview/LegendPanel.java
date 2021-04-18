@@ -20,22 +20,26 @@ import images.imagemodel.Legend;
 
 public class LegendPanel extends JPanel {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -7770746739264143025L;
   private List<Legend> legendList;
-  private static final long serialVersionUID = 3L;
   private DefaultListModel<Object> model;
   private JList<Object> list;
   private JLabel legendLabel;
+  private JLabel legendLabelText;
 
   public LegendPanel() {
     this.legendList = new ArrayList<Legend>();
     this.model = new DefaultListModel<Object>();
     this.setLayout(new BorderLayout(10, 10));
     
-    legendLabel = new JLabel();
-    legendLabel.setHorizontalAlignment(JLabel.CENTER);
-    legendLabel.setVerticalAlignment(JLabel.CENTER);
+    legendLabelText = new JLabel();
+    legendLabelText.setHorizontalAlignment(JLabel.CENTER);
+    legendLabelText.setVerticalAlignment(JLabel.CENTER);
     
-    this.add(legendLabel, BorderLayout.NORTH);
+    this.add(legendLabelText, BorderLayout.NORTH);
     
     list = new JList<Object>();
     this.add(list, BorderLayout.SOUTH);
@@ -52,8 +56,8 @@ public class LegendPanel extends JPanel {
 
   public void populate() {
     model.clear();
-    legendLabel.setText("Legend");
-    legendLabel.setFont(new Font("Serif", Font.BOLD, 18));
+    legendLabelText.setText("Legend");
+    legendLabelText.setFont(new Font("Serif", Font.BOLD, 18));
     
     for (Legend legend : legendList) {
       ImageIcon imageIcon = createImageIcon(
@@ -72,11 +76,13 @@ public class LegendPanel extends JPanel {
     list.setModel(model);
   }
 
-  private static ImageIcon createImageIcon(Color color, int width, int height) {
+  private ImageIcon createImageIcon(Color color, int width, int height) {
     BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     Graphics2D graphics = image.createGraphics();
     graphics.setPaint(color);
     graphics.fillRect(0, 0, width, height);
     return new ImageIcon(image);
   }
+  
+  
 }

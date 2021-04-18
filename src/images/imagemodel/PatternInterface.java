@@ -32,12 +32,88 @@ public interface PatternInterface {
    * 
    * @param rgbBuffer         It is a 2D array of RGB colors.
    * @param noOfSquaresAcross It is the number of evenly sized squares.
-   * @return processed 2D array of RGB colors
+   * @return processed 2D array of RGB colors and the legend list
    * @throws IOException if an error generated while reading the DMC Floss RGB
    *                     conversion values.
    */
-  public String doPattern(int[][][] rgbBuffer, int noOfSquaresAcross) throws IOException;
 
-  public Pair<int[][][], List<Legend>> doUIPattern(int[][][] rgbBuffer, int noOfSquaresAcross) throws IOException;
+  public Pair<int[][][], List<Legend>> doPattern(int[][][] rgbBuffer, int noOfSquaresAcross)
+      throws IOException;
 
+  /**
+   * This method exchange one color for another given color in a cross-stitch
+   * pattern at given coordinates.
+   * 
+   * @param rgbBuffer         It is a 2D array of RGB colors.
+   * @param noOfSquaresAcross It is the number of evenly sized squares.
+   * @param XCordinate        x-coordinate of the image.
+   * @param YCordinate        y-coordinate of the image.
+   * @param dmcCode           dmc floss code of the color
+   * @param legendList        It is the list of legends
+   * @return processed 2D array of RGB colors and the legend list
+   */
+  public Pair<int[][][], List<Legend>> doReplaceColorPattern(int[][][] rgbBuffer,
+      int noOfSquaresAcross, int XCordinate, int YCordinate, String dmcCode,
+      List<Legend> legendList);
+
+  /**
+   * 
+   * This method removes the given dmc code from the legend and replace it with
+   * Blank and represents it as dot on the pattern.
+   * 
+   * @param noOfSquaresAcross It is the number of evenly sized squares.
+   * @param dmcCode           dmc floss code of the color
+   * @param legendList        It is the list of legends
+   * @return list of Legend
+   */
+  public List<Legend> doRemoveColorPattern(int noOfSquaresAcross, String dmcCode,
+      List<Legend> legendList);
+
+  /**
+   * This method adds a line of text to cross-stitch pattern in a given color.
+   * 
+   * @param rgbBuffer         It is a 2D array of RGB colors.
+   * @param noOfSquaresAcross It is the number of evenly sized squares.
+   * @param text              text to be added to the pattern
+   * @param dmcCode           dmc floss code of the color
+   * @param legendList        It is the list of legends
+   * @return processed 2D array of RGB colors and the legend list
+   * @throws IOException
+   */
+  public Pair<int[][][], List<Legend>> doAddTextPattern(int[][][] rgbBuffer, int noOfSquaresAcross,
+      String text, String dmcCode, List<Legend> legendList) throws IOException;
+
+  /**
+   * This method substitute each color in the actual pattern with given list of
+   * colors.
+   * 
+   * @param rgbBuffer      It is a 2D array of RGB colors.
+   * @param selectedColors It is the number of evenly sized squares.
+   * @param legendList     It is the list of legends
+   * @return processed 2D array of RGB colors and the legend list
+   */
+  public Pair<int[][][], List<Legend>> doAddNewColorsPattern(int[][][] rgbBuffer,
+      List<String> selectedColors, List<Legend> legendList);
+
+  /**
+   * This method generates the coordinates and the symbol to be displayed on the
+   * pattern.
+   * 
+   * @param rgbBuffer         It is a 2D array of RGB colors.
+   * @param legendlist        It is the list of legends
+   * @param noOfSquaresAcross It is the number of evenly sized squares.
+   * @return List of SymbolCordinates
+   */
+  public List<SymbolCordinates> getCordinatesForSymbol(int[][][] rgbBuffer, List<Legend> legendlist,
+      int noOfSquaresAcross);
+
+  /**
+   * This method generate the cross pattern in a text format.
+   * 
+   * @param rgbBuffer         It is a 2D array of RGB colors.
+   * @param noOfSquaresAcross It is the number of evenly sized squares.
+   * @param legendList        It is the list of legends
+   * @return generated pattern in text format
+   */
+  public String savePattern(int[][][] rgbBuffer, int noOfSquaresAcross, List<Legend> legendList);
 }

@@ -8,7 +8,8 @@ import java.util.Objects;
 
 /**
  * ImageModel class implements the ImageModelInterface interface that can be
- * used to manipulate images to produce some interesting effects.
+ * used to manipulate images to produce some interesting effects and generate
+ * the cross-stitch pattern.
  */
 public class ImageModel implements ImageModelInterface {
 
@@ -177,6 +178,7 @@ public class ImageModel implements ImageModelInterface {
     }
   }
 
+  @Override
   public void notifyImageObservers() {
     Iterator<ImageObserver> iterator = imageObservers.iterator();
     while (iterator.hasNext()) {
@@ -200,6 +202,7 @@ public class ImageModel implements ImageModelInterface {
     }
   }
 
+  @Override
   public void notifyPatternLegendObservers() {
     Iterator<PatternLegendObserver> iterator = patternLegendObservers.iterator();
     while (iterator.hasNext()) {
@@ -235,17 +238,6 @@ public class ImageModel implements ImageModelInterface {
   }
 
   @Override
-  public ImageModelInterface pattern() throws IOException {
-    ImageInterface imageData = this.imageObj.pattern();
-
-    Objects.requireNonNull(imageData);
-
-    this.imageObj = imageData;
-
-    return new ImageModel(this);
-  }
-
-  @Override
   public ImageModelInterface savePattern(String fileName) throws IOException {
 
     Objects.requireNonNull(fileName, "Filepath cannot be null.");
@@ -260,8 +252,8 @@ public class ImageModel implements ImageModelInterface {
   }
 
   @Override
-  public ImageModelInterface patternUi() throws IOException {
-    ImageInterface imageData = this.imageObj.patternUi();
+  public ImageModelInterface pattern() throws IOException {
+    ImageInterface imageData = this.imageObj.pattern();
 
     Objects.requireNonNull(imageData);
 
@@ -272,6 +264,91 @@ public class ImageModel implements ImageModelInterface {
     notifyPatternLegendObservers();
 
     return new ImageModel(this);
+  }
+
+  @Override
+  public ImageModelInterface patternRemoveColor(String dmcCode) throws IOException {
+    Objects.requireNonNull(dmcCode);
+
+    ImageInterface imageData = this.imageObj.patternRemoveColor(dmcCode);
+
+    Objects.requireNonNull(imageData);
+
+    this.imageObj = imageData;
+
+    notifyImageObservers();
+
+    notifyPatternLegendObservers();
+
+    return new ImageModel(this);
+  }
+
+  @Override
+  public ImageModelInterface patternReplaceColor(int xCordinate, int yCordinate, String dmcCode)
+      throws IOException {
+    Objects.requireNonNull(dmcCode);
+
+    ImageInterface imageData = this.imageObj.patternReplaceColor(xCordinate, yCordinate, dmcCode);
+
+    Objects.requireNonNull(imageData);
+
+    this.imageObj = imageData;
+
+    notifyImageObservers();
+
+    notifyPatternLegendObservers();
+
+    return new ImageModel(this);
+  }
+
+  @Override
+  public ImageModelInterface patternAddText(String text, String dmcCode) throws IOException {
+    Objects.requireNonNull(dmcCode);
+    Objects.requireNonNull(text);
+    ImageInterface imageData = this.imageObj.patternAddText(text, dmcCode);
+
+    Objects.requireNonNull(imageData);
+
+    this.imageObj = imageData;
+
+    notifyImageObservers();
+
+    notifyPatternLegendObservers();
+
+    return new ImageModel(this);
+  }
+
+  @Override
+  public List<DmcFloss> getDmcFlossColors() throws IOException {
+    List<DmcFloss> dmcFlossList = ImageOperationsUtility.loadDmcFloss();
+    Objects.requireNonNull(dmcFlossList);
+    return dmcFlossList;
+  }
+
+  @Override
+  public ImageModelInterface patternAddNewColors(List<String> selectedColors) throws IOException {
+    Objects.requireNonNull(selectedColors);
+
+    ImageInterface imageData = this.imageObj.patternAddNewColor(selectedColors);
+
+    Objects.requireNonNull(imageData);
+
+    this.imageObj = imageData;
+
+    notifyImageObservers();
+
+    notifyPatternLegendObservers();
+
+    return new ImageModel(this);
+  }
+
+  @Override
+  public List<SymbolCordinates> patternGetCordinatesForSymbol() throws IOException {
+    List<SymbolCordinates> symbolCordinatesData = this.imageObj.patternGetCoordinatesForSymbol();
+
+    Objects.requireNonNull(symbolCordinatesData);
+
+    return symbolCordinatesData;
   }
 
 }

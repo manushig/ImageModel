@@ -20,5 +20,5 @@ public interface ReducingColorDensityInterface {
    * @return processed 2D array of RGB colors
    */
   public int[][][] doReduceColorDensity(int[][][] rgbBuffer, int noOfColorsToReduceTo,
-      Boolean isDitheringRequired);
+      boolean isDitheringRequired);
 }

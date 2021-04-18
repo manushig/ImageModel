@@ -2,6 +2,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import images.imagemodel.ColorTransformation;
 import images.imagemodel.ColorTransformationInterface;
@@ -9,14 +10,16 @@ import images.imagemodel.Filter;
 import images.imagemodel.FilterInterface;
 import images.imagemodel.Image;
 import images.imagemodel.ImageInterface;
+import images.imagemodel.Legend;
 import images.imagemodel.Pattern;
 import images.imagemodel.PatternInterface;
 import images.imagemodel.Pixelate;
 import images.imagemodel.PixelateInterface;
 import images.imagemodel.ReducingColorDensity;
 import images.imagemodel.ReducingColorDensityInterface;
-import org.junit.Test;
+import javafx.util.Pair;
 
+import org.junit.Test;
 
 /**
  * A JUnit test class for manipulating 2 D RGB array image data.
@@ -333,14 +336,26 @@ public class ImageModelTest {
         { { 8, 8, 8 }, { 7, 7, 7 }, { 9, 9, 9 }, { 0, 0, 0 } },
         { { 43, 43, 43 }, { 54, 54, 54 }, { 43, 43, 43 }, { 76, 76, 76 } },
         { { 65, 65, 65 }, { 43, 43, 43 }, { 123, 123, 123 }, { 32, 32, 32 } } };
-    String expectedOutput = "2 x 2\n" + "\n" + "tt\n" + "tt\n" + "\n" + "LEGEND\n" + "t DMC-934\n";
 
     PatternInterface pattern = new Pattern();
 
-    String actualOutput = pattern.doPattern(rgbBuffer, 2);
+    Pair<int[][][], List<Legend>> actualOutput = pattern.doPattern(rgbBuffer, 2);
 
-    assertEquals(expectedOutput, actualOutput);
+    int[][][] updated_image = actualOutput.getKey();
+    List<Legend> legendList = actualOutput.getValue();
 
+    int[][][] expectedOutput = { { { 49, 57, 25 }, { 0, 0, 0 }, { 49, 57, 25 }, { 0, 0, 0 } },
+        { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+        { { 49, 57, 25 }, { 66, 66, 66 }, { 49, 57, 25 }, { 72, 72, 72 } },
+        { { 66, 66, 66 }, { 49, 57, 25 }, { 135, 125, 115 }, { 54, 31, 14 } } };
+
+    for (int i = 0; i < updated_image.length; i++) {
+      for (int j = 0; j < updated_image[0].length; j++) {
+        for (int k = 0; k < rgbBuffer[0][0].length; k++) {
+          assertEquals(expectedOutput[i][j][k], updated_image[i][j][k]);
+        }
+      }
+    }
   }
 
 }

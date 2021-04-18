@@ -134,13 +134,13 @@ public class ImageOperationsUtility {
   }
 
   /**
-   * This method create a clone of an given array.
+   * This method create a clone of an given 3D array.
    * 
-   * @param source Array whose clone is required
-   * @return Cloned array
+   * @param source 3D Array whose clone is required
+   * @return Cloned 3D array
    */
   protected static int[][][] copyArray(int[][][] source) {
-    Objects.requireNonNull(source, "2 D RGB array value cannot be null.");
+    Objects.requireNonNull(source, "3 D array value cannot be null.");
 
     int[][][] target = source.clone();
 
@@ -177,10 +177,7 @@ public class ImageOperationsUtility {
   protected static void savePattern(String generatedPattern, String filename) throws IOException {
     Objects.requireNonNull(generatedPattern);
     Objects.requireNonNull(filename);
-
-    String directory = new File(".").getCanonicalPath();
-    String filepath = String.format(directory + "\\" + filename);
-    FileOutputStream fis = new FileOutputStream(filepath, false);
+    FileOutputStream fis = new FileOutputStream(filename, false);
     OutputStreamWriter isr = new OutputStreamWriter(fis, StandardCharsets.UTF_16BE);
     BufferedWriter writer = new BufferedWriter(isr);
     writer.write(generatedPattern);
@@ -224,4 +221,84 @@ public class ImageOperationsUtility {
 
     return dmcDataSet;
   }
+
+  /**
+   * This method create a clone of an given Legend list.
+   * 
+   * @param source Legend list whose clone is required
+   * @return Cloned Legend list
+   */
+  protected static List<Legend> copyLegendList(List<Legend> sourecLegendList) {
+    Objects.requireNonNull(sourecLegendList, "Legend List cannot be null.");
+
+    List<Legend> copiedList = new ArrayList<Legend>();
+    for (int i = 0; i < sourecLegendList.size(); i++) {
+      Objects.requireNonNull(sourecLegendList.get(i));
+      copiedList.add(sourecLegendList.get(i));
+    }
+    return copiedList;
+  }
+
+  /**
+   * This method create a clone of an given 2D array.
+   * 
+   * @param source 2D Array whose clone is required
+   * @return Cloned 2D array
+   */
+  protected static int[][] copyArray(int[][] source) {
+    Objects.requireNonNull(source, "2 D array value cannot be null.");
+
+    int[][] target = source.clone();
+
+    for (int i = 0; i < source.length; i++) {
+      target[i] = source[i].clone();
+    }
+
+    return target;
+  }
+
+  /**
+   * This method reads the file and populate the siena font representation of
+   * cross-stitch alphabets.
+   * 
+   * @return the siena font representation of cross-stitch alphabets.
+   * @throws IOException if there is an error while reading from the file.
+   */
+  protected static List<CrossStitchAlphabet> loadAlphabetSet() throws IOException {
+    String directory = new File(".").getCanonicalPath();
+    String fileName = "Alphabet.txt";
+    String fileSeperator = FileSystems.getDefault().getSeparator();
+    String file = String.format("%s%s%s", directory, fileSeperator, fileName);
+
+    Readable reader = new BufferedReader(new FileReader(file));
+
+    Scanner scan = new Scanner(reader);
+
+    List<CrossStitchAlphabet> alphabetDataSet = new ArrayList<CrossStitchAlphabet>();
+
+    int i = 0;
+    while (scan.hasNext()) {
+      String[] in = scan.nextLine().split(" ");
+      char alphabet = (char) Integer.parseInt(String.valueOf(in[0]), 16);
+      int xAxis = Integer.parseInt(in[1]);
+
+      int[][] alphabetArray = new int[8][5];
+
+      int l = 2;
+      for (int j = 0; j < 8; j++) {
+        for (int k = 0; k < 5; k++) {
+          alphabetArray[j][k] = Integer.parseInt(in[l]);
+          l++;
+        }
+      }
+
+      alphabetDataSet.add(new CrossStitchAlphabet(i, alphabet, alphabetArray, xAxis));
+      i++;
+
+    }
+    scan.close();
+
+    return alphabetDataSet;
+  }
+
 }

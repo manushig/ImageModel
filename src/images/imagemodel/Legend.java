@@ -16,18 +16,27 @@ public class Legend implements Comparable<Legend> {
   private int blueValue;
 
   /**
-   * Constructs a Legend, specifying details like dmcId,dmcValueand symbol.
+   * Constructs a Legend, specifying details like dmcId,dmcValue and symbol.
    * 
    * @param dmcId    it is the identifier value
-   * @param dmcValue it is the DMC code value
+   * @param dmcCode it is the DMC code value
    * @param symbol   it is the unique unicode value
    */
   public Legend(int dmcId, String dmcCode, char symbol) {
+    Objects.requireNonNull(dmcCode);
     this.dmcId = dmcId;
     this.dmcCode = dmcCode;
     this.symbol = symbol;
   }
-  
+
+  /**
+   * Constructs a Legend, specifying details like dmcId,dmcValue symbol, red
+   * color, green color and blue color.
+   * 
+   * @param dmcId    it is the identifier value
+   * @param dmcCode it is the DMC code value
+   * @param symbol   it is the unique unicode value
+   */
   public Legend(int dmcId, String dmcCode, char symbol, int redValue, int greenValue,
       int blueValue) {
     this(dmcId, dmcCode, symbol);
@@ -93,14 +102,29 @@ public class Legend implements Comparable<Legend> {
 
   }
 
+  /**
+   * It returns the red color value.
+   * 
+   * @return the red color value.
+   */
   public int getRed() {
     return this.redValue;
   }
 
+  /**
+   * It returns the green color value.
+   * 
+   * @return the red color value.
+   */
   public int getGreen() {
     return this.greenValue;
   }
 
+  /**
+   * It returns the blue color value.
+   * 
+   * @return the red color value.
+   */
   public int getBlue() {
     return this.blueValue;
   }

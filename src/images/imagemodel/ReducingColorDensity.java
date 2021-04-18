@@ -11,7 +11,7 @@ public class ReducingColorDensity implements ReducingColorDensityInterface {
 
   @Override
   public int[][][] doReduceColorDensity(int[][][] rgbBuffer, int noOfColorsToReduceTo,
-      Boolean isDitheringRequired) {
+      boolean isDitheringRequired) {
     Objects.requireNonNull(rgbBuffer, "2 D RGB array value cannot be null.");
 
     int[][][] reduced_color_density_rgb_buffer = ImageOperationsUtility.copyArray(rgbBuffer);

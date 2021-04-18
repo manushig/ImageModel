@@ -14,7 +14,6 @@ import images.imagecontrol.commands.GrayScale;
 import images.imagecontrol.commands.LoadImage;
 import images.imagecontrol.commands.Mosaic;
 import images.imagecontrol.commands.Pattern;
-import images.imagecontrol.commands.PatternUI;
 import images.imagecontrol.commands.Pixelate;
 import images.imagecontrol.commands.SaveImage;
 import images.imagecontrol.commands.SavePattern;

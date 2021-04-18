@@ -24,6 +24,23 @@ import java.util.List;
  * <li>Pattern Generation - By pixelating the image and then map each
  * super-pixel in the image to a floss color by calculating the "closest" color
  * of available floss, a cross-stitch pattern from an image can be generated.
+ * <li>Exchange color on pattern - It provides the ability to exchange one color
+ * for another in a cross-stitch pattern by clicking on the color in a displayed
+ * pattern and allowing the user to select a different color from the DMC color
+ * options.
+ * <li>Remove color on pattern - It provide the ability to pick one color in a
+ * cross-stitch pattern that will then be removed from the pattern completely.
+ * The pixels of that color would be replaced with a blank pixel.
+ * <li>Display symbols on pattern - It provides the ability to display the
+ * cross-stitch pattern to the screen, display both the symbol and the DMC floss
+ * color at the same time.
+ * <li>Generate pattern with new colors - It provides the ability to select the
+ * DMC color palette to use in an image. Do this by providing the ability for
+ * the user to select the DMC color thread colors that they have on hand and
+ * then substitute each color in the actual pattern with one that the user has
+ * indicated that they have on hand.
+ * <li>Add text on pattern - It provides the user with the ability to add a line
+ * of text to any cross-stitch pattern using a cross-stitch friendly alphabet.
  * </ul>
  * 
  */
@@ -117,14 +134,77 @@ public interface ImageInterface {
    * 
    * @param fileName It is the file name where pattern needs to be printed.
    * @return an ImageInterface object
-   * @throws IOException is there is an error while writing the pattern to the
+   * @throws IOException if there is an error while writing the pattern to the
    *                     file.
    */
   public ImageInterface savePattern(String fileName) throws IOException;
 
-  public ImageInterface patternUi() throws IOException;
-  
+  /**
+   * It retrieves the list of legends of the generated cross-stitch pattern.
+   * 
+   * @return an ImageInterface object
+   */
   public List<Legend> getPatternLegend();
 
+  /**
+   * It retrieves the buffered image.
+   * 
+   * @return Buffered image
+   */
   public BufferedImage getImage();
+
+  /**
+   * Remove the given color from the pattern.
+   * 
+   * @param dmcCode dmc code color to remove from the pattern.
+   * @return an ImageInterface object
+   * @throws IOException if there is an error while writing the pattern to the
+   *                     file.
+   */
+  public ImageInterface patternRemoveColor(String dmcCode) throws IOException;
+
+  /**
+   * It exchanges one color for another given color in a cross-stitch pattern at
+   * given coordinates.
+   * 
+   * @param xCordinate x-coordinate of the image clicked.
+   * @param yCordinate y-coordinate of the image clicked.
+   * @param dmcCode    dmc code color to replace to
+   * @return an ImageInterface object
+   * @throws IOException if there is an error while writing the pattern to the
+   *                     file.
+   */
+  public ImageInterface patternReplaceColor(int xCordinate, int yCordinate, String dmcCode)
+      throws IOException;
+
+  /**
+   * It adds a line of text to cross-stitch pattern.
+   * 
+   * @param text    The text to be displayed onto the image
+   * @param dmcCode Color in which text to be displayed
+   * @return an ImageInterface object
+   * @throws IOException if there is an error while writing the pattern to the
+   *                     file.
+   */
+  public ImageInterface patternAddText(String text, String dmcCode) throws IOException;
+
+  /**
+   * It substitutes each color in the actual pattern with given list of colors.
+   * 
+   * @param selectedColors List of colors to be displaced
+   * @return an ImageInterface object
+   * @throws IOException if there is an error while writing the pattern to the
+   *                     file.
+   */
+  public ImageInterface patternAddNewColor(List<String> selectedColors) throws IOException;
+
+  /**
+   * It provides the coordinates and the symbol to be displayed on the pattern.
+   * 
+   * @return List of SymbolCordinates object, having coordinates and alphabet to
+   *         be displayed information.
+   * @throws IOException if there is an error while writing the pattern to the
+   *                     file.
+   */
+  public List<SymbolCordinates> patternGetCoordinatesForSymbol() throws IOException;
 }

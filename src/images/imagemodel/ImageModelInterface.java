@@ -1,6 +1,7 @@
 package images.imagemodel;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * ImageModelInterface, it is an interface that can be used to manipulate images
@@ -22,11 +23,28 @@ import java.io.IOException;
  * <li>Pattern Generation - It generates the chunked image to makes it possible
  * to convert an image that has many pixels into one that has fewer pixels
  * without actually changing the number of colors that the image uses. It
- * generates the cross-stitch pattern from an image.
+ * generates the cross-stitch pattern from an image. *
+ * <li>Exchange color on pattern - It provides the ability to exchange one color
+ * for another in a cross-stitch pattern by clicking on the color in a displayed
+ * pattern and allowing the user to select a different color from the DMC color
+ * options.
+ * <li>Remove color on pattern - It provide the ability to pick one color in a
+ * cross-stitch pattern that will then be removed from the pattern completely.
+ * The pixels of that color would be replaced with a blank pixel.
+ * <li>Display symbols on pattern - It provides the ability to display the
+ * cross-stitch pattern to the screen, display both the symbol and the DMC floss
+ * color at the same time.
+ * <li>Generate pattern with new colors - It provides the ability to select the
+ * DMC color palette to use in an image. Do this by providing the ability for
+ * the user to select the DMC color thread colors that they have on hand and
+ * then substitute each color in the actual pattern with one that the user has
+ * indicated that they have on hand.
+ * <li>Add text on pattern - It provides the user with the ability to add a line
+ * of text to any cross-stitch pattern using a cross-stitch friendly alphabet.
  * </ul>
  * 
  */
-public interface ImageModelInterface {
+public interface ImageModelInterface extends ImageSubject, PatternSubject {
 
   /**
    * This method loads the image from the given file path.
@@ -132,35 +150,73 @@ public interface ImageModelInterface {
    * 
    * @param fileName It is the file name where pattern needs to be printed.
    * @return an ImageInterface object
-   * @throws IOException is there is an error while writing the pattern to the
+   * @throws IOException if there is an error while writing the pattern to the
    *                     file.
    */
   public ImageModelInterface savePattern(String fileName) throws IOException;
 
   /**
-   * This method allows objects to register as observer for state changes.
+   * Remove the given color from the pattern.
    * 
-   * @param imageObserver It is an objects which wants to register for state
-   *                      changes.
+   * @param dmcCode dmc code color to remove from the pattern.
+   * @return an ImageModelInterface object
+   * @throws IOException if there is an error while writing the pattern to the
+   *                     file.
    */
-  public void registerImageObserver(ImageObserver imageObserver);
+  public ImageModelInterface patternRemoveColor(String dmcCode) throws IOException;
 
   /**
-   * This method allows objects to be removed as observer.
+   * It exchanges one color for another given color in a cross-stitch pattern at
+   * given coordinates.
    * 
-   * @param imageObserver It is an objects which wants to remove as observer
+   * @param xCordinate x-coordinate of the image clicked.
+   * @param yCordinate y-coordinate of the image clicked.
+   * @param dmcCode    dmc code color to replace to
+   * @return an ImageModelInterface object
+   * @throws IOException if there is an error while writing the pattern to the
+   *                     file.
    */
-  public void removeImageObserver(ImageObserver imageObserver);
+  public ImageModelInterface patternReplaceColor(int xCordinate, int yCordinate, String dmcCode)
+      throws IOException;
 
   /**
-   * This method notifies observers if there is any state change.
+   * It adds a line of text to cross-stitch pattern in a given color.
+   * 
+   * @param text    The text to be displayed onto the image
+   * @param dmcCode Color in which text to be displayed
+   * @return an ImageModelInterface object
+   * @throws IOException if there is an error while writing the pattern to the
+   *                     file.
    */
-  // public void notifyImageObservers();
 
-  public void registerPatternLegendObserver(PatternLegendObserver patternLegendObserver);
+  public ImageModelInterface patternAddText(String text, String dmcCode) throws IOException;
 
-  public void removePatternLegendObserver(PatternLegendObserver patternLegendObserver);
+  /**
+   * It returns all the dmc codes details.
+   * 
+   * @return List of DmcFloss object having dmcFloss details.
+   * @throws IOException if there is an error while writing the pattern to the
+   *                     file.
+   */
+  public List<DmcFloss> getDmcFlossColors() throws IOException;
 
-  public ImageModelInterface patternUi() throws IOException;
-  // public void notifyPatternObservers();
+  /**
+   * It substitutes each color in the actual pattern with given list of colors.
+   * 
+   * @param selectedColors List of colors to be displaced
+   * @return an ImageModelInterface object
+   * @throws IOException if there is an error while writing the pattern to the
+   *                     file.
+   */
+  public ImageModelInterface patternAddNewColors(List<String> selectedColors) throws IOException;
+
+  /**
+   * It provides the coordinates and the symbol to be displayed on the pattern.
+   * 
+   * @return List of SymbolCordinates object, having coordinates and alphabet to
+   *         be displayed information.
+   * @throws IOException is there is an error while writing the pattern to the
+   *                     file.
+   */
+  public List<SymbolCordinates> patternGetCordinatesForSymbol() throws IOException;
 }

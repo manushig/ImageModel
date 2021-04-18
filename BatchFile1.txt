@@ -1,6 +1,6 @@
-load 3.png
+load goat.png
 pixelate 100
-save 3_pixelate.jpg
-load 3.png
+save goat_pixelate.jpg
+load goat.png
 pattern
-savePattern 3-pattern.txt
+savePattern goat-pattern.txt

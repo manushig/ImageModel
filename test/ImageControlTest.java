@@ -9,26 +9,26 @@ import images.imagemodel.ImageModelInterface;
 import org.junit.Before;
 import org.junit.Test;
 
-
-
 /**
  * A JUnit test class for manipulating 2 D RGB array image data.
  */
 public class ImageControlTest {
   private StringBuffer log;
   private StringBuffer out;
+  private ImageModelInterface mockmodel;
 
   @Before
   public void setUp() {
     log = new StringBuffer();
 
     out = new StringBuffer();
+
+    mockmodel = new MockImageModel(log, 1234);
   }
 
   @Test
   public void TestLoad() throws IOException {
 
-    ImageModelInterface mockmodel = new MockImageModel(log, 12345);
     String command = "load Test.png";
 
     Readable reader = new BufferedReader(new StringReader(command));
@@ -37,14 +37,12 @@ public class ImageControlTest {
 
     control.start(mockmodel);
 
-    assertEquals("Filename: Test.png and UniqueCode: 12345", log.toString());
+    assertEquals("Function: loadImage and Filename: Test.png\n", log.toString());
     assertEquals("load command is executed.\n", out.toString());
   }
 
   @Test
   public void TestSaveImage() throws IOException {
-
-    ImageModelInterface mockmodel = new MockImageModel(log, 12346);
 
     String command = "save Test.png";
 
@@ -54,13 +52,12 @@ public class ImageControlTest {
 
     control.start(mockmodel);
 
-    assertEquals("Filename: Test.png and UniqueCode: 12346", log.toString());
+    assertEquals("Function: saveImage and Filename: Test.png\n", log.toString());
     assertEquals("save command is executed.\n", out.toString());
   }
 
   @Test
   public void TestGrayScale() throws IOException {
-    ImageModelInterface mockmodel = new MockImageModel(log, 12347);
 
     String command = "grayscale";
 
@@ -70,13 +67,12 @@ public class ImageControlTest {
 
     control.start(mockmodel);
 
-    assertEquals("UniqueCode: 12347", log.toString());
+    assertEquals("Function: grayScale\n", log.toString());
     assertEquals("grayscale command is executed.\n", out.toString());
   }
 
   @Test
   public void TestSepia() throws IOException {
-    ImageModelInterface mockmodel = new MockImageModel(log, 12348);
 
     String command = "sepia";
 
@@ -86,13 +82,12 @@ public class ImageControlTest {
 
     control.start(mockmodel);
 
-    assertEquals("UniqueCode: 12348", log.toString());
+    assertEquals("Function: sepia\n", log.toString());
     assertEquals("sepia command is executed.\n", out.toString());
   }
 
   @Test
   public void TestBlur() throws IOException {
-    ImageModelInterface mockmodel = new MockImageModel(log, 12349);
 
     String command = "blur";
 
@@ -102,13 +97,12 @@ public class ImageControlTest {
 
     control.start(mockmodel);
 
-    assertEquals("UniqueCode: 12349", log.toString());
+    assertEquals("Function: blur\n", log.toString());
     assertEquals("blur command is executed.\n", out.toString());
   }
 
   @Test
   public void TestSharpen() throws IOException {
-    ImageModelInterface mockmodel = new MockImageModel(log, 12350);
 
     String command = "sharpen";
 
@@ -118,13 +112,12 @@ public class ImageControlTest {
 
     control.start(mockmodel);
 
-    assertEquals("UniqueCode: 12350", log.toString());
+    assertEquals("Function: sharpen\n", log.toString());
     assertEquals("sharpen command is executed.\n", out.toString());
   }
 
   @Test
   public void TestDither() throws IOException {
-    ImageModelInterface mockmodel = new MockImageModel(log, 12351);
 
     String command = "dither 2";
 
@@ -134,13 +127,12 @@ public class ImageControlTest {
 
     control.start(mockmodel);
 
-    assertEquals("noOfColorsToReduceTo: 2 and UniqueCode: 12351", log.toString());
+    assertEquals("Function: dither and noOfColorsToReduceTo: 2\n", log.toString());
     assertEquals("dither command is executed.\n", out.toString());
   }
 
   @Test
   public void TestMosaic() throws IOException {
-    ImageModelInterface mockmodel = new MockImageModel(log, 12352);
 
     String command = "mosaic 6600";
 
@@ -150,13 +142,12 @@ public class ImageControlTest {
 
     control.start(mockmodel);
 
-    assertEquals("noOfSeeds: 6600 and UniqueCode: 12352", log.toString());
+    assertEquals("Function: mosaic and noOfSeeds: 6600\n", log.toString());
     assertEquals("mosaic command is executed.\n", out.toString());
   }
 
   @Test
   public void TestPixelate() throws IOException {
-    ImageModelInterface mockmodel = new MockImageModel(log, 12353);
 
     String command = "pixelate 30";
 
@@ -166,13 +157,12 @@ public class ImageControlTest {
 
     control.start(mockmodel);
 
-    assertEquals("noOfSquaresAcross: 30 and UniqueCode: 12353", log.toString());
+    assertEquals("Function: pixelate and noOfSquaresAcross: 30\n", log.toString());
     assertEquals("pixelate command is executed.\n", out.toString());
   }
 
   @Test
   public void TestPattern() throws IOException {
-    ImageModelInterface mockmodel = new MockImageModel(log, 12354);
 
     String command = "pattern";
 
@@ -182,13 +172,12 @@ public class ImageControlTest {
 
     control.start(mockmodel);
 
-    assertEquals("UniqueCode: 12354", log.toString());
+    assertEquals("Function: pattern\n", log.toString());
     assertEquals("pattern command is executed.\n", out.toString());
   }
 
   @Test
   public void TestSavePattern() throws IOException {
-    ImageModelInterface mockmodel = new MockImageModel(log, 12355);
 
     String command = "savePattern Test.txt";
 
@@ -198,13 +187,12 @@ public class ImageControlTest {
 
     control.start(mockmodel);
 
-    assertEquals("Filename: Test.txt and UniqueCode: 12355", log.toString());
+    assertEquals("Function: savePattern and fileName: Test.txt\n", log.toString());
     assertEquals("savePattern command is executed.\n", out.toString());
   }
-  
+
   @Test(expected = IllegalArgumentException.class)
   public void TestInvalidCommand() throws IOException {
-    ImageModelInterface mockmodel = new MockImageModel(log, 12355);
 
     String command = "saveImage Test.png";
 
@@ -214,18 +202,17 @@ public class ImageControlTest {
 
     control.start(mockmodel);
   }
-  
+
   @Test(expected = NullPointerException.class)
   public void TestNullIn() throws IOException {
-    ImageModelInterface mockmodel = new MockImageModel(log, 12355);
 
     Readable reader = null;
-    
+
     ImageControllerInterface control = new ImageController(reader, out);
 
     control.start(mockmodel);
   }
-  
+
   @Test(expected = NullPointerException.class)
   public void TestNullOut() throws IOException {
 
@@ -235,7 +222,7 @@ public class ImageControlTest {
 
     ImageControllerInterface control = new ImageController(reader, null);
   }
-  
+
   @Test(expected = NullPointerException.class)
   public void TestNullModel() throws IOException {
     ImageModelInterface mockmodel = null;

@@ -1,11 +1,13 @@
 package images.imagemodel;
 
+import java.util.Objects;
+
 /**
  * DmcFloss, represents the DMC floss to RGB conversion values representation.
  * 
  */
-public class DmcFloss {
-  private int id;
+public class DmcFloss implements Comparable<DmcFloss> {
+  private Integer id;
   private String dmcCode;
   private int redValue;
   private int greenValue;
@@ -25,6 +27,7 @@ public class DmcFloss {
    */
   public DmcFloss(int id, String dmcValue, int redValue, int greenValue, int blueValue,
       char symbol) {
+    Objects.requireNonNull(dmcValue);
     this.id = id;
     this.dmcCode = dmcValue;
     this.redValue = redValue;
@@ -38,8 +41,8 @@ public class DmcFloss {
    * 
    * @return the identifier value.
    */
-  protected int getId() {
-    return this.id;
+  protected Integer getId() {
+    return new Integer(this.id);
   }
 
   /**
@@ -47,7 +50,7 @@ public class DmcFloss {
    * 
    * @return the DMC code value
    */
-  protected String getDmcCode() {
+  public String getDmcCode() {
     return this.dmcCode;
   }
 
@@ -56,7 +59,7 @@ public class DmcFloss {
    * 
    * @return the red value
    */
-  protected int getRedValue() {
+  public int getRedValue() {
     return this.redValue;
   }
 
@@ -65,7 +68,7 @@ public class DmcFloss {
    * 
    * @return the green value
    */
-  protected int getGreenValue() {
+  public int getGreenValue() {
     return this.greenValue;
   }
 
@@ -74,7 +77,7 @@ public class DmcFloss {
    * 
    * @return the blue value
    */
-  protected int getBlueValue() {
+  public int getBlueValue() {
     return this.blueValue;
   }
 
@@ -83,8 +86,40 @@ public class DmcFloss {
    * 
    * @return the unique unicode value
    */
-  protected char getSymbol() {
+  public char getSymbol() {
     return this.symbol;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    // Fast path for pointer equality:
+    if (this == o) { // backward compatibility with default equals
+      return true;
+    }
+
+    if (!(o instanceof DmcFloss)) {
+      return false;
+    }
+
+    DmcFloss that = (DmcFloss) o;
+
+    return (this.getId() == that.getId() && this.getDmcCode() == that.getDmcCode()
+        && this.getRedValue() == that.getRedValue() && this.getGreenValue() == that.getGreenValue()
+        && this.getBlueValue() == that.getBlueValue() && this.getSymbol() == that.getSymbol());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.id, this.dmcCode, this.redValue, this.greenValue, this.blueValue,
+        this.symbol);
+  }
+
+  @Override
+  public int compareTo(DmcFloss other) {
+
+    DmcFloss that = (DmcFloss) other;
+    return this.getId().compareTo(that.getId());
+
   }
 
 }
