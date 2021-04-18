@@ -8,10 +8,20 @@ import images.imagemodel.Legend;
 import images.imagemodel.SymbolCordinates;
 import images.imageview.ImageViewInterface;
 
+/**
+ * MockView, it is the class which mocks the ImageViewInterface to test the
+ * controller in isolation.
+ * 
+ */
 public class MockView implements ImageViewInterface {
 
   private StringBuffer log;
 
+  /**
+   * Constructs a MockView, specifying log.
+   * 
+   * @param log It is the log
+   */
   public MockView(StringBuffer log) {
     this.log = log;
   }

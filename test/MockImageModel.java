@@ -11,7 +11,6 @@ import images.imagemodel.SymbolCordinates;
 /**
  * MockImageModel, it is the class which mocks the ImageModel to test the
  * controller in isolation.
- *
  * 
  */
 public class MockImageModel implements ImageModelInterface {

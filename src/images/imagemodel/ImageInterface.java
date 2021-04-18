@@ -134,8 +134,7 @@ public interface ImageInterface {
    * 
    * @param fileName It is the file name where pattern needs to be printed.
    * @return an ImageInterface object
-   * @throws IOException if there is an error while writing the pattern to the
-   *                     file.
+   * @throws IOException if file/directory not found
    */
   public ImageInterface savePattern(String fileName) throws IOException;
 
@@ -158,8 +157,7 @@ public interface ImageInterface {
    * 
    * @param dmcCode dmc code color to remove from the pattern.
    * @return an ImageInterface object
-   * @throws IOException if there is an error while writing the pattern to the
-   *                     file.
+   * @throws IOException if file/directory not found
    */
   public ImageInterface patternRemoveColor(String dmcCode) throws IOException;
 
@@ -171,8 +169,7 @@ public interface ImageInterface {
    * @param yCordinate y-coordinate of the image clicked.
    * @param dmcCode    dmc code color to replace to
    * @return an ImageInterface object
-   * @throws IOException if there is an error while writing the pattern to the
-   *                     file.
+   * @throws IOException if file/directory not found
    */
   public ImageInterface patternReplaceColor(int xCordinate, int yCordinate, String dmcCode)
       throws IOException;
@@ -183,8 +180,7 @@ public interface ImageInterface {
    * @param text    The text to be displayed onto the image
    * @param dmcCode Color in which text to be displayed
    * @return an ImageInterface object
-   * @throws IOException if there is an error while writing the pattern to the
-   *                     file.
+   * @throws IOException if file/directory not found
    */
   public ImageInterface patternAddText(String text, String dmcCode) throws IOException;
 
@@ -193,8 +189,7 @@ public interface ImageInterface {
    * 
    * @param selectedColors List of colors to be displaced
    * @return an ImageInterface object
-   * @throws IOException if there is an error while writing the pattern to the
-   *                     file.
+   * @throws IOException if file/directory not found
    */
   public ImageInterface patternAddNewColor(List<String> selectedColors) throws IOException;
 
@@ -203,8 +198,7 @@ public interface ImageInterface {
    * 
    * @return List of SymbolCordinates object, having coordinates and alphabet to
    *         be displayed information.
-   * @throws IOException if there is an error while writing the pattern to the
-   *                     file.
+   * @throws IOException if file/directory not found
    */
   public List<SymbolCordinates> patternGetCoordinatesForSymbol() throws IOException;
 }

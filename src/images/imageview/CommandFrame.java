@@ -12,20 +12,27 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
+/**
+ * CommandFrame, a JFrame to take batch script input.
+ *
+ */
 public class CommandFrame extends JFrame implements ActionListener {
 
   /**
-   * 
+   * It is the generated serial version id.
    */
   private static final long serialVersionUID = -2931950600634961973L;
 
   private JTextArea commandTextArea;
   private JButton executeButton;
-  private JScrollPane scrollPane;
-  private JPanel commandPanel;
   private ImageViewInterface parentFrame;
 
-  public CommandFrame(ImageViewInterface parentFrame) {    
+  /**
+   * Constructs a CommandFrame.
+   * 
+   * @param parentFrame It is the parent ImageViewImp frame.
+   */
+  public CommandFrame(ImageViewInterface parentFrame) {
     this.parentFrame = parentFrame;
     this.setSize(200, 200); // Sets the x and y dimension of the frame
     this.setLocation(150, 150);
@@ -34,13 +41,13 @@ public class CommandFrame extends JFrame implements ActionListener {
 
     this.setLayout(new BorderLayout());
 
-
-    commandPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    JPanel commandPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
     commandPanel.setLayout(new BorderLayout(10, 10));
 
     commandTextArea = new JTextArea();
 
-    scrollPane = new JScrollPane(commandTextArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+    JScrollPane scrollPane = new JScrollPane(commandTextArea,
+        ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     scrollPane.setPreferredSize(new Dimension(850, 450));
 
@@ -50,11 +57,11 @@ public class CommandFrame extends JFrame implements ActionListener {
     executeButton.setText("Execute");
     executeButton.addActionListener(this);
     executeButton.setEnabled(true);
- 
+
     commandPanel.add(executeButton, BorderLayout.SOUTH);
 
     this.add(commandPanel);
-    
+
     pack();
     this.setVisible(true);
 
@@ -63,8 +70,8 @@ public class CommandFrame extends JFrame implements ActionListener {
   @Override
   public void actionPerformed(ActionEvent event) {
     if (event.getSource() == executeButton) {
-        this.dispose();
-        parentFrame.setCommandText(commandTextArea.getText());
+      this.dispose();
+      parentFrame.setCommandText(commandTextArea.getText());
     }
 
   }

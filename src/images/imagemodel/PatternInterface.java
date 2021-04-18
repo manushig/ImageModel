@@ -46,18 +46,17 @@ public interface PatternInterface {
    * 
    * @param rgbBuffer         It is a 2D array of RGB colors.
    * @param noOfSquaresAcross It is the number of evenly sized squares.
-   * @param XCordinate        x-coordinate of the image.
-   * @param YCordinate        y-coordinate of the image.
+   * @param xCordinate        x-coordinate of the image.
+   * @param yCordinate        y-coordinate of the image.
    * @param dmcCode           dmc floss code of the color
    * @param legendList        It is the list of legends
    * @return processed 2D array of RGB colors and the legend list
    */
   public Pair<int[][][], List<Legend>> doReplaceColorPattern(int[][][] rgbBuffer,
-      int noOfSquaresAcross, int XCordinate, int YCordinate, String dmcCode,
+      int noOfSquaresAcross, int xCordinate, int yCordinate, String dmcCode,
       List<Legend> legendList);
 
   /**
-   * 
    * This method removes the given dmc code from the legend and replace it with
    * Blank and represents it as dot on the pattern.
    * 
@@ -78,7 +77,7 @@ public interface PatternInterface {
    * @param dmcCode           dmc floss code of the color
    * @param legendList        It is the list of legends
    * @return processed 2D array of RGB colors and the legend list
-   * @throws IOException
+   * @throws IOException if file/directory not found
    */
   public Pair<int[][][], List<Legend>> doAddTextPattern(int[][][] rgbBuffer, int noOfSquaresAcross,
       String text, String dmcCode, List<Legend> legendList) throws IOException;

@@ -13,7 +13,10 @@ import images.imagecontrol.InteractiveController;
 import images.imagemodel.ImageModelInterface;
 import images.imageview.ImageViewInterface;
 
-public class UIControllerTest {
+/**
+ * A JUnit test class for testing Interactive Controller.
+ */
+public class InteractiveControllerTest {
   private StringBuffer log;
   private ImageViewInterface mockview;
   private ImageModelInterface mockmodel;
@@ -95,7 +98,7 @@ public class UIControllerTest {
     String expectedMessage = "Function: setFeatures and feature object passed\n"
         + "Function: registerImageObserver and imageObserver: 1234\n"
         + "Function: registerPatternLegendObserver and patternLegendObserver: 1234\n"
-        + "Function: displayExceptionMessage and message: null\n"
+        + "Function: displayExceptionMessage and message: Issue occured. Please retry\n"
         + "Function: setProgressBarText and message: Issue occured. Please retry\n"
         + "Function: disableMouseListenerOnImagePanel\n";
     assertEquals(expectedMessage, log.toString());
@@ -142,7 +145,7 @@ public class UIControllerTest {
     String expectedMessage = "Function: setFeatures and feature object passed\n"
         + "Function: registerImageObserver and imageObserver: 1234\n"
         + "Function: registerPatternLegendObserver and patternLegendObserver: 1234\n"
-        + "Function: displayExceptionMessage and message: null\n"
+        + "Function: displayExceptionMessage and message: Issue occured. Please retry\n"
         + "Function: setProgressBarText and message: Issue occured. Please retry\n"
         + "Function: disableMouseListenerOnImagePanel\n";
     assertEquals(expectedMessage, log.toString());
@@ -384,7 +387,8 @@ public class UIControllerTest {
         + "Function: registerPatternLegendObserver and patternLegendObserver: 1234\n"
         + "Function: setProgressBarText and message: In Progress.\n"
         + "Function: loadImage and Filename: Test.png\n"
-        + "Function: disableImagePanelOnBatchCommands and message: Load Batch file or enter batch commands to proceed.\n"
+        + "Function: disableImagePanelOnBatchCommands and message: "
+        + "Load Batch file or enter batch commands to proceed.\n"
         + "Function: displayInformationMessage and message: load command is executed.\n" + "\n"
         + "Function: setProgressBarText and message: Success.\n";
     assertEquals(expectedMessage, log.toString());
@@ -399,8 +403,9 @@ public class UIControllerTest {
     String expectedMessage = "Function: setFeatures and feature object passed\n"
         + "Function: registerImageObserver and imageObserver: 1234\n"
         + "Function: registerPatternLegendObserver and patternLegendObserver: 1234\n"
-        + "Function: disableImagePanelOnBatchCommands and message: Load Batch file or enter batch commands to proceed.\n"
-        + "Function: displayExceptionMessage and message: null\n"
+        + "Function: disableImagePanelOnBatchCommands and message: "
+        + "Load Batch file or enter batch commands to proceed.\n"
+        + "Function: displayExceptionMessage and message: Issue occured. Please retry\n"
         + "Function: setProgressBarText and message: Issue occured. Please retry\n";
     assertEquals(expectedMessage, log.toString());
   }
@@ -429,7 +434,8 @@ public class UIControllerTest {
         + "Function: registerImageObserver and imageObserver: 1234\n"
         + "Function: registerPatternLegendObserver and patternLegendObserver: 1234\n"
         + "Function: setProgressBarText and message: In Progress.\n"
-        + "Function: disableImagePanelOnBatchCommands and message: Load Batch file or enter batch commands to proceed.\n"
+        + "Function: disableImagePanelOnBatchCommands and message: "
+        + "Load Batch file or enter batch commands to proceed.\n"
         + "Function: displayExceptionMessage and message: Issue occured. Please retry\n"
         + "Function: setProgressBarText and message: Issue occured. Please retry\n";
     assertEquals(expectedMessage, log.toString());
@@ -444,7 +450,8 @@ public class UIControllerTest {
     String expectedMessage = "Function: setFeatures and feature object passed\n"
         + "Function: registerImageObserver and imageObserver: 1234\n"
         + "Function: registerPatternLegendObserver and patternLegendObserver: 1234\n"
-        + "Function: disableImagePanelOnBatchCommands and message: Load Batch file or enter batch commands to proceed.\n"
+        + "Function: disableImagePanelOnBatchCommands and message: "
+        + "Load Batch file or enter batch commands to proceed.\n"
         + "Function: displayExceptionMessage and message: Issue occured. Please retry\n"
         + "Function: setProgressBarText and message: Issue occured. Please retry\n";
     assertEquals(expectedMessage, log.toString());
@@ -490,7 +497,7 @@ public class UIControllerTest {
     String expectedMessage = "Function: setFeatures and feature object passed\n"
         + "Function: registerImageObserver and imageObserver: 1234\n"
         + "Function: registerPatternLegendObserver and patternLegendObserver: 1234\n"
-        + "Function: displayExceptionMessage and message: null\n"
+        + "Function: displayExceptionMessage and message: Issue occured. Please retry\n"
         + "Function: setProgressBarText and message: Issue occured. Please retry\n"
         + "Function: disableMouseListenerOnImagePanel\n";
     assertEquals(expectedMessage, log.toString());
@@ -538,7 +545,7 @@ public class UIControllerTest {
     String expectedMessage = "Function: setFeatures and feature object passed\n"
         + "Function: registerImageObserver and imageObserver: 1234\n"
         + "Function: registerPatternLegendObserver and patternLegendObserver: 1234\n"
-        + "Function: displayExceptionMessage and message: null\n"
+        + "Function: displayExceptionMessage and message: Issue occured. Please retry\n"
         + "Function: setProgressBarText and message: Issue occured. Please retry\n"
         + "Function: disableMouseListenerOnImagePanel\n";
     assertEquals(expectedMessage, log.toString());
@@ -602,7 +609,8 @@ public class UIControllerTest {
     String expectedMessage = "Function: setFeatures and feature object passed\n"
         + "Function: registerImageObserver and imageObserver: 1234\n"
         + "Function: registerPatternLegendObserver and patternLegendObserver: 1234\n"
-        + "Function: displayInformationMessage and message: Please click on image to replace color.\n"
+        + "Function: displayInformationMessage and message: "
+        + "Please click on image to replace color.\n"
         + "Function: addMouseListenerOnImagePanel\n";
     assertEquals(expectedMessage, log.toString());
 
@@ -647,7 +655,7 @@ public class UIControllerTest {
     String expectedMessage = "Function: setFeatures and feature object passed\n"
         + "Function: registerImageObserver and imageObserver: 1234\n"
         + "Function: registerPatternLegendObserver and patternLegendObserver: 1234\n"
-        + "Function: displayExceptionMessage and message: null\n"
+        + "Function: displayExceptionMessage and message: Issue occured. Please retry\n"
         + "Function: setProgressBarText and message: Issue occured. Please retry\n"
         + "Function: disableMouseListenerOnImagePanel\n";
     assertEquals(expectedMessage, log.toString());
@@ -676,7 +684,7 @@ public class UIControllerTest {
     String expectedMessage = "Function: setFeatures and feature object passed\n"
         + "Function: registerImageObserver and imageObserver: 1234\n"
         + "Function: registerPatternLegendObserver and patternLegendObserver: 1234\n"
-        + "Function: displayExceptionMessage and message: null\n"
+        + "Function: displayExceptionMessage and message: Issue occured. Please retry\n"
         + "Function: setProgressBarText and message: Issue occured. Please retry\n"
         + "Function: disableMouseListenerOnImagePanel\n";
     assertEquals(expectedMessage, log.toString());
@@ -740,7 +748,7 @@ public class UIControllerTest {
     String expectedMessage = "Function: setFeatures and feature object passed\n"
         + "Function: registerImageObserver and imageObserver: 1234\n"
         + "Function: registerPatternLegendObserver and patternLegendObserver: 1234\n"
-        + "Function: displayExceptionMessage and message: null\n"
+        + "Function: displayExceptionMessage and message: Issue occured. Please retry\n"
         + "Function: setProgressBarText and message: Issue occured. Please retry\n"
         + "Function: disableMouseListenerOnImagePanel\n";
     assertEquals(expectedMessage, log.toString());

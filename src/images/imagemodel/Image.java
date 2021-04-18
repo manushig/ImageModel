@@ -36,7 +36,8 @@ public class Image implements ImageInterface {
 
   public Image(Image image) {
     if (!Objects.isNull(image.rgb_buffer)) {
-      this.rgb_buffer = new int[image.rgb_buffer.length][image.rgb_buffer[0].length][image.rgb_buffer[0][0].length];
+      this.rgb_buffer = new int[image.rgb_buffer.length]
+          [image.rgb_buffer[0].length][image.rgb_buffer[0][0].length];
       for (int x = 0; x < image.rgb_buffer.length; x++) {
         for (int y = 0; y < image.rgb_buffer[0].length; y++) {
           for (int z = 0; z < image.rgb_buffer[0][0].length; z++) {

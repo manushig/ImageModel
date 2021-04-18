@@ -156,6 +156,24 @@ public class ImageOperationsUtility {
   }
 
   /**
+   * This method create a clone of an given 2D array.
+   * 
+   * @param source 2D Array whose clone is required
+   * @return Cloned 2D array
+   */
+  protected static int[][] copyArray(int[][] source) {
+    Objects.requireNonNull(source, "2 D array value cannot be null.");
+
+    int[][] target = source.clone();
+
+    for (int i = 0; i < source.length; i++) {
+      target[i] = source[i].clone();
+    }
+
+    return target;
+  }
+
+  /**
    * It returns the number of squares required when generating the cross-stitch
    * pattern.
    * 
@@ -237,24 +255,6 @@ public class ImageOperationsUtility {
       copiedList.add(sourecLegendList.get(i));
     }
     return copiedList;
-  }
-
-  /**
-   * This method create a clone of an given 2D array.
-   * 
-   * @param source 2D Array whose clone is required
-   * @return Cloned 2D array
-   */
-  protected static int[][] copyArray(int[][] source) {
-    Objects.requireNonNull(source, "2 D array value cannot be null.");
-
-    int[][] target = source.clone();
-
-    for (int i = 0; i < source.length; i++) {
-      target[i] = source[i].clone();
-    }
-
-    return target;
   }
 
   /**

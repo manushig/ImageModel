@@ -4,38 +4,25 @@ import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontMetrics;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-
-import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -44,29 +31,26 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import images.imagecontrol.ImageControllerInterface;
 import images.imagecontrol.InteractiveController;
 import images.imagemodel.DmcFloss;
-import images.imagemodel.ImageModelInterface;
-import images.imagemodel.ImageObserver;
 import images.imagemodel.Legend;
-import images.imagemodel.PatternLegendObserver;
 import images.imagemodel.SymbolCordinates;
 import images.imagecontrol.Features;
 
+/**
+ * ImageViewImp, a JFrame to take user inputs and perform image manipulations to
+ * do on the image.
+ *
+ */
 public class ImageViewImp extends JFrame implements ImageViewInterface {
 
   /**
-   * 
+   * It is the generated serial version id.
    */
   private static final long serialVersionUID = 6710309563254238911L;
-  private InteractiveController controller;
-
   private int inputValue;
   private JButton ditherButton;
   private JButton mosaicButton;
@@ -84,8 +68,6 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
   private JMenuItem addTextPatternMenuItem;
   private JMenuItem selectNewColorPatternMenuItem;
 
-  private JMenuBar menuBar;
-
   private JMenu imageOperationsMenu;
   private JMenu fileOperationsMenu;
   private JMenuItem batchCommandMenu;
@@ -101,8 +83,6 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
   private JMenuItem mosaicImageMenu;
   private JMenuItem pixelateImageMenu;
   private JMenuItem generatePatternImageMenu;
-  private JPanel imagePanel;
-  private JPanel legendPanel;
 
   private JFileChooser imageOpenChooser;
   private JFileChooser imageSaveChooser;
@@ -110,10 +90,7 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
   private JFileChooser patternSaveOpenChooser;
   private BufferedImage imageToDisplay;
   private JLabel imageLabel;
-  private JScrollPane imageScrollPane;
-  private JScrollPane legendScrollPane;
-  private JSplitPane splitPane;
-  private JFrame commandFrame;
+
   private String commandText;
   private String addTextToPattern;
   private boolean mouseListenerIsActive;
@@ -123,7 +100,6 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
   private int yCordinateSelected;
   private String dmcCodeSelected;
 
-  private JMenu operationsMenu;
   private JMenuItem imageOperationsMenuItem;
   private JMenuItem commandOperationsMenuItem;
   private JMenuItem exitOperationsMenuItem;
@@ -134,24 +110,28 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
   private DefaultListModel<Object> dmcModel;
   private JList<Object> dmcList;
   private JList<Object> dmcColorList;
-  private JLabel legendLabel;
   private JLabel legendLabelText;
-  private JPanel legendContent;
   private JFrame colorSelectFrame;
   private JFrame addTextFrame;
   private JLabel progressBarText;
 
-  private JScrollPane dmcScrollPane;
   private List<String> selectedNewColors;
   private String fileName;
 
+  /**
+   * Constructs a ImageViewImp.
+   * 
+   * @param caption    It is the title to be displayed.
+   * @param controller It is the controller object
+   * @throws IOException if I/O operations failed.
+   */
   public ImageViewImp(String caption, InteractiveController controller) throws IOException {
     super(caption);
-    this.controller = controller;
-
+    Objects.requireNonNull(caption);
+    Objects.requireNonNull(controller);
     this.setSize(1000, 1000); // Sets the x and y dimension of the frame
     this.setLocation(100, 100);
-    this.setTitle("Cross Stitch Application");
+    this.setTitle(caption);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     this.setLayout(new BorderLayout(10, 10));
@@ -183,9 +163,9 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
   }
 
   private void setMenu() {
-    menuBar = new JMenuBar();
+    JMenuBar menuBar = new JMenuBar();
 
-    operationsMenu = new JMenu("Operations");
+    JMenu operationsMenu = new JMenu("Operations");
     operationsMenu.setMnemonic(KeyEvent.VK_O);
 
     imageOperationsMenuItem = new JMenuItem("Image Operations");
@@ -303,7 +283,7 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
 
   private void setPanel() {
     // Image Panel
-    imagePanel = new JPanel();
+    JPanel imagePanel = new JPanel();
 
     imageLabel = new JLabel();
 
@@ -312,7 +292,8 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
     imageLabel
         .setText("Either Select Image or Command Operations to proceed from Operations menu.");
 
-    imageScrollPane = new JScrollPane(imageLabel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+    JScrollPane imageScrollPane = new JScrollPane(imageLabel,
+        ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     imageScrollPane.setPreferredSize(new Dimension(710, 710));
 
@@ -329,7 +310,7 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
     imagePanel.add(progressBarText);
 
     // Legend Panel
-    legendPanel = new JPanel();
+    JPanel legendPanel = new JPanel();
 
     legendPanel.setLayout(new BorderLayout(10, 10));
 
@@ -342,13 +323,14 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
     dmcList = new JList<Object>();
     dmcColorList = new JList<Object>();
 
-    legendScrollPane = new JScrollPane(dmcList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+    JScrollPane legendScrollPane = new JScrollPane(dmcList,
+        ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     legendScrollPane.setPreferredSize(new Dimension(250, 400));
 
     legendPanel.add(legendScrollPane, BorderLayout.CENTER);
 
-    splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, imagePanel, legendPanel);
+    JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, imagePanel, legendPanel);
 
     splitPane.setOneTouchExpandable(true);
     splitPane.setDividerLocation(750);
@@ -404,6 +386,13 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
     getUserInput("What is the number of squares accross width?", pixelateButton, pixelateImageMenu);
   }
 
+  /**
+   * Private helper method to display JOptionPane and get user input.
+   * 
+   * @param message          Message to display
+   * @param buttonToClick    button be clicked.
+   * @param callingComponent Component
+   */
   private void getUserInput(String message, JButton buttonToClick, Component callingComponent) {
     String value = JOptionPane.showInputDialog(message);
     try {
@@ -420,7 +409,7 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
 
   @Override
   public void geBatchCommandInput() {
-    commandFrame = new CommandFrame(this);
+    CommandFrame commandFrame = new CommandFrame(this);
     commandFrame.setVisible(true);
   }
 
@@ -432,6 +421,13 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
 
   }
 
+  /**
+   * Private helper method to display fileChooser and get user input.
+   * 
+   * @param fileChooser It is the component of JFileChooser
+   * @param filter      It is the filter for file extensions.
+   * @param operation   It is verify which type of Dialog box to show to the user.
+   */
   private void fileChooser(JFileChooser fileChooser, FileNameExtensionFilter filter,
       String operation) {
     fileChooser.setCurrentDirectory(new java.io.File("."));
@@ -548,6 +544,7 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
 
   @Override
   public void updateImage(BufferedImage image) {
+    Objects.requireNonNull(image);
     imageToDisplay = image;
 
     imageLabel.setIcon(new ImageIcon(imageToDisplay));
@@ -560,6 +557,7 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
 
   @Override
   public void updatePatternLegend(List<Legend> patternLegendList) {
+    Objects.requireNonNull(patternLegendList);
     this.patternLegendList = patternLegendList;
     populateLegend();
     setPatternOperationsVisibility(true);
@@ -592,7 +590,7 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
 
   @Override
   public void disableImagePanelOnBatchCommands(String message) {
-
+    Objects.requireNonNull(message);
     imageOperationsPerformed = false;
     fileOperationsMenu.setEnabled(false);
     imageOperationsMenu.setEnabled(false);
@@ -640,6 +638,13 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
 
   }
 
+  /**
+   * Private helper method to show the JOptionPane to get color code.
+   * 
+   * @param title        Title to be displayed
+   * @param colorOptions List of DMC Codes
+   * @return the selected color
+   */
   private String displaycolorOptions(String title, String[] colorOptions) {
 
     String selectedColor = (String) JOptionPane.showInputDialog(null, "Select DMC Color", title,
@@ -653,12 +658,16 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
     mouseListenerIsActive = false;
   }
 
+  /**
+   * Populate legend list for removing the color on the pattern and avoiding Blank
+   * option.
+   */
   private String[] populateLegendList() {
     int size = patternLegendList.size();
     String[] legendDmcCode = new String[size];
     int j = 0;
     for (int i = 0; i < size; i++) {
-      if (patternLegendList.get(i).getDmcCode() != "Blank") {
+      if (!patternLegendList.get(i).getDmcCode().equals("Blank")) {
         String code = String.format("%s", patternLegendList.get(i).getDmcCode());
         legendDmcCode[j] = code;
         j++;
@@ -668,7 +677,10 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
     return legendDmcCode;
   }
 
-  public void populateLegend() {
+  /**
+   * Private helper method to populate DMC Floss list on the legend Panel.
+   */
+  private void populateLegend() {
     legendModel.clear();
     legendLabelText.setText("Legend");
     legendLabelText.setFont(new Font("Serif", Font.BOLD, 18));
@@ -685,7 +697,10 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
     dmcList.setModel(legendModel);
   }
 
-  public void populateDmcFlossList() {
+  /**
+   * Private helper method to populate DMC Floss list on the dialog box.
+   */
+  private void populateDmcFlossList() {
     dmcModel.clear();
 
     for (DmcFloss dmcFloss : dmcFlossList) {
@@ -700,6 +715,15 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
     dmcColorList.setModel(dmcModel);
   }
 
+  /**
+   * Private helper method to create the image icon to display the DMC Floss
+   * code's color.
+   * 
+   * @param color  It is the color to display
+   * @param width  It is the width of the image
+   * @param height It is the height of the image
+   * @return ImageIcon object
+   */
   private ImageIcon createImageIcon(Color color, int width, int height) {
     BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     Graphics2D graphics = image.createGraphics();
@@ -821,7 +845,8 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
 
     panel.add(label, BorderLayout.NORTH);
 
-    dmcScrollPane = new JScrollPane(dmcColorList, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+    JScrollPane dmcScrollPane = new JScrollPane(dmcColorList,
+        ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     dmcScrollPane.setPreferredSize(new Dimension(250, 400));
 
@@ -837,7 +862,8 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
 
   @Override
   public void selectColorAndAddTextWindow(List<DmcFloss> dmcList) {
-    String[] colorOptions = populateDMCFloss(dmcList);
+    Objects.requireNonNull(dmcList);
+    String[] colorOptions = populateDmcFloss(dmcList);
     dmcCodeSelected = displaycolorOptions("Add Text", colorOptions);
 
     if (!Objects.isNull(dmcCodeSelected)) {
@@ -847,7 +873,13 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
 
   }
 
-  private String[] populateDMCFloss(List<DmcFloss> dmcList) {
+  /**
+   * Private helper method DMC Floss details.
+   * 
+   * @param dmcList List of DmcFloss
+   * @return List of DMC codes
+   */
+  private String[] populateDmcFloss(List<DmcFloss> dmcList) {
     int size = dmcList.size();
     String[] dmcCode = new String[size];
     int j = 0;
@@ -876,13 +908,17 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
 
   @Override
   public void setProgressBarText(String message) {
-    // JOptionPane.showMessageDialog(this, message, "Information",
-    // JOptionPane.INFORMATION_MESSAGE);
+    Objects.requireNonNull(message);
     progressBarText.setText(message);
     this.repaint();
   }
 
-  private void addText(List<SymbolCordinates> symbolCordinatesList) {
+  /**
+   * Private helper method to add symbol onto the image at given coordinates.
+   * 
+   * @param symbolCordinatesList List of symbolCordinatesList
+   */
+  private void addSymbols(List<SymbolCordinates> symbolCordinatesList) {
     BufferedImage test = new BufferedImage(imageToDisplay.getWidth(), imageToDisplay.getHeight(),
         BufferedImage.TYPE_INT_ARGB);
 
@@ -899,7 +935,7 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
 
     for (SymbolCordinates symbolCordinates : symbolCordinatesList) {
       String symbolToAdd = String.valueOf(symbolCordinates.getSymbol());
-      Rectangle2D rec = fMetrics.getStringBounds(symbolToAdd, g);
+      fMetrics.getStringBounds(symbolToAdd, g);
 
       int centerX = symbolCordinates.getxCordinate();
       int centerY = symbolCordinates.getyCordinate();
@@ -917,6 +953,7 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
 
   @Override
   public void diplaySymbolsOnPattern(List<SymbolCordinates> symbolCordinatesList) {
-    addText(symbolCordinatesList);
+    Objects.requireNonNull(symbolCordinatesList);
+    addSymbols(symbolCordinatesList);
   }
 }

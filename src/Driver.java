@@ -56,44 +56,9 @@ public class Driver {
 
       interactiveController.setView(view);
 
-    } else
-
-    {
+    } else {
       System.out.println("Invalid arguments\n");
     }
-  }
-
-  public static void main1(String[] args) throws IOException {
-    ImageModelInterface model = new ImageModel();
-
-    InteractiveController control = new InteractiveController(model);
-
-    ImageViewInterface view = new ImageViewImp("Cross Stitch Application", control);
-
-    control.setView(view);
-
-  }
-
-  public static void main2(String[] args) throws IOException {
-    ImageModelInterface model = new ImageModel();
-    String directory = new File(".").getCanonicalPath();
-    String batchfileName = args[args.length - 1];
-    String fileSeperator = FileSystems.getDefault().getSeparator();
-    String batchFile = String.format("%s%s%s", directory, fileSeperator, batchfileName);
-
-    StringBuffer out = new StringBuffer();
-
-    Readable reader = new BufferedReader(new FileReader(batchFile));
-
-    ImageControllerInterface control = new ImageController(reader, out);
-
-    System.out.println("Started\n");
-
-    control.start(model);
-
-    System.out.println(out.toString());
-
-    System.out.println("Done\n");
   }
 
 }

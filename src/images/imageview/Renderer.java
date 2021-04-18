@@ -1,16 +1,17 @@
 package images.imageview;
 
 import java.awt.Component;
-
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
+/**
+ * Renderer, provides the List representation of Legend.
+ * 
+ *
+ */
 public class Renderer extends DefaultListCellRenderer implements ListCellRenderer<Object> {
 
-  /**
-   * 
-   */
   private static final long serialVersionUID = 1L;
 
   @Override

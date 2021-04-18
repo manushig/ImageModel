@@ -173,8 +173,7 @@ public interface ImageModelInterface extends ImageSubject, PatternSubject {
    * @param yCordinate y-coordinate of the image clicked.
    * @param dmcCode    dmc code color to replace to
    * @return an ImageModelInterface object
-   * @throws IOException if there is an error while writing the pattern to the
-   *                     file.
+   * @throws IOException if file/directory not found
    */
   public ImageModelInterface patternReplaceColor(int xCordinate, int yCordinate, String dmcCode)
       throws IOException;
@@ -185,8 +184,7 @@ public interface ImageModelInterface extends ImageSubject, PatternSubject {
    * @param text    The text to be displayed onto the image
    * @param dmcCode Color in which text to be displayed
    * @return an ImageModelInterface object
-   * @throws IOException if there is an error while writing the pattern to the
-   *                     file.
+   * @throws IOException if file/directory not found.
    */
 
   public ImageModelInterface patternAddText(String text, String dmcCode) throws IOException;
@@ -195,8 +193,7 @@ public interface ImageModelInterface extends ImageSubject, PatternSubject {
    * It returns all the dmc codes details.
    * 
    * @return List of DmcFloss object having dmcFloss details.
-   * @throws IOException if there is an error while writing the pattern to the
-   *                     file.
+   * @throws IOException if file/directory not found.
    */
   public List<DmcFloss> getDmcFlossColors() throws IOException;
 
@@ -205,8 +202,7 @@ public interface ImageModelInterface extends ImageSubject, PatternSubject {
    * 
    * @param selectedColors List of colors to be displaced
    * @return an ImageModelInterface object
-   * @throws IOException if there is an error while writing the pattern to the
-   *                     file.
+   * @throws IOException if file/directory not found
    */
   public ImageModelInterface patternAddNewColors(List<String> selectedColors) throws IOException;
 
@@ -215,8 +211,7 @@ public interface ImageModelInterface extends ImageSubject, PatternSubject {
    * 
    * @return List of SymbolCordinates object, having coordinates and alphabet to
    *         be displayed information.
-   * @throws IOException is there is an error while writing the pattern to the
-   *                     file.
+   * @throws IOException if file/directory not found
    */
   public List<SymbolCordinates> patternGetCordinatesForSymbol() throws IOException;
 }

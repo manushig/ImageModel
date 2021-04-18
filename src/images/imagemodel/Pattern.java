@@ -2,7 +2,6 @@ package images.imagemodel;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -31,60 +30,6 @@ public class Pattern implements PatternInterface {
     List<DmcFloss> dmcSet = ImageOperationsUtility.loadDmcFloss();
     Objects.requireNonNull(dmcSet);
     this.dmcDataSet = dmcSet;
-  }
-
-  /**
-   * Private Helper method to print the cross-stitch pattern.
-   * 
-   * @param dmcBuffer         It is the processed 2 D array of RGB color
-   * @param noOfSquaresAcross It is the number of squares across the width of the
-   *                          image.
-   * @param dmcDataSet        It is the DMC Floss RGB conversion dataset.
-   * @return It returns the generated pattern.
-   */
-  private String printPattern(int[][][] dmcBuffer, int noOfSquaresAcross) {
-
-    List<Legend> legendSet = new ArrayList<Legend>();
-
-    int image_height = dmcBuffer.length;
-    int image_width = dmcBuffer[0].length;
-
-    int square_length = image_width / noOfSquaresAcross;
-
-    int pixelate_x = image_height / square_length;
-
-    int m = pixelate_x;
-    int n = noOfSquaresAcross;
-
-    StringBuilder pattern = new StringBuilder();
-
-    pattern.append(String.format("%d x %d\n\n", n, m));
-
-    int i = 0;
-    int j = 0;
-    for (int y = 0; y < m; y++) {
-      for (int x = 0; x < n; x++) {
-        int id = dmcBuffer[i][j][0];
-        pattern.append(String.format("%c", dmcDataSet.get(id).getSymbol()));
-        legendSet
-            .add(new Legend(id, dmcDataSet.get(id).getDmcCode(), dmcDataSet.get(id).getSymbol()));
-        j += square_length;
-      }
-      pattern.append("\n");
-      j = 0;
-      i += square_length;
-
-    }
-
-    pattern.append("\nLEGEND\n");
-
-    Set<Legend> legendListTree = new TreeSet<Legend>(legendSet);
-
-    for (Legend legend : legendListTree) {
-      pattern.append(String.format("%c DMC-%s\n", legend.getSymbol(), legend.getDmcCode()));
-    }
-
-    return pattern.toString();
   }
 
   /**
@@ -138,7 +83,8 @@ public class Pattern implements PatternInterface {
 
     int[][][] rgbBuffer_copy = ImageOperationsUtility.copyArray(rgbBuffer);
 
-    int[][][] pattern_buffer = new int[rgbBuffer_copy.length][rgbBuffer_copy[0].length][rgbBuffer_copy[0][0].length];
+    int[][][] pattern_buffer = new int[rgbBuffer_copy.length]
+        [rgbBuffer_copy[0].length][rgbBuffer_copy[0][0].length];
 
     int[][][] legend_buffer = new int[rgbBuffer_copy.length][rgbBuffer_copy[0].length][1];
 
@@ -166,6 +112,14 @@ public class Pattern implements PatternInterface {
     return new Pair<int[][][], List<Legend>>(pattern_buffer, legendList);
   }
 
+  /**
+   * Private helper method to generate the Legends list.
+   * 
+   * @param dmcBuffer         It is 3D Array of DMC code id's'
+   * @param noOfSquaresAcross It is the number of squares across the width of the
+   *                          image.
+   * @return Set of Legends
+   */
   private Set<Legend> generateLegend(int[][][] dmcBuffer, int noOfSquaresAcross) {
 
     List<Legend> legendSet = new ArrayList<Legend>();
@@ -204,7 +158,8 @@ public class Pattern implements PatternInterface {
 
   @Override
   public Pair<int[][][], List<Legend>> doReplaceColorPattern(int[][][] rgbBuffer,
-      int noOfSquaresAcross, int XCordinate, int YCordinate, String dmcCode,
+      int noOfSquaresAcross, int xCordinate,
+      int yCordinate, String dmcCode,
       List<Legend> legendList) {
     Objects.requireNonNull(rgbBuffer, "2 D RGB array value cannot be null.");
     Objects.requireNonNull(dmcCode, "DMC Code value cannot be null.");
@@ -213,9 +168,9 @@ public class Pattern implements PatternInterface {
     int[][][] pattern_buffer = ImageOperationsUtility.copyArray(rgbBuffer);
 
     int[] color = new int[3];
-    color[0] = pattern_buffer[YCordinate][XCordinate][0];
-    color[1] = pattern_buffer[YCordinate][XCordinate][1];
-    color[2] = pattern_buffer[YCordinate][XCordinate][2];
+    color[0] = pattern_buffer[yCordinate][xCordinate][0];
+    color[1] = pattern_buffer[yCordinate][xCordinate][1];
+    color[2] = pattern_buffer[yCordinate][xCordinate][2];
 
     DmcFloss dmcFlossToReplaceWith = getDmcFlossDetails(dmcCode);
 
@@ -239,6 +194,9 @@ public class Pattern implements PatternInterface {
     }
 
     String dmcFlossCodeToReplace = getDmcFlossDetails(color[0], color[1], color[2], legendList);
+
+    Objects.requireNonNull(dmcFlossCodeToReplace);
+
     Set<Legend> legendSet = modifyLegendList(legendList, dmcFlossCodeToReplace, null);
     List<Legend> updatedLegendList = new ArrayList<>(legendSet);
 
@@ -254,6 +212,15 @@ public class Pattern implements PatternInterface {
     return null;
   }
 
+  /**
+   * Private helper method to get DMC code of the given color.
+   * 
+   * @param redColor   It is the red color
+   * @param greenColor It is the green color
+   * @param blueColor  It is the blue color
+   * @param legendList It is the list of Legend
+   * @return
+   */
   private String getDmcFlossDetails(int redColor, int greenColor, int blueColor,
       List<Legend> legendList) {
 
@@ -267,6 +234,14 @@ public class Pattern implements PatternInterface {
     return null;
   }
 
+  /**
+   * Private helper method to modify the legend list.
+   * 
+   * @param legendList    It is the list of Legend
+   * @param dmcFlossCode  It is DMC Floss to be removed
+   * @param dmcFlossToAdd It is DMC Floss to be added
+   * @return Updated Legend list
+   */
   private Set<Legend> modifyLegendList(List<Legend> legendList, String dmcFlossCode,
       DmcFloss dmcFlossToAdd) {
     int legendIndex = -1;
@@ -306,6 +281,13 @@ public class Pattern implements PatternInterface {
     return updatedLegendList;
   }
 
+  /**
+   * Private helper method to generate the Blank DMC Floss details.
+   * 
+   * @param dmcfloss   DMC Floss whose will be removed from the pattern
+   * @param legendList It is the list of Legend
+   * @return Blank DMC Floss details
+   */
   private DmcFloss generateBlankFloss(DmcFloss dmcfloss, List<Legend> legendList) {
     int id = getLeastId(legendList) - 1;
     return new DmcFloss(id, "Blank", dmcfloss.getRedValue(), dmcfloss.getGreenValue(),
@@ -313,6 +295,12 @@ public class Pattern implements PatternInterface {
 
   }
 
+  /**
+   * Private helper method to get Least id in the legend list.
+   * 
+   * @param legendList It is the list of Legend
+   * @return least id in the legend list
+   */
   private int getLeastId(List<Legend> legendList) {
     Collections.sort(legendList);
     return legendList.get(0).getDmcId();
@@ -437,6 +425,15 @@ public class Pattern implements PatternInterface {
     return new Pair<int[][][], List<Legend>>(pattern_buffer, updatedLegendList);
   }
 
+  /**
+   * Private helper method to add DMC floss code to the Legend list.
+   * 
+   * @param legendList    It is the list of Legend
+   * @param dmcFlossCode  It is the DMC Floss code whose details needs to be added
+   *                      to Legend list
+   * @param dmcFlossToAdd It is the DMC Floss needs to be added to the Legend list
+   * @return Updated Legend list
+   */
   private Set<Legend> addToLegendList(List<Legend> legendList, String dmcFlossCode,
       DmcFloss dmcFlossToAdd) {
     boolean dmcFlossNotAdded = true;
@@ -455,6 +452,12 @@ public class Pattern implements PatternInterface {
     return legendListTree;
   }
 
+  /**
+   * Private helper method to return legend information of the given Dmc Floss.
+   * 
+   * @param dmcFlossToAdd Dmc Floss to add.
+   * @return Legend
+   */
   private Legend legendToAdd(DmcFloss dmcFlossToAdd) {
     Legend legendToAdd = new Legend(dmcFlossToAdd.getId(), dmcFlossToAdd.getDmcCode(),
         dmcFlossToAdd.getSymbol(), dmcFlossToAdd.getRedValue(), dmcFlossToAdd.getGreenValue(),
@@ -471,7 +474,8 @@ public class Pattern implements PatternInterface {
 
     int[][][] rgbBuffer_copy = ImageOperationsUtility.copyArray(rgbBuffer);
 
-    int[][][] pattern_buffer = new int[rgbBuffer_copy.length][rgbBuffer_copy[0].length][rgbBuffer_copy[0][0].length];
+    int[][][] pattern_buffer = new int[rgbBuffer_copy.length]
+        [rgbBuffer_copy[0].length][rgbBuffer_copy[0][0].length];
 
     Objects.requireNonNull(dmcDataSet);
 
@@ -503,6 +507,13 @@ public class Pattern implements PatternInterface {
     return new Pair<int[][][], List<Legend>>(pattern_buffer, updatedLegendList);
   }
 
+  /**
+   * Private helper method to get dmc floss list from the given list of selected
+   * colors.
+   * 
+   * @param selectedColors list of selected colors
+   * @return list of DmcFloss
+   */
   private List<DmcFloss> getDmcListFromSelectedColors(List<String> selectedColors) {
     List<DmcFloss> dmcFlossSelectedColorsList = new ArrayList<DmcFloss>();
     for (String dmcCode : selectedColors) {
@@ -513,7 +524,7 @@ public class Pattern implements PatternInterface {
   }
 
   /**
-   * Private helper method to generate the legend using new colors list
+   * Private helper method to generate the legend using new colors list.
    * 
    * @param uniqueDmcFloss set of unique Dmc Floss details
    * @return

@@ -1,9 +1,13 @@
-import java.awt.image.BufferedImage;
 import java.util.List;
 
 import images.imagemodel.Legend;
 import images.imagemodel.PatternLegendObserver;
 
+/**
+ * MockPatternLegendObserver, it is the class which mocks the
+ * PatternLegendObserver to test the controller in isolation.
+ * 
+ */
 public class MockPatternLegendObserver implements PatternLegendObserver {
   private StringBuffer log;
   private final int uniqueCode;

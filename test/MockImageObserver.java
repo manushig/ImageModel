@@ -2,6 +2,11 @@ import java.awt.image.BufferedImage;
 
 import images.imagemodel.ImageObserver;
 
+/**
+ * MockImageObserver, it is the class which mocks the ImageObserver to test the
+ * controller in isolation.
+ * 
+ */
 public class MockImageObserver implements ImageObserver {
   private StringBuffer log;
   private final int uniqueCode;

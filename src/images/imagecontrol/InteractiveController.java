@@ -68,7 +68,7 @@ public class InteractiveController implements Features {
   public void loadImage(String fileName) {
     try {
       Objects.requireNonNull(fileName);
-      if (fileName != "") {
+      if (!fileName.equals("")) {
         view.setProgressBarText("In Progress.");
         ImageCommand givenCommand = new LoadImage(fileName);
         givenCommand.execute(model);
@@ -92,7 +92,7 @@ public class InteractiveController implements Features {
     try {
 
       Objects.requireNonNull(fileName);
-      if (fileName != "") {
+      if (!fileName.equals("")) {
         view.setProgressBarText("In Progress.");
         ImageCommand givenCommand = new SaveImage(fileName);
         givenCommand.execute(model);
@@ -252,7 +252,7 @@ public class InteractiveController implements Features {
   public void savePattern(String fileName) {
     try {
       Objects.requireNonNull(fileName);
-      if (fileName != "") {
+      if (!fileName.equals("")) {
         view.setProgressBarText("In Progress.");
         ImageCommand givenCommand = new SavePattern(fileName);
         givenCommand.execute(model);
@@ -272,7 +272,7 @@ public class InteractiveController implements Features {
   public void executeBatchcommand(String commandText) {
     try {
       Objects.requireNonNull(commandText);
-      if (commandText != "") {
+      if (!commandText.equals("")) {
         view.setProgressBarText("In Progress.");
         StringBuffer out = new StringBuffer();
 
@@ -298,8 +298,7 @@ public class InteractiveController implements Features {
   public void executeBatchFile(String fileName) {
     try {
       Objects.requireNonNull(fileName);
-
-      if (fileName != "") {
+      if (!fileName.equals("")) {
         view.setProgressBarText("In Progress.");
         StringBuffer out = new StringBuffer();
         Readable reader = new BufferedReader(new FileReader(fileName));
@@ -325,7 +324,7 @@ public class InteractiveController implements Features {
     try {
       Objects.requireNonNull(dmcCode);
 
-      if (dmcCode != "") {
+      if (!dmcCode.equals("")) {
         view.setProgressBarText("In Progress.");
         ImageCommand givenCommand = new PatternReplaceColor(xCordinate, yCordinate, dmcCode);
         givenCommand.execute(model);
@@ -348,7 +347,7 @@ public class InteractiveController implements Features {
     try {
       Objects.requireNonNull(dmcCode);
 
-      if (dmcCode != "") {
+      if (!dmcCode.equals("")) {
         view.setProgressBarText("In Progress.");
         ImageCommand givenCommand = new PatternRemoveColor(dmcCode);
         givenCommand.execute(model);
@@ -397,7 +396,7 @@ public class InteractiveController implements Features {
     try {
       Objects.requireNonNull(dmcCode);
       Objects.requireNonNull(text);
-      if (dmcCode != "" && text != "") {
+      if ((!dmcCode.equals("")) && (!text.equals(""))) {
         view.setProgressBarText("In Progress.");
         ImageCommand givenCommand = new PatternAddText(text, dmcCode);
         givenCommand.execute(model);

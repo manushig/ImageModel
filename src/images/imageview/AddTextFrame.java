@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,8 +12,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+/**
+ * AddTextFrame, a JFrame to take text input to be displayed onto the pattern.
+ *
+ */
 public class AddTextFrame extends JFrame implements ActionListener {
 
+  /**
+   * It is the generated serial version id.
+   */
+  private static final long serialVersionUID = -7163521050934143251L;
   private String buttonsString;
   private JButton[] buttonList;
   private String buffer;
@@ -24,12 +31,14 @@ public class AddTextFrame extends JFrame implements ActionListener {
   private JButton enter;
   private JButton clearAll;
   private JButton addText;
-  private JPanel panel;
-  private JPanel buttonPanel;
-  private JPanel textPanel;
 
   private ImageViewInterface parentFrame;
 
+  /**
+   * Constructs a AddTextFrame.
+   * 
+   * @param parentFrame It is the parent ImageViewImp frame.
+   */
   public AddTextFrame(ImageViewInterface parentFrame) {
     Objects.requireNonNull(parentFrame);
     this.parentFrame = parentFrame;
@@ -40,12 +49,12 @@ public class AddTextFrame extends JFrame implements ActionListener {
 
     buffer = "";
 
-    panel = new JPanel(new BorderLayout(10, 10));
+    JPanel panel = new JPanel(new BorderLayout(10, 10));
     panel.setPreferredSize(new Dimension(400, 400));
 
     buttonsString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.,-!?";
 
-    textPanel = new JPanel(new BorderLayout());
+    JPanel textPanel = new JPanel(new BorderLayout());
 
     JLabel note = new JLabel();
     note.setText("Note: Longer text will be truncated if it doesn't fit");
@@ -55,12 +64,12 @@ public class AddTextFrame extends JFrame implements ActionListener {
     text = new JTextField(100);
     text.setActionCommand("" + buffer);
     text.setEditable(false);
-    text.setPreferredSize( new Dimension( 200, 24 ) );
+    text.setPreferredSize(new Dimension(200, 24));
     textPanel.add(text, BorderLayout.SOUTH);
 
     panel.add(textPanel, BorderLayout.NORTH);
 
-    buttonPanel = new JPanel();
+    JPanel buttonPanel = new JPanel();
 
     int number = buttonsString.length();
     buttonList = new JButton[number];
@@ -115,7 +124,7 @@ public class AddTextFrame extends JFrame implements ActionListener {
       text.setText("" + buffer);
     } else if (event.getSource() == addText) {
       this.dispose();
-      parentFrame.setAddTextToPattern(buffer.toString());
+      parentFrame.setAddTextToPattern(buffer);
     } else {
       for (int i = 0; i < number; i++) {
         if (event.getSource() == buttonList[i]) {
