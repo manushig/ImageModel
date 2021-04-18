@@ -18,6 +18,7 @@ public class SavePattern implements ImageCommand {
    * Constructs a SavePattern, specifying file name.
    * 
    * @param fileName It is the name of the file where pattern needs to be saved.
+   * @throws IllegalArgumentException if filename is empty.
    */
   public SavePattern(String fileName) throws IllegalArgumentException {
     Objects.requireNonNull(fileName);

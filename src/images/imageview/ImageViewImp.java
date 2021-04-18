@@ -568,8 +568,10 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
 
   @Override
   public void clearLegend() {
+    Objects.requireNonNull(legendModel);
     legendModel.clear();
     legendLabelText.setText("");
+    
     dmcList.setModel(legendModel);
 
     setPatternOperationsVisibility(false);

@@ -11,7 +11,7 @@ import images.imagemodel.ImageModelInterface;
  */
 public class Pixelate implements ImageCommand {
 
-  private int noOfSquaresAcross;
+  private final int noOfSquaresAcross;
 
   /**
    * Constructs a Pixelate, specifying number of squares across the width of the

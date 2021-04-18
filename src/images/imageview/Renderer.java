@@ -1,6 +1,8 @@
 package images.imageview;
 
 import java.awt.Component;
+import java.util.Objects;
+
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
@@ -17,6 +19,8 @@ public class Renderer extends DefaultListCellRenderer implements ListCellRendere
   @Override
   public Component getListCellRendererComponent(JList<?> list, Object value, int index,
       boolean isSelected, boolean cellHasFocus) {
+    Objects.requireNonNull(list);
+    Objects.requireNonNull(value);
     LegendTextIcon legendIcon = (LegendTextIcon) value;
     setText(legendIcon.getDmcFlossText());
     setIcon(legendIcon.getDmcFlossImage());
