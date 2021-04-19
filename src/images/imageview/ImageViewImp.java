@@ -432,7 +432,7 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
     JFileChooser fileChooser = new JFileChooser();
     fileChooser.setCurrentDirectory(new java.io.File("."));
     fileChooser.setSelectedFile(new File(""));
-    fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+    fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
     fileChooser.setFileFilter(filter);
     int result = 0;
     if (operation.equals("save")) {
@@ -440,12 +440,17 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
     } else if (operation.equals("load")) {
       result = fileChooser.showOpenDialog(this);
     }
-    if (Objects.isNull(result) || result == 1) {
-      this.fileName = "";
-    } else {
+    
+    if(result == JFileChooser.APPROVE_OPTION)
+    {
       this.fileName = fileChooser.getSelectedFile().getAbsolutePath();
+      fileChooserButton.doClick();
     }
-    fileChooserButton.doClick();
+    else
+    {
+      this.fileName = "";
+    }
+    
   }
 
   @Override

@@ -165,31 +165,31 @@ Invalid arguments
 
 - Filtering Images - Blur
   
- ![](./ImageResources/IndiaFlag-blur.png)
+ ![](./Screenshots/IndiaFlag-blur.png)
   
 - Filtering Images - Sharpness
   
-  ![](./ImageResources/IndiaFlag-sharpen.png)
+  ![](./Screenshots/IndiaFlag-sharpen.png)
  
 - Color transformations - Grey Scale
   
-  ![](./ImageResources/IndiaFlag-grayscale.png)
+  ![](./Screenshots/IndiaFlag-grayscale.png)
 
 - Color transformations - Sepia Tone
   
-  ![](./ImageResources/IndiaFlag-sepia.png)
+  ![](./Screenshots/IndiaFlag-sepia.png)
 
 - Dither - 8 values per channel
   
-  ![](./ImageResources/IndiaFlag-dither.png)
+  ![](./Screenshots/IndiaFlag-dither.png)
 
 - Mosaic - 1650 seeds
   
-  ![](./ImageResources/IndiaFlag-mosaic-1650.png)
+  ![](./Screenshots/IndiaFlag-mosaic-1650.png)
 
 - Pixelate 100 squares across
 
-  ![](./ImageResources/IndiaFlag-pixelate-100.png)
+  ![](./Screenshots/IndiaFlag-pixelate-100.png)
 
 - Cross-Stitch Pattern - This pattern can be seen by opening the file at /ImageResources/IndiaFlag-pattern.txt. This file should be open in UTF-16 BE format.
 
@@ -418,7 +418,7 @@ It is an interface that is refer by Subject for updating state.
 8) Text is added to 0,0 location, if user writes again on the same image then text will be overwritten.
   
 # Limitations
-- Text is added to 0,0 location, if user writes again on the same image then text will be overwritten.
+- None
  
 # Citations
 - IndiaFlag.png - https://pixabay.com/vectors/flag-india-tricolor-country-nation-159416/
