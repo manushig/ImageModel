@@ -83,7 +83,8 @@ public class Pattern implements PatternInterface {
 
     int[][][] rgbBuffer_copy = ImageOperationsUtility.copyArray(rgbBuffer);
 
-    int[][][] pattern_buffer = new int[rgbBuffer_copy.length][rgbBuffer_copy[0].length][rgbBuffer_copy[0][0].length];
+    int[][][] pattern_buffer = new int[rgbBuffer_copy.length]
+        [rgbBuffer_copy[0].length][rgbBuffer_copy[0][0].length];
 
     int[][][] legend_buffer = new int[rgbBuffer_copy.length][rgbBuffer_copy[0].length][1];
 
@@ -472,7 +473,8 @@ public class Pattern implements PatternInterface {
 
     int[][][] rgbBuffer_copy = ImageOperationsUtility.copyArray(rgbBuffer);
 
-    int[][][] pattern_buffer = new int[rgbBuffer_copy.length][rgbBuffer_copy[0].length][rgbBuffer_copy[0][0].length];
+    int[][][] pattern_buffer = new int[rgbBuffer_copy.length]
+        [rgbBuffer_copy[0].length][rgbBuffer_copy[0][0].length];
 
     Objects.requireNonNull(dmcDataSet);
 

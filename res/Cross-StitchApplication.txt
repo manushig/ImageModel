@@ -1,0 +1,36 @@
+PS C:\Manushi\ProjectsWorkSpace\ImageModel\res\ImageResources> java -jar .\Program.jar -interactive
+PS C:\Manushi\ProjectsWorkSpace\ImageModel\res\ImageResources> java -jar .\Program.jar -script .\BatchFile1.txt
+Started
+
+load command is executed.
+blur command is executed.
+save command is executed.
+load command is executed.
+sharpen command is executed.
+save command is executed.
+load command is executed.
+grayscale command is executed.
+save command is executed.
+load command is executed.
+sepia command is executed.
+save command is executed.
+load command is executed.
+dither command is executed.
+save command is executed.
+load command is executed.
+mosaic command is executed.
+save command is executed.
+load command is executed.
+pixelate command is executed.
+save command is executed.
+load command is executed.
+pixelate command is executed.
+save command is executed.
+load command is executed.
+pattern command is executed.
+savePattern command is executed.
+
+Done
+
+PS C:\Manushi\ProjectsWorkSpace\ImageModel\res\ImageResources> java -jar .\Program.jar -wrong
+Invalid arguments

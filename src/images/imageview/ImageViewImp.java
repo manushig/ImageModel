@@ -41,8 +41,8 @@ import images.imagemodel.SymbolCordinates;
 import images.imagecontrol.Features;
 
 /**
- * ImageViewImp, a JFrame to take user inputs and perform image manipulations to
- * do on the image.
+ * ImageViewImp, a JFrame to take user inputs and perform image manipulations on
+ * the image.
  *
  */
 public class ImageViewImp extends JFrame implements ImageViewInterface {
@@ -571,7 +571,7 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
     Objects.requireNonNull(legendModel);
     legendModel.clear();
     legendLabelText.setText("");
-    
+
     dmcList.setModel(legendModel);
 
     setPatternOperationsVisibility(false);
