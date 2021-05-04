@@ -1,6 +1,0 @@
-load goat.png
-pixelate 100
-save goat_pixelate.jpg
-load goat.png
-pattern
-savePattern goat-pattern.txt

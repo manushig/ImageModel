@@ -79,7 +79,10 @@ public class InteractiveController implements Features {
       } else {
         view.displayExceptionMessage("Filename not selected.");
       }
-    } catch (Exception exception) {
+    } catch (NullPointerException exception) {
+      view.displayExceptionMessage("Issue occured. Please retry");
+      view.setProgressBarText("Issue occured. Please retry");
+    } catch (IOException exception) {
       view.displayExceptionMessage("Issue occured. Please retry");
       view.setProgressBarText("Issue occured. Please retry");
     } finally {
@@ -101,7 +104,10 @@ public class InteractiveController implements Features {
       } else {
         view.displayExceptionMessage("Filename not selected.");
       }
-    } catch (Exception exception) {
+    } catch (NullPointerException exception) {
+      view.displayExceptionMessage("Issue occured. Please retry");
+      view.setProgressBarText("Issue occured. Please retry");
+    } catch (IOException exception) {
       view.displayExceptionMessage("Issue occured. Please retry");
       view.setProgressBarText("Issue occured. Please retry");
     } finally {
@@ -119,7 +125,10 @@ public class InteractiveController implements Features {
       view.disableMouseListenerOnImagePanel();
       view.setImageOperationsPerformedStatus(true);
       view.setProgressBarText("Success.");
-    } catch (Exception exception) {
+    } catch (NullPointerException exception) {
+      view.displayExceptionMessage("Issue occured. Please retry");
+      view.setProgressBarText("Issue occured. Please retry");
+    } catch (IOException exception) {
       view.displayExceptionMessage("Issue occured. Please retry");
       view.setProgressBarText("Issue occured. Please retry");
     }
@@ -135,7 +144,10 @@ public class InteractiveController implements Features {
       view.disableMouseListenerOnImagePanel();
       view.setImageOperationsPerformedStatus(true);
       view.setProgressBarText("Success.");
-    } catch (Exception exception) {
+    } catch (NullPointerException exception) {
+      view.displayExceptionMessage("Issue occured. Please retry");
+      view.setProgressBarText("Issue occured. Please retry");
+    } catch (IOException exception) {
       view.displayExceptionMessage("Issue occured. Please retry");
       view.setProgressBarText("Issue occured. Please retry");
     }
@@ -151,7 +163,10 @@ public class InteractiveController implements Features {
       view.disableMouseListenerOnImagePanel();
       view.setImageOperationsPerformedStatus(true);
       view.setProgressBarText("Success.");
-    } catch (Exception exception) {
+    } catch (NullPointerException exception) {
+      view.displayExceptionMessage("Issue occured. Please retry");
+      view.setProgressBarText("Issue occured. Please retry");
+    } catch (IOException exception) {
       view.displayExceptionMessage("Issue occured. Please retry");
       view.setProgressBarText("Issue occured. Please retry");
     }
@@ -167,7 +182,10 @@ public class InteractiveController implements Features {
       view.disableMouseListenerOnImagePanel();
       view.setImageOperationsPerformedStatus(true);
       view.setProgressBarText("Success.");
-    } catch (Exception exception) {
+    } catch (NullPointerException exception) {
+      view.displayExceptionMessage("Issue occured. Please retry");
+      view.setProgressBarText("Issue occured. Please retry");
+    } catch (IOException exception) {
       view.displayExceptionMessage("Issue occured. Please retry");
       view.setProgressBarText("Issue occured. Please retry");
     }
@@ -187,7 +205,10 @@ public class InteractiveController implements Features {
       } else {
         view.displayExceptionMessage("Value should be greater than 0");
       }
-    } catch (Exception exception) {
+    } catch (NullPointerException exception) {
+      view.displayExceptionMessage("Issue occured. Please retry");
+      view.setProgressBarText("Issue occured. Please retry");
+    } catch (IOException exception) {
       view.displayExceptionMessage("Issue occured. Please retry");
       view.setProgressBarText("Issue occured. Please retry");
     }
@@ -207,7 +228,10 @@ public class InteractiveController implements Features {
       } else {
         view.displayExceptionMessage("Value should be greater than 0");
       }
-    } catch (Exception exception) {
+    } catch (NullPointerException exception) {
+      view.displayExceptionMessage("Issue occured. Please retry");
+      view.setProgressBarText("Issue occured. Please retry");
+    } catch (IOException exception) {
       view.displayExceptionMessage("Issue occured. Please retry");
       view.setProgressBarText("Issue occured. Please retry");
     }
@@ -227,7 +251,10 @@ public class InteractiveController implements Features {
       } else {
         view.displayExceptionMessage("Value should be greater than 0");
       }
-    } catch (Exception exception) {
+    } catch (IOException exception) {
+      view.displayExceptionMessage("Issue occured. Please retry");
+      view.setProgressBarText("Issue occured. Please retry");
+    } catch (NullPointerException exception) {
       view.displayExceptionMessage("Issue occured. Please retry");
       view.setProgressBarText("Issue occured. Please retry");
     }
@@ -242,7 +269,10 @@ public class InteractiveController implements Features {
       view.disableMouseListenerOnImagePanel();
       view.setImageOperationsPerformedStatus(true);
       view.setProgressBarText("Success.");
-    } catch (Exception exception) {
+    } catch (IOException exception) {
+      view.displayExceptionMessage("Issue occured. Please retry");
+      view.setProgressBarText("Issue occured. Please retry");
+    } catch (NullPointerException exception) {
       view.displayExceptionMessage("Issue occured. Please retry");
       view.setProgressBarText("Issue occured. Please retry");
     }
@@ -262,7 +292,10 @@ public class InteractiveController implements Features {
       } else {
         view.displayExceptionMessage("Filename not selected.");
       }
-    } catch (Exception exception) {
+    } catch (NullPointerException exception) {
+      view.displayExceptionMessage("Issue occured. Please retry");
+      view.setProgressBarText("Issue occured. Please retry");
+    } catch (IOException exception) {
       view.displayExceptionMessage("Issue occured. Please retry");
       view.setProgressBarText("Issue occured. Please retry");
     }
@@ -286,7 +319,12 @@ public class InteractiveController implements Features {
       } else {
         view.displayExceptionMessage("Text given is empty.");
       }
-    } catch (Exception exception) {
+    } catch (NullPointerException exception) {
+      view.disableImagePanelOnBatchCommands("Load Batch file or enter batch commands to proceed.");
+      view.displayExceptionMessage("Issue occured. Please retry");
+
+      view.setProgressBarText("Issue occured. Please retry");
+    } catch (IOException exception) {
       view.disableImagePanelOnBatchCommands("Load Batch file or enter batch commands to proceed.");
       view.displayExceptionMessage("Issue occured. Please retry");
 
@@ -312,7 +350,11 @@ public class InteractiveController implements Features {
       } else {
         view.displayExceptionMessage("Filename not selected.");
       }
-    } catch (Exception exception) {
+    } catch (NullPointerException exception) {
+      view.disableImagePanelOnBatchCommands("Load Batch file or enter batch commands to proceed.");
+      view.displayExceptionMessage("Issue occured. Please retry");
+      view.setProgressBarText("Issue occured. Please retry");
+    } catch (IOException exception) {
       view.disableImagePanelOnBatchCommands("Load Batch file or enter batch commands to proceed.");
       view.displayExceptionMessage("Issue occured. Please retry");
       view.setProgressBarText("Issue occured. Please retry");
@@ -333,7 +375,10 @@ public class InteractiveController implements Features {
       } else {
         view.displayExceptionMessage("DMC Code cannot be empty.");
       }
-    } catch (Exception exception) {
+    } catch (NullPointerException exception) {
+      view.displayExceptionMessage("Issue occured. Please retry");
+      view.setProgressBarText("Issue occured. Please retry");
+    } catch (IOException exception) {
       view.displayExceptionMessage("Issue occured. Please retry");
       view.setProgressBarText("Issue occured. Please retry");
     } finally {
@@ -357,7 +402,10 @@ public class InteractiveController implements Features {
       } else {
         view.displayExceptionMessage("DMC Code cannot be empty.");
       }
-    } catch (Exception exception) {
+    } catch (NullPointerException exception) {
+      view.displayExceptionMessage("Issue occured. Please retry");
+      view.setProgressBarText("Issue occured. Please retry");
+    } catch (IOException exception) {
       view.displayExceptionMessage("Issue occured. Please retry");
       view.setProgressBarText("Issue occured. Please retry");
     } finally {
@@ -405,7 +453,10 @@ public class InteractiveController implements Features {
       } else {
         view.displayExceptionMessage("DMC Code cannot be empty.");
       }
-    } catch (Exception exception) {
+    } catch (IOException exception) {
+      view.displayExceptionMessage("Issue occured. Please retry");
+      view.setProgressBarText("Issue occured. Please retry");
+    } catch (NullPointerException exception) {
       view.displayExceptionMessage("Issue occured. Please retry");
       view.setProgressBarText("Issue occured. Please retry");
     } finally {
@@ -424,7 +475,10 @@ public class InteractiveController implements Features {
 
       view.addNewColorsWindow(dmcFlossDataSet);
       view.setProgressBarText("Success.");
-    } catch (Exception exception) {
+    } catch (NullPointerException exception) {
+      view.displayExceptionMessage("Issue occured. Please retry");
+      view.setProgressBarText("Issue occured. Please retry");
+    } catch (IOException exception) {
       view.displayExceptionMessage("Issue occured. Please retry");
       view.setProgressBarText("Issue occured. Please retry");
     } finally {
@@ -450,7 +504,10 @@ public class InteractiveController implements Features {
       } else {
         view.displayExceptionMessage("Select atleast one color.");
       }
-    } catch (Exception exception) {
+    } catch (NullPointerException exception) {
+      view.displayExceptionMessage("Issue occured. Please retry");
+      view.setProgressBarText("Issue occured. Please retry");
+    } catch (IOException exception) {
       view.displayExceptionMessage("Issue occured. Please retry");
       view.setProgressBarText("Issue occured. Please retry");
     } finally {
@@ -469,7 +526,10 @@ public class InteractiveController implements Features {
 
       view.selectColorAndAddTextWindow(dmcFlossDataSet);
       view.setProgressBarText("Success.");
-    } catch (Exception exception) {
+    } catch (NullPointerException exception) {
+      view.displayExceptionMessage("Issue occured. Please retry");
+      view.setProgressBarText("Issue occured. Please retry");
+    } catch (IOException exception) {
       view.displayExceptionMessage("Issue occured. Please retry");
       view.setProgressBarText("Issue occured. Please retry");
     } finally {
@@ -534,7 +594,10 @@ public class InteractiveController implements Features {
 
       view.diplaySymbolsOnPattern(symbolCordinatesSet);
       view.setProgressBarText("Success.");
-    } catch (Exception exception) {
+    } catch (NullPointerException exception) {
+      view.displayExceptionMessage("Issue occured. Please retry");
+      view.setProgressBarText("Issue occured. Please retry");
+    } catch (IOException exception) {
       view.displayExceptionMessage("Issue occured. Please retry");
       view.setProgressBarText("Issue occured. Please retry");
     } finally {

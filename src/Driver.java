@@ -22,42 +22,46 @@ public class Driver {
    * 
    * @param args Arguments as command and batch file path.
    */
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) {
+    try {
+      String command = args[0];
 
-    String command = args[0];
+      ImageModelInterface model = new ImageModel();
 
-    ImageModelInterface model = new ImageModel();
+      if (command.equals("-script")) {
+        String directory = new File(".").getCanonicalPath();
+        String batchfileName = args[1];
+        String fileSeperator = FileSystems.getDefault().getSeparator();
+        String batchFile = String.format("%s%s%s", directory, fileSeperator, batchfileName);
 
-    if (command.equals("-script")) {
-      String directory = new File(".").getCanonicalPath();
-      String batchfileName = args[1];
-      String fileSeperator = FileSystems.getDefault().getSeparator();
-      String batchFile = String.format("%s%s%s", directory, fileSeperator, batchfileName);
+        StringBuffer out = new StringBuffer();
 
-      StringBuffer out = new StringBuffer();
+        Readable reader = new BufferedReader(new FileReader(batchFile));
 
-      Readable reader = new BufferedReader(new FileReader(batchFile));
+        ImageControllerInterface batchcontroller = new ImageController(reader, out);
 
-      ImageControllerInterface batchcontroller = new ImageController(reader, out);
+        System.out.println("Started\n");
 
-      System.out.println("Started\n");
+        batchcontroller.start(model);
 
-      batchcontroller.start(model);
+        System.out.println(out.toString());
 
-      System.out.println(out.toString());
+        System.out.println("Done\n");
+      }
 
-      System.out.println("Done\n");
-    }
+      else if (command.equals("-interactive")) {
+        InteractiveController interactiveController = new InteractiveController(model);
 
-    else if (command.equals("-interactive")) {
-      InteractiveController interactiveController = new InteractiveController(model);
+        ImageViewInterface view = new ImageViewImp("Cross Stitch Application",
+            interactiveController);
 
-      ImageViewInterface view = new ImageViewImp("Cross Stitch Application", interactiveController);
+        interactiveController.setView(view);
 
-      interactiveController.setView(view);
-
-    } else {
-      System.out.println("Invalid arguments\n");
+      } else {
+        System.out.println("Invalid arguments\n");
+      }
+    } catch (IOException exception) {
+      System.out.println("Issue occured. Please retry.");
     }
   }
 

@@ -440,17 +440,14 @@ public class ImageViewImp extends JFrame implements ImageViewInterface {
     } else if (operation.equals("load")) {
       result = fileChooser.showOpenDialog(this);
     }
-    
-    if(result == JFileChooser.APPROVE_OPTION)
-    {
+
+    if (result == JFileChooser.APPROVE_OPTION) {
       this.fileName = fileChooser.getSelectedFile().getAbsolutePath();
       fileChooserButton.doClick();
-    }
-    else
-    {
+    } else {
       this.fileName = "";
     }
-    
+
   }
 
   @Override

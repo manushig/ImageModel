@@ -1,5 +1,7 @@
 package images.imagemodel;
 
+import java.util.Objects;
+
 /**
  * CrossStitchAlphabet, represents the Siena font representation of cross-stitch
  * alphabets.
@@ -22,6 +24,7 @@ public class CrossStitchAlphabet {
    */
   public CrossStitchAlphabet(int id, char alphabet, int[][] alphabetPattern,
       int noOfSquaresOccupiedInXAxis) {
+    Objects.requireNonNull(alphabetPattern);
     this.id = id;
     this.alphabet = alphabet;
     this.alphabetPattern = alphabetPattern;
